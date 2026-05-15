@@ -1,22 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // HydrarGyrum Studiehub — Firebase configuratie
-//
-// SETUP (eenmalig):
-//   1. Ga naar https://console.firebase.google.com en maak een nieuw project
-//   2. Voeg een web-app toe → kopieer de config hieronder
-//   3. Ga naar Authentication → Sign-in method → activeer:
-//        • Email/Password
-//        • Google
-//   4. Ga naar Firestore Database → Create database → Production mode
-//      Voeg deze regel toe aan de Firestore rules:
-//        allow read, write: if request.auth != null;
-//   5. (Optioneel) Firebase Hosting: `npm i -g firebase-tools && firebase deploy`
-//
-// GRATIS TIER (Spark plan):
-//   • Authentication  — onbeperkt voor email + Google
-//   • Firestore       — 1 GB opslag, 50K reads/dag, 20K writes/dag
-//   • Hosting         — 10 GB, 360 MB/dag transfer
-// ─────────────────────────────────────────────────────────────────────────────
 
 import { initializeApp }  from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
 import { getAuth }        from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
