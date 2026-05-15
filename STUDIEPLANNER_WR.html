@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- HydrarGyrum: auth guard + Firestore progress -->
+<!-- HydrarGyrum: stub zodat niet-module scripts onReady() kunnen aanroepen vóór module laadt -->
+<script>
+  window._hgProgress = {
+    userId: null, _pending: [],
+    load: function() { return Promise.resolve(null); },
+    save: function() { return Promise.resolve(false); },
+    onReady: function(cb) { this._pending.push(cb); }
+  };
+</script>
 <script type="module" src="./js/progress.js"></script>
 <title>WR Studieplanner — Juni 2026</title>
 <style>

@@ -13,12 +13,14 @@ import {
 // Verberg pagina tot auth bevestigd is
 document.documentElement.style.visibility = 'hidden';
 
-const _pending = [];
+// Haal callbacks op die al via de stub geregistreerd zijn
+const _stubPending = window._hgProgress?._pending ?? [];
 
+// Vervang stub met echte implementatie
 window._hgProgress = {
   userId: null,
+  _queue: [],
 
-  // Laad voortgang van één planner (key = 'ca' | 'wr' | …)
   async load(key) {
     if (!this.userId) return null;
     try {
@@ -30,7 +32,6 @@ window._hgProgress = {
     }
   },
 
-  // Sla voortgang op (gedebounced via aanroeper)
   async save(key, state) {
     if (!this.userId) return false;
     try {
@@ -46,13 +47,9 @@ window._hgProgress = {
     }
   },
 
-  // Registreer een callback die vuurt zodra de gebruiker bekend is
   onReady(cb) {
-    if (this.userId) {
-      cb(this.userId);
-    } else {
-      _pending.push(cb);
-    }
+    if (this.userId) { cb(this.userId); }
+    else { this._queue.push(cb); }
   },
 };
 
@@ -63,5 +60,8 @@ onAuthStateChanged(auth, (user) => {
   }
   document.documentElement.style.visibility = '';
   window._hgProgress.userId = user.uid;
-  _pending.splice(0).forEach((cb) => cb(user.uid));
+  // Drain beide queues: stub-callbacks + callbacks na module-load
+  [..._stubPending, ...window._hgProgress._queue]
+    .forEach((cb) => cb(user.uid));
+  window._hgProgress._queue = [];
 });
