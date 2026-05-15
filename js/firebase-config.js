@@ -27,12 +27,13 @@ import { getFirestore }   from 'https://www.gstatic.com/firebasejs/10.14.1/fireb
 // Project settings → Your apps → Web app → SDK setup and configuration
 // ──────────────────────────────────────────────────────────────────────────────
 const firebaseConfig = {
-  apiKey:            "JOUW_API_KEY",
-  authDomain:        "JOUW_PROJECT_ID.firebaseapp.com",
-  projectId:         "JOUW_PROJECT_ID",
-  storageBucket:     "JOUW_PROJECT_ID.appspot.com",
-  messagingSenderId: "JOUW_SENDER_ID",
-  appId:             "JOUW_APP_ID"
+  apiKey: "AIzaSyCDHQaqmlZZthuAturgIYjBExerit7KdnY",
+  authDomain: "hydrargyrum-6c7a2.firebaseapp.com",
+  projectId: "hydrargyrum-6c7a2",
+  storageBucket: "hydrargyrum-6c7a2.firebasestorage.app",
+  messagingSenderId: "657676577325",
+  appId: "1:657676577325:web:f6aee504df5b40287326a4",
+  measurementId: "G-JJJ5XRXR13"
 };
 
 const app = initializeApp(firebaseConfig);
