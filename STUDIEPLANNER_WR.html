@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WR Studieplanner — Juni 2026</title>
+<style>
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #222535; --surface3: #2a2e45;
+  --accent: #4ade80; --green: #4ade80; --red: #f87171;
+  --text: #e2e8f0; --muted: #94a3b8; --border: #2d3148;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+header h1 { font-size: 1.2rem; color: var(--accent); }
+.exam-countdown { background: #14532d; color: #86efac; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; }
+.overall-progress { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.overall-bar { width: 120px; height: 6px; background: var(--surface2); border-radius: 3px; }
+.overall-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.3s; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
+
+.science-strip { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+.sci-pill { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 0.78rem; color: var(--muted); flex: 1; min-width: 175px; }
+.sci-pill strong { color: var(--text); display: block; margin-bottom: 3px; font-size: 0.8rem; }
+
+.week-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.week-tab { padding: 8px 18px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; font-size: 0.85rem; transition: all 0.15s; }
+.week-tab:hover { border-color: var(--accent); color: var(--text); }
+.week-tab.active { background: var(--accent); border-color: var(--accent); color: #0f1117; font-weight: 700; }
+.week-tab .wprog { font-size: 0.72rem; opacity: 0.8; }
+
+.day-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+.day-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.day-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
+.day-label { font-weight: 700; font-size: 0.95rem; }
+.day-tag { font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+
+.session { border-bottom: 1px solid var(--border); }
+.session:last-child { border-bottom: none; }
+.session-header { padding: 10px 16px; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+.session-header:hover { background: var(--surface2); }
+.time-badge { font-size: 0.72rem; color: var(--muted); background: var(--surface2); padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.session-title { font-size: 0.88rem; font-weight: 600; flex: 1; }
+.session-dur { font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
+.chevron { color: var(--muted); font-size: 0.75rem; transition: transform 0.2s; }
+.chevron.open { transform: rotate(90deg); }
+
+/* ── Kanban ticket list ── */
+.tasks { padding: 8px 12px 12px 12px; display: none; }
+.tasks.open { display: block; }
+
+.task {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--surface2);
+  border-radius: 8px;
+  border-left: 3px solid var(--border);
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.task:last-child { margin-bottom: 0; }
+.task:hover { opacity: 0.9; transform: translateX(2px); }
+.task.task-done { opacity: 0.48; }
+.task-check { width: 16px; height: 16px; border: 2px solid var(--border); border-radius: 4px; flex-shrink: 0; margin-top: 3px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.task-check.done { background: var(--green); border-color: var(--green); }
+.task-check.done::after { content: '\2713'; color: #0f1117; font-size: 10px; font-weight: 900; }
+.task-body { flex: 1; min-width: 0; }
+.task-badge { font-size: 0.59rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.7px; padding: 1px 5px; border-radius: 3px; display: inline-block; margin-bottom: 3px; }
+.task-text { font-size: 0.82rem; line-height: 1.4; }
+.task-time { font-size: 0.72rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+
+/* Ticket type: left-border color */
+.tk-lees    { border-left-color: #7c3aed; }
+.tk-schrijf { border-left-color: #2563eb; }
+.tk-code    { border-left-color: #0d9488; }
+.tk-herhaal { border-left-color: #d97706; }
+.tk-mock    { border-left-color: #dc2626; }
+.tk-nakijk  { border-left-color: #64748b; }
+.tk-spiek   { border-left-color: #16a34a; }
+
+/* Ticket badge colors */
+.tb-lees    { background: #2d1b69; color: #c4b5fd; }
+.tb-schrijf { background: #172554; color: #93c5fd; }
+.tb-code    { background: #042f2e; color: #5eead4; }
+.tb-herhaal { background: #3b2500; color: #fcd34d; }
+.tb-mock    { background: #450a0a; color: #fca5a5; }
+.tb-nakijk  { background: #1e293b; color: #94a3b8; }
+.tb-spiek   { background: #14532d; color: #86efac; }
+
+/* text color when done */
+.task-text.done { text-decoration: line-through; color: var(--muted); }
+
+.break-indicator { text-align: center; padding: 6px; color: var(--muted); font-size: 0.72rem; background: var(--surface2); letter-spacing: 0.3px; }
+
+/* Day-level topic tags */
+.t-th     { background: #14532d; color: #86efac; }
+.t-sa     { background: #1e3a5f; color: #93c5fd; }
+.t-ex     { background: #422006; color: #fdba74; }
+.t-mock   { background: #450a0a; color: #fca5a5; }
+.t-exam   { background: #450a0a; color: #fca5a5; }
+.t-review { background: #1c2a1c; color: #86efac; }
+.t-rest   { background: #1c1917; color: #78716c; }
+
+.week-stats { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.wstat { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 0.82rem; }
+.wstat-n { font-size: 1.3rem; font-weight: 700; color: var(--accent); }
+.wstat-label { color: var(--muted); font-size: 0.75rem; }
+
+.week-content { display: none; }
+.week-content.active { display: block; }
+
+.today-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+.day-card.today { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+
+.exam-note { background: #14532d; border: 1px solid #16a34a; border-radius: 8px; padding: 10px 14px; font-size: 0.8rem; color: #86efac; margin-bottom: 16px; line-height: 1.6; }
+.exam-note strong { color: #4ade80; }
+#sync-status { font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+</style>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>&#128210; WR Studieplanner — Wetenschappelijk Rekenen</h1>
+    <div style="font-size:0.78rem;color:var(--muted);margin-top:3px">Theorie (gesloten boek) + SageMath op PC (open boek) &mdash; Di 17 juni 08:30&ndash;13:30</div>
+  </div>
+  <div class="exam-countdown" id="countdown">&#128197; Laden...</div>
+  <div class="overall-progress">
+    <span style="font-size:0.8rem;color:var(--muted);">Totaal: <span id="done-count">0</span>/<span id="total-count">0</span></span>
+    <div class="overall-bar"><div class="overall-fill" id="overall-fill" style="width:0%"></div></div>
+  </div>
+  <div id="sync-status">&#9675; Laden...</div>
+</header>
+
+<div class="container">
+
+  <div class="science-strip">
+    <div class="sci-pill"><strong>&#127775; 9&ndash;11u &mdash; Nieuwe leerstof</strong>Moeilijkste theorie, nieuwe begrippen, gesloten-boek recall. Piekconcentratie &mdash; plan hier H4, H8, H12.</div>
+    <div class="sci-pill"><strong>&#9728;&#65039; 11&ndash;13u &mdash; Actief verwerken</strong>Theorievragen beantwoorden, pseudocode opschrijven. Nog hoog &mdash; actief studeren, niet lezen.</div>
+    <div class="sci-pill"><strong>&#128564; 13&ndash;15u &mdash; Post-lunch dip</strong>Licht: oplossingen lezen, spiekblad aanvullen, notebooks doorlopen. Geen nieuwe theorie.</div>
+    <div class="sci-pill"><strong>&#128260; 15&ndash;17u &mdash; Tweede piek</strong>SageMath coderen, implementaties uitschrijven, oud examen maken. Creatief probleemoplossen.</div>
+    <div class="sci-pill"><strong>&#128218; Gesloten boek = echt gesloten</strong>Altijd op papier, zonder notes, met timer. Dan nakijken. Nooit anders oefenen.</div>
+    <div class="sci-pill"><strong>&#128187; Open boek = oefenen zonder boek</strong>Codeer ZONDER spiekblad. Spiekblad = noodanker op het examen, geen kruk.</div>
+    <div class="sci-pill"><strong>&#128197; Spaced rep: dag 1 &rarr; 3 &rarr; 7 &rarr; 14</strong>Ingebouwd in de planning. Rood = vergeten. Groen = zeker. Fouten zijn de planning.</div>
+  </div>
+
+  <div class="exam-note">
+    <strong>&#127891; Examen Di 17 juni 08:30&ndash;13:30 (5u)</strong> &nbsp;&bull;&nbsp;
+    Deel 1: Theorie <strong>gesloten boek</strong> &mdash; begrippen, algoritmen, bewijzen &nbsp;&bull;&nbsp;
+    Deel 2: SageMath op PC <strong>open boek</strong> &mdash; cursus + notities + spiekblad toegelaten &nbsp;&bull;&nbsp;
+    Cursus: H1&ndash;H9 + H12 &nbsp;&bull;&nbsp; SageMath: NB0&ndash;NB6
+  </div>
+
+  <div class="week-tabs" id="week-tabs">
+    <div class="week-tab" onclick="showWeek(0)">Week 1 &mdash; Eerste sweep (15 mei&rarr;)<br><span class="wprog" id="wp0">0%</span></div>
+    <div class="week-tab" onclick="showWeek(1)">Week 2 &mdash; Deeltijd<br><span class="wprog" id="wp1">0%</span></div>
+    <div class="week-tab" onclick="showWeek(2)">Week 3 &mdash; Intensief<br><span class="wprog" id="wp2">0%</span></div>
+    <div class="week-tab" onclick="showWeek(3)">Week 4 &mdash; Mock + Examen<br><span class="wprog" id="wp3">0%</span></div>
+  </div>
+
+  <div id="week-0" class="week-content"></div>
+  <div id="week-1" class="week-content"></div>
+  <div id="week-2" class="week-content"></div>
+  <div id="week-3" class="week-content"></div>
+
+</div>
+
+<script>
+const EXAM_DATE = new Date('2026-06-17');
+const STATE_KEY = 'wr_planner_v2';
+
+function isToday(d) { var t = new Date(); return new Date(d).toDateString() === t.toDateString(); }
+
+function updateCountdown() {
+  var diff = Math.ceil((EXAM_DATE - new Date()) / 86400000);
+  var el = document.getElementById('countdown');
+  if (diff > 0) el.textContent = '📅 Examen over ' + diff + ' dag' + (diff !== 1 ? 'en' : '');
+  else if (diff === 0) el.textContent = '🎯 VANDAAG is het examen!';
+  else el.textContent = '✅ Examen voorbij';
+}
+
+// ── TYPE MAP ──────────────────────────────────────────────
+var TYPE = {
+  lees:    { label: 'LEES',    bk: 'tb-lees',    tk: 'tk-lees'    },
+  schrijf: { label: 'SCHRIJF', bk: 'tb-schrijf', tk: 'tk-schrijf' },
+  code:    { label: 'CODE',    bk: 'tb-code',    tk: 'tk-code'    },
+  herhaal: { label: 'HERHAAL', bk: 'tb-herhaal', tk: 'tk-herhaal' },
+  mock:    { label: 'MOCK',    bk: 'tb-mock',    tk: 'tk-mock'    },
+  nakijk:  { label: 'NAKIJK',  bk: 'tb-nakijk',  tk: 'tk-nakijk'  },
+  spiek:   { label: 'SPIEKBL.',bk: 'tb-spiek',   tk: 'tk-spiek'   },
+};
+
+// ── DATA ──────────────────────────────────────────────────
+var weeks = [
+
+// =====================================================================
+// WEEK 1: Eerste sweep (15–19 mei) — namiddagsessies naast CA Week 1
+// CA krijgt de ochtenden (piekconcentratie), WR start elke dag om 15:00
+// =====================================================================
+{
+  label: 'Week 1 — Eerste sweep (15 mei→)',
+  subtitle: 'H1–H12 eerste lezing — 15:00 start elke dag, CA ochtenden',
+  days: [
+    {
+      label: 'Vr', date: '15 mei', tag: 't-th', tagText: 'H1 + H2 (start vandaag)',
+      today: isToday('2026-05-15'),
+      sessions: [
+        { title: '📅 CA ochtend — Q1: getallenstelsels', time: '9:00', dur: '', tasks: [], isBreak: true },
+        { title: 'H1 — Floating-point lezen', time: '15:00', dur: '25 min', tasks: [
+          { type: 'lees', text: 'Cursus H1: floating-point, IEEE 754, machineprecisie ε_mach, afrondingsfout vs afknottingsfout', min: 15 },
+          { type: 'schrijf', text: 'Schrijf van buiten: definitie computationele fout, conditioneringsgetal κ, wat "well-posed" betekent', min: 10 },
+        ]},
+        { title: '☕', time: '15:25', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H1 — Theorievragen + notebook', time: '15:35', dur: '30 min', tasks: [
+          { type: 'schrijf', text: 'Beantwoord alle theorievragen H1 (repo: theorie_vragen/hoofdstuk1.tex) schriftelijk, zonder kijken', min: 20 },
+          { type: 'lees', text: 'Bekijk "h1 - cancellation bij het plotten van functies.ipynb" — begrijp wat er misgaat', min: 10 },
+        ]},
+        { title: '☕', time: '16:05', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H2 — LU + pivoting lezen', time: '16:15', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Cursus H2: LU-factorisatie, partiële pivoting, Cholesky, iteratief verfijnen', min: 20 },
+          { type: 'schrijf', text: 'Noteer LU als pseudocode op papier: L·y=b (forward), U·x=y (backward)', min: 10 },
+        ]},
+        { title: '☕', time: '16:45', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H2 — Theorievragen + NB preview', time: '16:55', dur: '30 min', tasks: [
+          { type: 'schrijf', text: 'Beantwoord alle theorievragen H2 (repo) schriftelijk, zonder kijken', min: 20 },
+          { type: 'lees', text: 'Bekijk "h2 - directe methoden.ipynb" — focus op Hilbert-matrix conditionering', min: 10 },
+        ]},
+      ]
+    },
+    {
+      label: 'Za', date: '16 mei', tag: 't-th', tagText: 'H3 + H4 + H5 + NB0',
+      today: isToday('2026-05-16'),
+      sessions: [
+        { title: '📅 CA ochtend — Q2: assembly basis', time: '9:00', dur: '', tasks: [], isBreak: true },
+        { title: 'H3 — Kleinste-kwadraten lezen', time: '15:00', dur: '25 min', tasks: [
+          { type: 'lees', text: 'Cursus H3: normaalvergelijkingen, QR (Householder vs Gram-Schmidt), SVD, pseudoinverse', min: 15 },
+          { type: 'schrijf', text: 'Beantwoord alle theorievragen H3 (repo) schriftelijk — noteer verschil QR vs normaalvergelijkingen (κ² vs κ)', min: 10 },
+        ]},
+        { title: '☕', time: '15:25', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H4 — Eigenwaarden lezen + vragen', time: '15:35', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Cursus H4: machtiteratie, inverse iteratie, Rayleigh-quotiënt iteratie, QR-iteratie', min: 15 },
+          { type: 'schrijf', text: 'Tabel: convergentieorde machtiteratie (1) / inverse (1) / Rayleigh (3) + alle theorievragen H4 schriftelijk', min: 15 },
+        ]},
+        { title: '☕', time: '16:05', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H5 — Niet-lineaire vergelijkingen', time: '16:15', dur: '25 min', tasks: [
+          { type: 'lees', text: 'Cursus H5: bisectie, vaste-puntiteratie, Newton-Raphson, secantmethode', min: 15 },
+          { type: 'schrijf', text: 'Convergentieorden: bisectie=1, secant≈1.618, Newton=2 + pseudocode Newton op papier zonder kijken', min: 10 },
+        ]},
+        { title: '☕', time: '16:40', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'NB0 — Sage basis + spiekblad', time: '16:50', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Open NB0 "0. Werken met Sage.ipynb" — voer alle cellen uit, noteer nieuw syntax', min: 15 },
+          { type: 'spiek', text: 'Spiekblad p1: var(), matrix(), solve(), diff(), integrate() — met korte voorbeelden', min: 15 },
+        ]},
+      ]
+    },
+    {
+      label: 'Zo', date: '17 mei', tag: 't-th', tagText: 'H6 + H7 + H8 + NB1',
+      today: isToday('2026-05-17'),
+      sessions: [
+        { title: '📅 CA ochtend — Q2: CVG + stapel tekenen', time: '9:00', dur: '', tasks: [], isBreak: true },
+        { title: 'H6 — Optimalisatie lezen + vragen', time: '15:00', dur: '25 min', tasks: [
+          { type: 'lees', text: 'Cursus H6: lokaal/globaal minimum, KKT-voorwaarden, steepest descent, Newton voor optimalisatie', min: 15 },
+          { type: 'schrijf', text: 'KKT-voorwaarden + verschil gradient vs Newton (convergentieorde + kosten) uit het hoofd', min: 10 },
+        ]},
+        { title: '☕', time: '15:25', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H7 — Interpolatie lezen + vragen', time: '15:35', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Cursus H7: Lagrange-interpolatie, Newton verdeelde differenties, Runge-fenomeen, stuksgewijze interp., splines', min: 18 },
+          { type: 'schrijf', text: 'Beantwoord alle theorievragen H7 schriftelijk, zonder kijken', min: 12 },
+        ]},
+        { title: '☕', time: '16:05', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H8 — Integratie lezen + vragen', time: '16:15', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Cursus H8: trapeziumregel, Simpson, Newton-Cotes, Gauss-kwadratuur, Romberg, adaptieve integratie', min: 18 },
+          { type: 'schrijf', text: 'Tabel nauwkeurigheidsorde (rechthoek=1, trap=2, Simpson=4, Gauss-n=2n-1) + alle theorievragen H8', min: 12 },
+        ]},
+        { title: '☕', time: '16:45', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'NB1 — Symbolisch rekenen + plots', time: '16:55', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Open NB1 "1. Symbolisch rekenen en plots.ipynb" — voer alle cellen uit', min: 15 },
+          { type: 'code', text: 'Oefen: diff(sin(x)*x^2,x), integrate(exp(-x^2),x,-oo,oo), plot(sin(x),(x,0,2*pi))', min: 15 },
+        ]},
+      ]
+    },
+    {
+      label: 'Ma', date: '18 mei', tag: 't-th', tagText: 'H9 + H12 + NB2',
+      today: isToday('2026-05-18'),
+      sessions: [
+        { title: '📅 CA ochtend — Q3: Booleaanse algebra + K-map', time: '9:00', dur: '', tasks: [], isBreak: true },
+        { title: 'H9 — GDV lezen + vragen', time: '15:00', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Cursus H9: Euler-methode, Runge-Kutta RK4, trapeziumregel voor ODE, stabiliteit, stijve stelsels', min: 20 },
+          { type: 'schrijf', text: 'Beantwoord alle theorievragen H9 schriftelijk, zonder kijken', min: 10 },
+        ]},
+        { title: '☕', time: '15:30', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H12 — DFT + FFT lezen + vragen', time: '15:40', dur: '35 min', tasks: [
+          { type: 'lees', text: 'Cursus H12: DFT-matrix, FFT Cooley-Tukey (even/oneven), complexiteit O(n log n)', min: 20 },
+          { type: 'schrijf', text: 'Schrijf W_n^{jk} = e^{-2πijk/n} + Cooley-Tukey recursie uit het hoofd + alle theorievragen H12', min: 15 },
+        ]},
+        { title: '☕', time: '16:15', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'NB2 + Aanvullingen', time: '16:25', dur: '35 min', tasks: [
+          { type: 'lees', text: 'Open NB2 "2. Datastructuren.ipynb" — loop door: lijsten, tuples, dict, sets, matrix-operaties', min: 15 },
+          { type: 'spiek', text: 'Spiekblad p2: matrix aanmaken, rij/kolom, inverse, determinant, eigenvalues()', min: 10 },
+          { type: 'lees', text: 'Bekijk aanvullingen "reeksontwikkelingen" + "meerdereveranderlijken" — beknopte lezing', min: 10 },
+        ]},
+      ]
+    },
+    {
+      label: 'Di', date: '19 mei', tag: 't-review', tagText: 'SR H1–H4 + NB0 zelf',
+      today: isToday('2026-05-19'),
+      sessions: [
+        { title: '📅 CA ochtend — Q3 NAND + carry lookahead', time: '9:00', dur: '', tasks: [], isBreak: true },
+        { title: '⟳ Spaced rep — H1 + H2 (dag 4)', time: '15:00', dur: '25 min', tasks: [
+          { type: 'herhaal', text: 'Beantwoord 8 H1-vragen volledig uit het hoofd (gesloten boek, timer 12 min) — dan nakijken, fouten markeren', min: 13 },
+          { type: 'herhaal', text: 'Beantwoord 8 H2-vragen volledig uit het hoofd (timer 12 min) — dan nakijken, fouten markeren', min: 12 },
+        ]},
+        { title: '☕', time: '15:25', dur: '10 min', tasks: [], isBreak: true },
+        { title: '⟳ Spaced rep — H3 + H4 (dag 3)', time: '15:35', dur: '25 min', tasks: [
+          { type: 'herhaal', text: 'Beantwoord 8 H3-vragen uit het hoofd (timer 10 min) — dan nakijken', min: 13 },
+          { type: 'herhaal', text: 'Beantwoord 8 H4-vragen uit het hoofd (timer 10 min) — dan nakijken', min: 12 },
+        ]},
+        { title: '☕', time: '16:00', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'NB0 — Zelf oefenen zonder kijken', time: '16:10', dur: '30 min', tasks: [
+          { type: 'code', text: 'Schrijf ZELF: definieer x, maak 3×3 matrix, bereken det + inverse, los A·x=b op — geen NB open', min: 20 },
+          { type: 'spiek', text: 'Voeg ontbrekende syntax toe aan spiekblad op basis van wat je vergat', min: 10 },
+        ]},
+      ]
+    },
+  ]
+},
+
+// =====================================================================
+// WEEK 2: Deeltijdperiode (21 mei – 7 juni) — WR-slots naast CA + MM
+// =====================================================================
+{
+  label: 'Week 2 — Deeltijd',
+  subtitle: 'WR-slots naast CA + MM — NB3–NB6 + spiekblad + mock theorie',
+  days: [
+    {
+      label: 'Do', date: '21 mei', tag: 't-sa', tagText: 'NB3 + Spiekblad',
+      today: isToday('2026-05-21'),
+      sessions: [
+        { title: 'NB3 — Bisectiemethode implementeren', time: '10:00', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Open NB3 "3. Programmeren.ipynb" — loop door: for-lussen, while, functies, recursie', min: 10 },
+          { type: 'code', text: 'Schrijf ZELF: bisectiemethode voor f(x)=x³−2, interval [1,2], tol=1e-6, max 50 iter.', min: 20 },
+        ]},
+        { title: '☕', time: '10:30', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'NB3 — Newton implementeren', time: '10:40', dur: '30 min', tasks: [
+          { type: 'code', text: 'Schrijf ZELF: Newton-methode voor f(x)=cos(x)−x, x0=1, stop bij |f(xk)|<1e-10', min: 20 },
+          { type: 'spiek', text: 'Spiekblad p3: Newton-skelet in Sage (diff() voor afgeleide, while-lus, convergentiecriterium)', min: 10 },
+        ]},
+        { title: '☕', time: '11:10', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'Spiekblad — LU + lineaire algebra', time: '11:20', dur: '30 min', tasks: [
+          { type: 'spiek', text: 'Spiekblad p1: LU-factorisatie in Sage — matrix.LU(), forward/backward substitution', min: 15 },
+          { type: 'spiek', text: 'Spiekblad p1: solve(A*x == b), A.eigenvalues(), A.eigenvectors_right() — met voorbeeld', min: 15 },
+        ]},
+        { title: '🌞 Middagpauze', time: '11:50', dur: '', tasks: [], isBreak: true },
+        { title: 'Oud oef-examen — lezen + spiekblad', time: '15:00', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Open ex1819_1_oef.pdf (niet_opgeloste_examens/) + ex1819_1_oef_opl_door_prof.pdf — lees grondig per vraag', min: 20 },
+          { type: 'spiek', text: 'Voeg ontbrekende SageMath-functies toe aan spiekblad op basis van de oplossingen', min: 10 },
+        ]},
+      ]
+    },
+    {
+      label: 'Zo', date: '24 mei', tag: 't-review', tagText: 'Spaced rep H1–H4 (dag 7–10)',
+      today: isToday('2026-05-24'),
+      sessions: [
+        { title: '⟳ SR — H1 + H2 (dag 10)', time: '10:00', dur: '25 min', tasks: [
+          { type: 'herhaal', text: 'Beantwoord 10 H1-vragen volledig uit het hoofd (timer 12 min) — dan nakijken', min: 13 },
+          { type: 'herhaal', text: 'Beantwoord 10 H2-vragen volledig uit het hoofd (timer 12 min) — dan nakijken', min: 12 },
+        ]},
+        { title: '☕', time: '10:25', dur: '10 min', tasks: [], isBreak: true },
+        { title: '⟳ SR — H3 + H4 (dag 9)', time: '10:35', dur: '25 min', tasks: [
+          { type: 'herhaal', text: 'Beantwoord 8 H3-vragen uit het hoofd (timer 10 min) — dan nakijken', min: 12 },
+          { type: 'herhaal', text: 'Beantwoord 8 H4-vragen uit het hoofd (timer 10 min) — dan nakijken', min: 13 },
+        ]},
+        { title: '☕', time: '11:00', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'NB3 — Machtiteratie implementeren', time: '11:10', dur: '35 min', tasks: [
+          { type: 'code', text: 'Schrijf ZELF: machtiteratie voor 3×3 matrix, zonder te kijken naar NB', min: 20 },
+          { type: 'nakijk', text: 'Vergelijk met matrix.eigenvalues() in Sage + noteer afwijking', min: 10 },
+          { type: 'spiek', text: 'Spiekblad: machtiteratie-skelet (initialiseer, normeer, iterate, stop bij convergentie)', min: 5 },
+        ]},
+      ]
+    },
+    {
+      label: 'Zo', date: '31 mei', tag: 't-review', tagText: 'Spaced rep H5–H12 (dag 14–15)',
+      today: isToday('2026-05-31'),
+      sessions: [
+        { title: '⟳ SR — H5 + H6 (dag 15)', time: '10:00', dur: '25 min', tasks: [
+          { type: 'herhaal', text: 'Beantwoord alle H5-vragen uit het hoofd (timer 12 min) — nakijken', min: 13 },
+          { type: 'herhaal', text: 'Beantwoord alle H6-vragen uit het hoofd (timer 10 min) — nakijken', min: 12 },
+        ]},
+        { title: '☕', time: '10:25', dur: '10 min', tasks: [], isBreak: true },
+        { title: '⟳ SR — H7 + H8 + H9 + H12 (dag 14)', time: '10:35', dur: '30 min', tasks: [
+          { type: 'herhaal', text: 'H7 + H8: beantwoord 6 vragen per H uit het hoofd (timer 20 min) — nakijken', min: 20 },
+          { type: 'herhaal', text: 'H9 + H12: beantwoord 5 vragen per H uit het hoofd (timer 12 min) — nakijken', min: 10 },
+        ]},
+        { title: '☕', time: '11:05', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'NB4 — Vergelijkingen oplossen in Sage', time: '11:15', dur: '35 min', tasks: [
+          { type: 'lees', text: 'Open NB4 "4. Oplossen van vergelijkingen.ipynb" — voer cellen uit', min: 10 },
+          { type: 'code', text: 'Schrijf ZELF: secantmethode voor f(x)=x³−2x−5, x0=2, x1=3', min: 15 },
+          { type: 'code', text: 'Gebruik find_root() en vergelijk resultaat met je eigen implementatie', min: 10 },
+        ]},
+      ]
+    },
+    {
+      label: 'Ma', date: '1 jun', tag: 't-sa', tagText: 'NB5 avond',
+      today: isToday('2026-06-01'),
+      sessions: [
+        { title: 'NB5 — Lineaire algebra + modulo', time: '19:30', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Open NB5 "5. Modulorekenen en lineaire algebra.ipynb" — voer cellen uit', min: 10 },
+          { type: 'code', text: 'Oefen: modulo-aritmetiek, solve(A*x == b), eigenvalues(), eigenvectors() op concrete matrix', min: 20 },
+        ]},
+        { title: '☕', time: '20:00', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'NB5 — Machtiteratie compact', time: '20:10', dur: '30 min', tasks: [
+          { type: 'code', text: 'Schrijf ZELF: machtiteratie in Sage, compact (≤10 regels), test op [[2,1],[1,3]]', min: 20 },
+          { type: 'spiek', text: 'Spiekblad p4: machtiteratie compact-template (kopieer beste versie)', min: 10 },
+        ]},
+      ]
+    },
+    {
+      label: 'Di', date: '2 jun', tag: 't-th', tagText: 'H12 verdieping avond',
+      today: isToday('2026-06-02'),
+      sessions: [
+        { title: 'H12 — DFT grondig herlezen', time: '19:30', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Cursus H12 opnieuw grondig: DFT-matrix, FFT divide-and-conquer, complexiteit O(n log n)', min: 20 },
+          { type: 'schrijf', text: 'Schrijf W_n^{jk} = e^{-2πijk/n} + Cooley-Tukey recursie uit het hoofd', min: 10 },
+        ]},
+        { title: '☕', time: '20:00', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H12 — Alle theorievragen + aanvulling', time: '20:10', dur: '30 min', tasks: [
+          { type: 'schrijf', text: 'Beantwoord ALLE theorievragen H12 (repo) schriftelijk opnieuw, zonder kijken', min: 20 },
+          { type: 'lees', text: 'Bekijk "aanvullingen_wr_reeksontwikkelingen.ipynb" — focus op Taylor vs Fourier', min: 10 },
+        ]},
+      ]
+    },
+    {
+      label: 'Wo', date: '3 jun', tag: 't-sa', tagText: 'NB6 avond',
+      today: isToday('2026-06-03'),
+      sessions: [
+        { title: 'NB6 — Veeltermen + machtreeksen', time: '19:30', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Open NB6 "6. Veeltermen en machtreeksen.ipynb" — voer alle cellen uit', min: 15 },
+          { type: 'code', text: 'Oefen: veelterm aanmaken, evalueren, taylor(), polynomial() in Sage', min: 15 },
+        ]},
+        { title: '☕', time: '20:00', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'NB6 — Lagrange-interpolant zelf schrijven', time: '20:10', dur: '30 min', tasks: [
+          { type: 'code', text: 'Schrijf ZELF: Lagrange-interpolant voor punten (0,1),(1,2),(2,5) zonder te kijken', min: 20 },
+          { type: 'spiek', text: 'Spiekblad p5: interpolate(), taylor(), polynomial() — met minimale voorbeelden', min: 10 },
+        ]},
+      ]
+    },
+    {
+      label: 'Vr', date: '5 jun', tag: 't-ex', tagText: 'Mock theorie avond',
+      today: isToday('2026-06-05'),
+      sessions: [
+        { title: '🏁 Theorie-mock ex2021_1_th — GETIMED', time: '19:30', dur: '90 min', tasks: [
+          { type: 'mock', text: 'Timer 90 min. Open ex2021_1_th.pdf (theorie_examens/). Geen boek, geen notes. Schrijf alles op papier.', min: 90 },
+        ]},
+        { title: 'Nakijken ex2021_1_th', time: '21:15', dur: '25 min', tasks: [
+          { type: 'nakijk', text: 'Kijk na met beschikbare oplossingen — noteer per vraag: correct / deels / fout', min: 15 },
+          { type: 'schrijf', text: 'Schrijf welke begrippen/bewijzen je niet kende — dit zijn je prioriteiten voor week 3', min: 10 },
+        ]},
+      ]
+    },
+    {
+      label: 'Zo', date: '7 jun', tag: 't-review', tagText: 'Licht + dag voor CA',
+      today: isToday('2026-06-07'),
+      sessions: [
+        { title: '⟳ SR — zwakke H bijwerken (dag voor CA)', time: '9:00', dur: '30 min', tasks: [
+          { type: 'herhaal', text: 'Lees de H die je fout had bij de mock van vrijdag: begrippen rustig opnieuw, cursus open', min: 20 },
+          { type: 'schrijf', text: 'Noteer resterende onduidelijkheden voor de intensieve week (ma 8 juni)', min: 10 },
+        ]},
+        { title: '🛑 Stop WR hier — dag voor CA-examen', time: '9:30', dur: '', tasks: [], isBreak: true },
+      ]
+    },
+  ]
+},
+
+// =====================================================================
+// WEEK 3: Volledig intensief (8–11 juni) — na CA-examen
+// =====================================================================
+{
+  label: 'Week 3 — Volledig intensief',
+  subtitle: 'Na CA-examen: 4 dagen 100% WR — theorie per H + alle NB zelf herschrijven',
+  days: [
+    {
+      label: 'Ma', date: '8 jun', tag: 't-th', tagText: 'CA + WR H1+H2',
+      today: isToday('2026-06-08'),
+      sessions: [
+        { title: '🎓 CA EXAMEN 08:30–12:30', time: '8:30', dur: '4 uur', tasks: [
+          { type: 'mock', text: 'Computerarchitectuur examen — veel succes! Kom daarna uitgerust terug voor WR.', min: 0 },
+        ]},
+        { title: 'H1 — Intensief herhalen', time: '14:00', dur: '30 min', tasks: [
+          { type: 'schrijf', text: 'Schrijf uit het hoofd: alle H1-begrippen (machineprecisie, conditionering, foutanalyse)', min: 15 },
+          { type: 'schrijf', text: 'Beantwoord ALLE H1-theorievragen (repo) schriftelijk — noteer elke fout', min: 15 },
+        ]},
+        { title: '☕', time: '14:30', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H2 — Intensief herhalen', time: '14:40', dur: '35 min', tasks: [
+          { type: 'lees', text: 'Cursus H2 opnieuw volledig: LU, pivoting, Cholesky, conditionering', min: 15 },
+          { type: 'schrijf', text: 'Beantwoord ALLE H2-theorievragen (repo) schriftelijk — noteer elke fout', min: 20 },
+        ]},
+        { title: '☕', time: '15:15', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H2 — Notebook + verificatie', time: '15:25', dur: '25 min', tasks: [
+          { type: 'lees', text: 'Bekijk theorie-notebook h2 opnieuw — begrijp Hilbert-matrix voorbeeld volledig', min: 15 },
+          { type: 'nakijk', text: 'Vergelijk je H1+H2 antwoorden met repo-vragen — welke H heeft de meeste fouten?', min: 10 },
+        ]},
+      ]
+    },
+    {
+      label: 'Di', date: '9 jun', tag: 't-th', tagText: 'H3 + H4 + NB0–NB2',
+      today: isToday('2026-06-09'),
+      sessions: [
+        { title: 'H3 — Intensief herhalen', time: '9:00', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Cursus H3 grondig: normaalvergelijkingen, QR Householder, Gram-Schmidt, SVD, pseudoinverse', min: 20 },
+          { type: 'schrijf', text: 'Beantwoord ALLE H3-theorievragen schriftelijk', min: 10 },
+        ]},
+        { title: '☕', time: '9:30', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H4 — Intensief herhalen', time: '9:40', dur: '35 min', tasks: [
+          { type: 'lees', text: 'Cursus H4 grondig: alle iteratiemethoden, convergentie, gelijkvormige transformaties', min: 20 },
+          { type: 'schrijf', text: 'Beantwoord ALLE H4-theorievragen schriftelijk', min: 15 },
+        ]},
+        { title: '☕', time: '10:15', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H4 — Rayleigh notebook', time: '10:25', dur: '25 min', tasks: [
+          { type: 'lees', text: 'Theorie-notebook h4 (rayleigh-quotiënt iteratie): begrijp elke stap in de code', min: 25 },
+        ]},
+        { title: '🌞 Middagpauze', time: '10:50', dur: '', tasks: [], isBreak: true },
+        { title: 'NB0+NB1 — Zelf herschrijven', time: '14:00', dur: '35 min', tasks: [
+          { type: 'code', text: 'Schrijf NB0 ZELF (geen kijken): var, matrix, solve, diff, integrate, plot — test elke lijn', min: 20 },
+          { type: 'code', text: 'Schrijf NB1 ZELF: diff(f,x), integrate(f,x,-oo,oo), solve(), plot() — test', min: 15 },
+        ]},
+        { title: '☕', time: '14:35', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'NB2 — Zelf herschrijven + vergelijken', time: '14:45', dur: '30 min', tasks: [
+          { type: 'code', text: 'Schrijf NB2 ZELF: datastructuren, matrix-operaties, inverse, determinant, stelsel oplossen', min: 20 },
+          { type: 'nakijk', text: 'Vergelijk je NB0–NB2 met originelen — noteer wat je vergat, voeg toe aan spiekblad', min: 10 },
+        ]},
+      ]
+    },
+    {
+      label: 'Wo', date: '10 jun', tag: 't-th', tagText: 'H5 + H6 + H7 + NB3+NB4',
+      today: isToday('2026-06-10'),
+      sessions: [
+        { title: 'H5 — Intensief herhalen', time: '9:00', dur: '25 min', tasks: [
+          { type: 'schrijf', text: 'Beantwoord ALLE H5-theorievragen schriftelijk, zonder kijken, timer 20 min', min: 20 },
+          { type: 'nakijk', text: 'Nakijken + fouten markeren', min: 5 },
+        ]},
+        { title: '☕', time: '9:25', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H6 — Intensief herhalen', time: '9:35', dur: '25 min', tasks: [
+          { type: 'lees', text: 'Cursus H6: KKT-voorwaarden + gradiëntmethode + Newton voor optimalisatie', min: 15 },
+          { type: 'schrijf', text: 'Schrijf KKT-voorwaarden + verschil gradiënt vs Newton (convergentieorde + kosten) uit het hoofd', min: 10 },
+        ]},
+        { title: '☕', time: '10:00', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H7 — Intensief herhalen', time: '10:10', dur: '35 min', tasks: [
+          { type: 'lees', text: 'Cursus H7 grondig: Lagrange, Newton verd. diff., Runge-fenomeen, splines, Hermite-interpolatie', min: 20 },
+          { type: 'schrijf', text: 'Beantwoord ALLE H7-theorievragen schriftelijk + maak 1 interpolatie-vraag uit ex1920_1_th', min: 15 },
+        ]},
+        { title: '🌞 Middagpauze', time: '10:45', dur: '', tasks: [], isBreak: true },
+        { title: 'NB3 — Bisectie + Newton herschrijven', time: '14:00', dur: '35 min', tasks: [
+          { type: 'code', text: 'Schrijf NB3 ZELF: bisectiemethode voor f(x)=x³−2, tol=1e-8, max 100 iter.', min: 18 },
+          { type: 'code', text: 'Schrijf NB3 ZELF: Newton voor f(x)=cos(x)−x, start x0=1, stop |f(xk)|<1e-10', min: 17 },
+        ]},
+        { title: '☕', time: '14:35', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'NB3 — RK4 + NB4', time: '14:45', dur: '35 min', tasks: [
+          { type: 'code', text: 'Schrijf ZELF: Runge-Kutta 4 voor y\'=y, y(0)=1 op [0,1] — vergelijk met exp(1)', min: 20 },
+          { type: 'code', text: 'Schrijf NB4 ZELF: los stelsel op, vind nulpunt, optimaliseer functie in Sage', min: 15 },
+        ]},
+        { title: '☕', time: '15:20', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'NB3+NB4 — Vergelijken + spiekblad', time: '15:30', dur: '20 min', tasks: [
+          { type: 'nakijk', text: 'Vergelijk je code met originele NB3+NB4 — noteer wat je vergat', min: 10 },
+          { type: 'spiek', text: 'Spiekblad: skeleton-code voor bisectie, Newton, RK4 — klaar voor gebruik op examen', min: 10 },
+        ]},
+      ]
+    },
+    {
+      label: 'Do', date: '11 jun', tag: 't-th', tagText: 'H8 + H9 + H12 + NB5+NB6',
+      today: isToday('2026-06-11'),
+      sessions: [
+        { title: 'H8 — Intensief herhalen', time: '9:00', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Cursus H8 grondig: alle Newton-Cotes formules, Gauss-kwadratuur, Romberg, adaptieve integratie', min: 20 },
+          { type: 'schrijf', text: 'Beantwoord ALLE H8-theorievragen schriftelijk, zonder kijken', min: 10 },
+        ]},
+        { title: '☕', time: '9:30', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'H9 + H12 — Intensief herhalen', time: '9:40', dur: '35 min', tasks: [
+          { type: 'lees', text: 'Cursus H9: Euler, RK4, trapezium, stabiliteit, stijve stelsels — grondig', min: 15 },
+          { type: 'schrijf', text: 'Beantwoord ALLE H9 + ALLE H12 theorievragen schriftelijk, zonder kijken', min: 20 },
+        ]},
+        { title: '☕', time: '10:15', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'Aanvullingen + zwakke H bijwerken', time: '10:25', dur: '30 min', tasks: [
+          { type: 'lees', text: 'Lees aanvullingen reeksontwikkelingen + meerdereveranderlijken volledig door', min: 15 },
+          { type: 'schrijf', text: 'Werk het H bij waar je gisteren de meeste fouten had — enkel de foute begrippen, actief opschrijven', min: 15 },
+        ]},
+        { title: '🌞 Middagpauze', time: '10:55', dur: '', tasks: [], isBreak: true },
+        { title: 'NB5 — Machtiteratie + eigenwaarden', time: '14:00', dur: '35 min', tasks: [
+          { type: 'code', text: 'Schrijf ZELF: machtiteratie voor 3×3 matrix — normeren, itereren, stopcriterium', min: 20 },
+          { type: 'code', text: 'Schrijf ZELF: eigenvalues(), eigenvectors_right() — vergelijk met machtiteratie-resultaat', min: 15 },
+        ]},
+        { title: '☕', time: '14:35', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'NB6 — Lagrange + interpolatie', time: '14:45', dur: '35 min', tasks: [
+          { type: 'code', text: 'Schrijf ZELF: Lagrange-interpolant voor (0,1),(1,2),(2,5) zonder kijken', min: 20 },
+          { type: 'code', text: 'Schrijf ZELF: Newton verdeelde differenties voor 4 punten, evalueer op tussenpunt', min: 15 },
+        ]},
+        { title: '☕', time: '15:20', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'Spiekblad finaliseren (versie 1)', time: '15:30', dur: '30 min', tasks: [
+          { type: 'nakijk', text: 'Vergelijk NB5+NB6 met originelen — noteer vergeten syntax', min: 10 },
+          { type: 'spiek', text: 'Spiekblad COMPLEET maken: elke methode heeft een skeleton-voorbeeld', min: 15 },
+          { type: 'spiek', text: 'Sla spiekblad op als PDF / druk af voor gebruik op examen', min: 5 },
+        ]},
+      ]
+    },
+  ]
+},
+
+// =====================================================================
+// WEEK 4: Mock-examens & Examendag (12–17 juni)
+// =====================================================================
+{
+  label: 'Week 4 — Mock + Examen',
+  subtitle: '4 volledige mock-examens (th + SageMath) → dag voor examen → examen',
+  days: [
+    {
+      label: 'Vr', date: '12 jun', tag: 't-mock', tagText: 'Mock #1',
+      today: isToday('2026-06-12'),
+      sessions: [
+        { title: '🏁 Theorie-mock ex2425_1_th — GETIMED', time: '9:00', dur: '90 min', tasks: [
+          { type: 'mock', text: 'Timer 90 min. Open ex2425_1_th.pdf (Examens/). Geen hulpmiddelen. Alles op papier.', min: 90 },
+        ]},
+        { title: '☕ Herstel', time: '10:30', dur: '30 min', tasks: [], isBreak: true },
+        { title: 'Nakijken theorie mock #1', time: '11:00', dur: '30 min', tasks: [
+          { type: 'nakijk', text: 'Kijk na met beschikbare oplossingen — noteer per vraag: correct / deels / fout', min: 20 },
+          { type: 'schrijf', text: 'Schrijf "zwakke H"-lijst: welke begrippen ontbreken? Dat zijn je middagpriorititeiten.', min: 10 },
+        ]},
+        { title: '🌞 Middagpauze', time: '11:30', dur: '', tasks: [], isBreak: true },
+        { title: '🏁 SageMath-mock ex2324_1_oef — GETIMED', time: '13:00', dur: '120 min', tasks: [
+          { type: 'mock', text: 'Timer 120 min. Open ex2324_1_oef.pdf + boilerplate ex2324_1_oef_nb.ipynb. Cursus + spiekblad open.', min: 120 },
+        ]},
+        { title: 'Nakijken SageMath mock #1', time: '15:15', dur: '30 min', tasks: [
+          { type: 'nakijk', text: 'Vergelijk met ex2324_1_oef_opl.pdf — per vraag: correct / deels / fout', min: 20 },
+          { type: 'spiek', text: 'Spiekblad aanvullen: welke Sage-syntax had je nodig maar stond er niet in?', min: 10 },
+        ]},
+      ]
+    },
+    {
+      label: 'Za', date: '13 jun', tag: 't-mock', tagText: 'Mock #2',
+      today: isToday('2026-06-13'),
+      sessions: [
+        { title: '🏁 Theorie-mock ex2425_2_th — GETIMED', time: '9:00', dur: '90 min', tasks: [
+          { type: 'mock', text: 'Timer 90 min. Open ex2425_2_th.pdf. Geen hulpmiddelen. Alles op papier.', min: 90 },
+        ]},
+        { title: 'Nakijken + gerichte herhaling zwakste H', time: '10:30', dur: '35 min', tasks: [
+          { type: 'nakijk', text: 'Kijk theorie na — noteer fouten per H', min: 15 },
+          { type: 'herhaal', text: 'Werk het zwakste H van mock #1 én #2 bij — 20 min actief opschrijven, cursus open', min: 20 },
+        ]},
+        { title: '🌞 Middagpauze', time: '11:05', dur: '', tasks: [], isBreak: true },
+        { title: '🏁 SageMath-mock ex2223_1_oef — GETIMED', time: '13:00', dur: '120 min', tasks: [
+          { type: 'mock', text: 'Timer 120 min. Open ex2223_1_oef.pdf + boilerplate ex2223_1_oef_nb.ipynb. Cursus + spiekblad open.', min: 120 },
+        ]},
+        { title: 'Nakijken SageMath mock #2', time: '15:15', dur: '30 min', tasks: [
+          { type: 'nakijk', text: 'Vergelijk met ex2223_1_oef_oplossing.ipynb (opgeloste_examens/) — per vraag: correct / deels / fout', min: 20 },
+          { type: 'spiek', text: 'Update zwakke-puntenlijst + spiekblad aanpassen waar nodig', min: 10 },
+        ]},
+      ]
+    },
+    {
+      label: 'Zo', date: '14 jun', tag: 't-mock', tagText: 'Mock #3',
+      today: isToday('2026-06-14'),
+      sessions: [
+        { title: '🏁 Theorie-mock ex2122_1_th — GETIMED', time: '9:00', dur: '90 min', tasks: [
+          { type: 'mock', text: 'Timer 90 min. Open ex2122_1_th.pdf. Geen hulpmiddelen. Alles op papier.', min: 90 },
+        ]},
+        { title: 'Nakijken + top-2 zwakke H bijwerken', time: '10:30', dur: '35 min', tasks: [
+          { type: 'nakijk', text: 'Kijk theorie na met ex2122_1_th_opl.pdf — noteer fouten', min: 15 },
+          { type: 'herhaal', text: 'Werk de 2 zwakste H\'s van alle mocks bij — elk 10 min actief', min: 20 },
+        ]},
+        { title: '🌞 Middagpauze', time: '11:05', dur: '', tasks: [], isBreak: true },
+        { title: '🏁 SageMath-mock ex2122_1_oef — GETIMED', time: '13:00', dur: '120 min', tasks: [
+          { type: 'mock', text: 'Timer 120 min. Open ex2122_1_oef.pdf + boilerplate ex2122_1_oef_nb.ipynb. Cursus + spiekblad open.', min: 120 },
+        ]},
+        { title: 'Nakijken + spiekblad definitief', time: '15:15', dur: '30 min', tasks: [
+          { type: 'nakijk', text: 'Kijk SageMath na — per vraag: correct / deels / fout', min: 15 },
+          { type: 'spiek', text: 'Spiekblad DEFINITIEF FINALISEREN — dit is wat je meeneemt naar het examen', min: 15 },
+        ]},
+      ]
+    },
+    {
+      label: 'Ma', date: '15 jun', tag: 't-mock', tagText: 'Mock #4',
+      today: isToday('2026-06-15'),
+      sessions: [
+        { title: '🏁 Theorie-mock ex2021_1_th — GETIMED', time: '9:00', dur: '90 min', tasks: [
+          { type: 'mock', text: 'Timer 90 min. Open ex2021_1_th.pdf. Geen hulpmiddelen. Alles op papier.', min: 90 },
+        ]},
+        { title: 'Nakijken + eindanalyse theorie', time: '10:30', dur: '30 min', tasks: [
+          { type: 'nakijk', text: 'Kijk na met ex2021_1_th_opl.pdf — vergelijk score mock #1 vs #4, voortgang zichtbaar?', min: 20 },
+          { type: 'schrijf', text: 'Noteer: welke 3 H\'s zijn nog onzeker? Die krijgen vanavond max 15 min elk.', min: 10 },
+        ]},
+        { title: '🌞 Middagpauze', time: '11:00', dur: '', tasks: [], isBreak: true },
+        { title: '🏁 SageMath-mock ex2021_1_oef — GETIMED', time: '13:00', dur: '120 min', tasks: [
+          { type: 'mock', text: 'Timer 120 min. Open ex2021_1_oef.pdf + boilerplate ex2021_1_oef_nb.ipynb. Cursus + spiekblad open.', min: 120 },
+        ]},
+        { title: 'Nakijken + laatste restpunten', time: '15:15', dur: '35 min', tasks: [
+          { type: 'nakijk', text: 'Kijk SageMath na + bereken ruwe score — ben je klaar?', min: 15 },
+          { type: 'herhaal', text: 'Werk de 3 onzekere H\'s bij — elk max 15 min, enkel de foute begrippen', min: 15 },
+          { type: 'schrijf', text: 'Controleer: heb je cursus + notities + spiekblad klaar voor morgen?', min: 5 },
+        ]},
+      ]
+    },
+    {
+      label: 'Di', date: '16 jun', tag: 't-review', tagText: 'Dag voor examen',
+      today: isToday('2026-06-16'),
+      sessions: [
+        { title: 'Lichte herhaling — geen nieuw materiaal', time: '9:00', dur: '30 min', tasks: [
+          { type: 'herhaal', text: 'Loop door theorievragen H1–H12 rustig door (lezen, niet schrijven) — bevestiging, niet studie', min: 20 },
+          { type: 'herhaal', text: 'Blader spiekblad door — ken je de structuur? Weet je waar alles staat?', min: 10 },
+        ]},
+        { title: '☕', time: '9:30', dur: '10 min', tasks: [], isBreak: true },
+        { title: 'Praktische voorbereiding', time: '9:40', dur: '20 min', tasks: [
+          { type: 'schrijf', text: 'Schrijf de 5 dingen op die je het vaakst vergat — laatste reminder op papier', min: 10 },
+          { type: 'nakijk', text: 'Leg klaar: cursus, notities, spiekblad. Controleer: hoe open je SageMath/Jupyter op het PC-examen?', min: 10 },
+        ]},
+        { title: '🛌 Stop hier — rust, eten, slapen. Geheugen consolideert \'s nachts.', time: '10:00', dur: '', tasks: [], isBreak: true },
+      ]
+    },
+    {
+      label: 'Wo', date: '17 jun', tag: 't-exam', tagText: 'EXAMEN',
+      today: isToday('2026-06-17'),
+      sessions: [
+        { title: '🎯 EXAMEN WETENSCHAPPELIJK REKENEN — 08:30–13:30', time: '8:30', dur: '5 uur', tasks: [
+          { type: 'schrijf', text: 'Lees eerst ALLE vragen door van beide delen (3 min) — plan je tijd voor elk deel', min: 3 },
+          { type: 'schrijf', text: 'Theorie-deel: begin bij wat je zeker weet — bouw vertrouwen op, dan de rest', min: 0 },
+          { type: 'schrijf', text: 'Theorie-deel: ~90 min beschikbaar — 8–10 min per vraag gemiddeld', min: 90 },
+          { type: 'code', text: 'SageMath-deel: codeer ZONDER spiekblad te raadplegen — enkel noodanker', min: 0 },
+          { type: 'nakijk', text: 'Laatste 10 min: controleer theorie-antwoorden + test SageMath-code op eenvoudig geval', min: 10 },
+        ]},
+      ]
+    },
+  ]
+}
+
+]; // end weeks
+
+// ── FIREBASE ──────────────────────────────────────────────────────
+const FB_CFG = {
+  apiKey: "AIzaSyCDHQaqmlZZthuAturgIYjBExerit7KdnY",
+  authDomain: "hydrargyrum-6c7a2.firebaseapp.com",
+  projectId: "hydrargyrum-6c7a2",
+  storageBucket: "hydrargyrum-6c7a2.firebasestorage.app",
+  messagingSenderId: "657676577325",
+  appId: "1:657676577325:web:f6aee504df5b40287326a4"
+};
+if (!firebase.apps.length) firebase.initializeApp(FB_CFG);
+const db = firebase.firestore();
+function getUserKey() { return localStorage.getItem('hub_user_key') || null; }
+
+function setSyncStatus(s) {
+  var el = document.getElementById('sync-status');
+  if (!el) return;
+  if (s === 'syncing') { el.textContent = '↻ Synchroniseren...'; el.style.color = '#fbbf24'; }
+  else if (s === 'synced')  { el.textContent = '☁ Gesynchroniseerd'; el.style.color = '#4ade80'; }
+  else if (s === 'offline') { el.textContent = '○ Lokaal opgeslagen'; el.style.color = '#94a3b8'; }
+  else                      { el.textContent = '⚠ Sync mislukt';      el.style.color = '#f87171'; }
+}
+
+async function loadFromCloud() {
+  var key = getUserKey();
+  if (!key) return null;
+  try {
+    var doc = await db.collection('studiehub').doc(key).get();
+    if (doc.exists && doc.data().wr_state) return doc.data().wr_state;
+  } catch(e) { console.warn('Firebase load failed:', e); }
+  return null;
+}
+
+var syncTimer;
+
+// ── STATE ──────────────────────────────────────────────────────────
+var state = {};
+function saveState() {
+  try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
+  var key = getUserKey();
+  if (!key) { setSyncStatus('offline'); return; }
+  setSyncStatus('syncing');
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(async function() {
+    try {
+      await db.collection('studiehub').doc(key).set({ wr_state: state }, { merge: true });
+      setSyncStatus('synced');
+    } catch(e) { console.warn('Firebase save failed:', e); setSyncStatus('error'); }
+  }, 1500);
+}
+function getTaskId(wi, di, si, ti) { return wi+'_'+di+'_'+si+'_'+ti; }
+
+// ── RENDER ─────────────────────────────────────────────────────────
+function renderAll() {
+  var totalTasks = 0, doneTasks = 0;
+
+  weeks.forEach(function(week, wi) {
+    var container = document.getElementById('week-'+wi);
+    var weekTotal = 0, weekDone = 0;
+
+    week.days.forEach(function(day, di) {
+      day.sessions.forEach(function(sess, si) {
+        sess.tasks.forEach(function(_, ti) {
+          weekTotal++;
+          if (state[getTaskId(wi,di,si,ti)]) weekDone++;
+        });
+      });
+    });
+    totalTasks += weekTotal;
+    doneTasks += weekDone;
+    var weekPct = weekTotal ? Math.round(weekDone/weekTotal*100) : 0;
+    document.getElementById('wp'+wi).textContent = weekPct+'%';
+
+    var html = '<div class="week-stats">'
+      + '<div class="wstat"><div class="wstat-n">'+weekDone+'/'+weekTotal+'</div><div class="wstat-label">taken klaar</div></div>'
+      + '<div class="wstat"><div class="wstat-n">'+weekPct+'%</div><div class="wstat-label">voltooiing</div></div>'
+      + '<div class="wstat"><div class="wstat-n">'+week.days.length+'</div><div class="wstat-label">studiedagen</div></div>'
+      + '<div class="wstat" style="flex:1"><div class="wstat-n" style="font-size:0.9rem;color:var(--muted)">'+week.subtitle+'</div></div>'
+      + '</div><div class="day-grid">';
+
+    week.days.forEach(function(day, di) {
+      var todayClass = day.today ? ' today' : '';
+      html += '<div class="day-card'+todayClass+'">'
+        + '<div class="day-header">'
+        + (day.today ? '<div class="today-dot"></div>' : '')
+        + '<div class="day-label">'+day.label+' <span style="color:var(--muted);font-weight:400">'+day.date+'</span></div>'
+        + '<span class="day-tag '+day.tag+'">'+day.tagText+'</span>'
+        + '</div>';
+
+      day.sessions.forEach(function(sess, si) {
+        if (sess.isBreak && sess.tasks.length === 0) {
+          html += '<div class="break-indicator">'
+            + (sess.time && sess.time !== 'rest' ? sess.time+' &mdash; ' : '')
+            + sess.title+'</div>';
+          return;
+        }
+
+        var sessId = 'sess_'+wi+'_'+di+'_'+si;
+        var isOpen = state['open_'+sessId] !== undefined ? state['open_'+sessId] : (day.today && si === 0);
+        var sessDone = 0;
+        sess.tasks.forEach(function(_, ti) { if (state[getTaskId(wi,di,si,ti)]) sessDone++; });
+        var sessComplete = sess.tasks.length > 0 && sessDone === sess.tasks.length;
+
+        html += '<div class="session">'
+          + '<div class="session-header" onclick="toggleSession(\''+sessId+'\', this)">'
+          + (sess.time ? '<span class="time-badge">'+sess.time+'</span>' : '')
+          + '<span class="session-title" style="'+(sessComplete ? 'color:var(--green)' : '')+'">'+(sessComplete ? '&#10003; ' : '')+sess.title+'</span>'
+          + (sess.dur ? '<span class="session-dur">'+sess.dur+'</span>' : '')
+          + (sess.tasks.length > 0 ? '<span class="chevron '+(isOpen ? 'open' : '')+'">&#9658;</span>' : '')
+          + '</div>';
+
+        if (sess.tasks.length > 0) {
+          html += '<div class="tasks '+(isOpen ? 'open' : '')+'" id="'+sessId+'">';
+          sess.tasks.forEach(function(task, ti) {
+            var tid = getTaskId(wi,di,si,ti);
+            var done = !!state[tid];
+            var tm = task.type ? TYPE[task.type] : null;
+            var tkCls = tm ? tm.tk : '';
+            html += '<div class="task '+tkCls+(done ? ' task-done' : '')+'" onclick="toggleTask(\''+tid+'\',event)">'
+              + '<div class="task-check '+(done ? 'done' : '')+'"></div>'
+              + '<div class="task-body">'
+              + (tm ? '<span class="task-badge '+tm.bk+'">'+tm.label+'</span>' : '')
+              + '<div class="task-text '+(done ? 'done' : '')+'">'+task.text+'</div>'
+              + '</div>'
+              + (task.min > 0 ? '<span class="task-time">'+task.min+' min</span>' : '')
+              + '</div>';
+          });
+          html += '</div>';
+        }
+        html += '</div>';
+      });
+
+      html += '</div>';
+    });
+
+    html += '</div>';
+    container.innerHTML = html;
+  });
+
+  var pct = totalTasks ? Math.round(doneTasks/totalTasks*100) : 0;
+  document.getElementById('done-count').textContent = doneTasks;
+  document.getElementById('total-count').textContent = totalTasks;
+  document.getElementById('overall-fill').style.width = pct+'%';
+}
+
+function toggleTask(tid, e) {
+  if (e) e.stopPropagation();
+  state[tid] = !state[tid];
+  saveState();
+  renderAll();
+}
+
+function toggleSession(sessId, headerEl) {
+  var key = 'open_'+sessId;
+  state[key] = !state[key];
+  saveState();
+  var tasksEl = document.getElementById(sessId);
+  var chevron = headerEl.querySelector('.chevron');
+  if (tasksEl) tasksEl.classList.toggle('open', state[key]);
+  if (chevron) chevron.classList.toggle('open', state[key]);
+}
+
+function showWeek(idx) {
+  document.querySelectorAll('.week-content').forEach(function(el, i) { el.classList.toggle('active', i === idx); });
+  document.querySelectorAll('.week-tab').forEach(function(el, i) { el.classList.toggle('active', i === idx); });
+}
+
+function autoSelectWeek() {
+  var today = new Date();
+  var bounds = [
+    new Date('2026-05-15'),
+    new Date('2026-05-21'),
+    new Date('2026-06-08'),
+    new Date('2026-06-12'),
+    new Date('2026-06-18'),
+  ];
+  var idx = 0;
+  for (var i = 0; i < bounds.length - 1; i++) {
+    if (today >= bounds[i] && today < bounds[i+1]) { idx = i; break; }
+  }
+  if (today >= bounds[bounds.length-1]) idx = 3;
+  showWeek(idx);
+}
+
+updateCountdown();
+(async function() {
+  var cloud = await loadFromCloud();
+  if (cloud) {
+    state = cloud;
+    try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
+    setSyncStatus('synced');
+  } else {
+    try { state = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch(e) {}
+    setSyncStatus(getUserKey() ? 'synced' : 'offline');
+  }
+  renderAll();
+  autoSelectWeek();
+})();
+</script>
+</body>
+</html>
