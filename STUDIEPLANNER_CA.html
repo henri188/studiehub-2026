@@ -3,16 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- HydrarGyrum auth guard: redirect to login if not authenticated -->
-<script type="module">
-  import { auth } from './js/firebase-config.js';
-  import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
-  document.documentElement.style.visibility = 'hidden';
-  onAuthStateChanged(auth, (user) => {
-    if (user) { document.documentElement.style.visibility = ''; }
-    else { window.location.replace('login.html'); }
-  });
-</script>
+<!-- HydrarGyrum: auth guard + Firestore progress -->
+<script type="module" src="./js/progress.js"></script>
 <title>CA Studieplanner — 4 weken</title>
 <style>
 :root {
@@ -106,8 +98,6 @@ header h1 { font-size: 1.2rem; color: var(--accent); }
 .today-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
 #sync-status { font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
 </style>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -630,19 +620,7 @@ function updateCountdown() {
 const STATE_KEY = 'ca_planner_v1';
 let state = {};
 
-// ── FIREBASE ──────────────────────────────────────────────────────
-const FB_CFG = {
-  apiKey: "AIzaSyCDHQaqmlZZthuAturgIYjBExerit7KdnY",
-  authDomain: "hydrargyrum-6c7a2.firebaseapp.com",
-  projectId: "hydrargyrum-6c7a2",
-  storageBucket: "hydrargyrum-6c7a2.firebasestorage.app",
-  messagingSenderId: "657676577325",
-  appId: "1:657676577325:web:f6aee504df5b40287326a4"
-};
-if (!firebase.apps.length) firebase.initializeApp(FB_CFG);
-const db = firebase.firestore();
-function getUserKey() { return localStorage.getItem('hub_user_key') || null; }
-
+// ── FIREBASE (via window._hgProgress — geladen door progress.js) ──
 function setSyncStatus(s) {
   var el = document.getElementById('sync-status');
   if (!el) return;
@@ -652,28 +630,15 @@ function setSyncStatus(s) {
   else                      { el.textContent = '⚠ Sync mislukt';      el.style.color = '#f87171'; }
 }
 
-async function loadFromCloud() {
-  var key = getUserKey();
-  if (!key) return null;
-  try {
-    var doc = await db.collection('studiehub').doc(key).get();
-    if (doc.exists && doc.data().ca_state) return doc.data().ca_state;
-  } catch(e) { console.warn('Firebase load failed:', e); }
-  return null;
-}
-
 var syncTimer;
 function saveState() {
   try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
-  var key = getUserKey();
-  if (!key) { setSyncStatus('offline'); return; }
+  if (!window._hgProgress?.userId) { setSyncStatus('offline'); return; }
   setSyncStatus('syncing');
   clearTimeout(syncTimer);
   syncTimer = setTimeout(async function() {
-    try {
-      await db.collection('studiehub').doc(key).set({ ca_state: state }, { merge: true });
-      setSyncStatus('synced');
-    } catch(e) { console.warn('Firebase save failed:', e); setSyncStatus('error'); }
+    var ok = await window._hgProgress.save('ca', state);
+    setSyncStatus(ok ? 'synced' : 'error');
   }, 1500);
 }
 function getTaskId(wi, di, si, ti) { return `${wi}_${di}_${si}_${ti}`; }
@@ -794,21 +759,21 @@ function showWeek(idx) {
 
 // Init
 updateCountdown();
-(async function() {
-  var cloud = await loadFromCloud();
+window._hgProgress.onReady(async function() {
+  var cloud = await window._hgProgress.load('ca');
   if (cloud) {
     state = cloud;
     try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
     setSyncStatus('synced');
   } else {
     try { state = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch(e) {}
-    setSyncStatus(getUserKey() ? 'synced' : 'offline');
+    setSyncStatus('offline');
   }
   renderAll();
   const today = new Date();
   const weekIdx = Math.min(3, Math.max(0, Math.floor((today - START_DATE) / (7 * 24 * 60 * 60 * 1000))));
   showWeek(weekIdx);
-})();
+});
 </script>
 </body>
 </html>
