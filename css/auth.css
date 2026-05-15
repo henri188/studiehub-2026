@@ -1,0 +1,279 @@
+/* HydrarGyrum — Auth page (login / register) */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--u5) var(--u4);
+}
+
+/* ── Card ── */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--bone);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-xl);
+  padding: var(--u6) var(--u6) var(--u5);
+  box-shadow: var(--shadow);
+  animation: cardIn var(--t-slow) var(--ease-mercury) both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Mark ── */
+.auth-mark {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--u4);
+}
+.auth-mark svg {
+  width: 44px;
+  height: auto;
+  color: var(--moss);
+  filter: drop-shadow(0 8px 20px color-mix(in oklab, var(--moss) 35%, transparent));
+  animation: dropFloat 4s var(--ease-mercury) infinite alternate;
+}
+
+@keyframes dropFloat {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-6px); }
+}
+
+/* ── Heading ── */
+.auth-heading {
+  text-align: center;
+  margin-bottom: var(--u5);
+}
+.auth-heading h1 {
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+.auth-heading p {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 16px;
+  color: var(--graphite);
+  margin-top: 6px;
+}
+
+.auth-divider {
+  height: 1px;
+  background: var(--line-strong);
+  margin-bottom: var(--u5);
+}
+
+/* ── Fields ── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--u3);
+}
+.field label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--graphite);
+}
+.field input {
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-m);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 400;
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color var(--t-fast),
+              box-shadow var(--t-fast);
+  width: 100%;
+}
+.field input::placeholder { color: var(--quicksilver); }
+.field input:focus {
+  border-color: var(--moss);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--moss) 15%, transparent);
+}
+
+/* ── Password strength ── */
+.strength-bar {
+  height: 2px;
+  background: var(--line);
+  border-radius: var(--r-full);
+  overflow: hidden;
+  margin-top: 6px;
+}
+.strength-fill {
+  height: 100%;
+  border-radius: var(--r-full);
+  transition: width var(--t-med) var(--ease-mercury),
+              background var(--t-med);
+  width: 0%;
+}
+.pw-hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--graphite);
+  margin-top: 4px;
+}
+
+/* ── Primary button ── */
+.btn-primary {
+  width: 100%;
+  padding: 13px 20px;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: var(--r-m);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-top: var(--u2);
+  transition: opacity var(--t-fast), transform var(--t-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-primary:hover:not(:disabled) { opacity: 0.85; }
+.btn-primary:active:not(:disabled) { transform: scale(0.99); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── Google button ── */
+.btn-google {
+  width: 100%;
+  padding: 12px 20px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-m);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: var(--u2);
+  transition: background var(--t-fast), border-color var(--t-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.btn-google:hover { background: var(--bone); border-color: var(--ink); }
+
+/* ── Or separator ── */
+.auth-or {
+  display: flex;
+  align-items: center;
+  gap: var(--u2);
+  margin: var(--u4) 0;
+}
+.auth-or::before, .auth-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.auth-or span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--graphite);
+}
+
+/* ── Error message ── */
+.auth-error {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--cinnabar);
+  background: color-mix(in oklab, var(--cinnabar) 8%, var(--paper));
+  border: 1px solid color-mix(in oklab, var(--cinnabar) 22%, transparent);
+  border-radius: var(--r-m);
+  padding: 10px 14px;
+  margin-top: var(--u3);
+  display: none;
+  animation: errorIn var(--t-fast) var(--ease-settle);
+}
+.auth-error.visible { display: block; }
+
+@keyframes errorIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Toggle link ── */
+.auth-toggle {
+  text-align: center;
+  margin-top: var(--u4);
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--graphite);
+}
+.auth-toggle button {
+  background: none;
+  border: none;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding: 0;
+  margin-left: 4px;
+}
+.auth-toggle button:hover { color: var(--moss); }
+
+/* ── Theme toggle (fixed) ── */
+.theme-btn {
+  position: fixed;
+  top: var(--u3);
+  right: var(--u4);
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-full);
+  padding: 6px 14px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--graphite);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color var(--t-fast), border-color var(--t-fast);
+}
+.theme-btn:hover { color: var(--ink); border-color: var(--ink); }
+.theme-btn .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink);
+  display: inline-block;
+}
+
+/* ── Loading spinner ── */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(236,235,230,0.3);
+  border-top-color: var(--paper);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: var(--u5) var(--u4) var(--u4);
+    border-radius: var(--r-l);
+  }
+}

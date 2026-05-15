@@ -1,342 +1,147 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Examens 2026 — Studiehub</title>
-<style>
-:root {
-  --bg: #0f1117; --surface: #1a1d27; --surface2: #222535; --border: #2d3148;
-  --text: #e2e8f0; --muted: #94a3b8;
-  --blue: #6c8ef5; --green: #4ade80; --orange: #fb923c; --red: #f87171;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  background: var(--bg); color: var(--text);
-  min-height: 100vh; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; padding: 32px 16px;
-}
-
-/* ── AUTH SCREENS ── */
-#auth-screen {
-  width: 100%; max-width: 360px;
-  display: flex; flex-direction: column; align-items: center; gap: 24px;
-}
-.auth-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 28px 28px 24px;
-  width: 100%;
-}
-.auth-logo { font-size: 1.8rem; text-align: center; margin-bottom: 6px; }
-.auth-title { font-size: 1.1rem; font-weight: 700; text-align: center; margin-bottom: 4px; }
-.auth-sub { font-size: 0.78rem; color: var(--muted); text-align: center; margin-bottom: 22px; }
-
-.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-.field label { font-size: 0.75rem; font-weight: 600; color: var(--muted); letter-spacing: 0.4px; }
-.field input {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text);
-  font-size: 0.9rem;
-  padding: 10px 13px;
-  outline: none;
-  transition: border-color 0.15s;
-  width: 100%;
-}
-.field input:focus { border-color: var(--blue); }
-
-.btn {
-  width: 100%; padding: 11px;
-  background: var(--blue); border: none; border-radius: 9px;
-  color: #fff; font-size: 0.88rem; font-weight: 700;
-  cursor: pointer; margin-top: 6px;
-  transition: opacity 0.15s, transform 0.1s;
-}
-.btn:hover { opacity: 0.88; }
-.btn:active { transform: scale(0.98); }
-.btn.danger { background: #7f1d1d; color: var(--red); }
-
-.error-msg {
-  font-size: 0.78rem; color: var(--red);
-  background: #2d1111; border: 1px solid #5a1f1f;
-  border-radius: 7px; padding: 8px 12px;
-  display: none; margin-top: 10px; text-align: center;
-}
-.error-msg.visible { display: block; }
-
-.strength-bar { height: 3px; border-radius: 2px; margin-top: 6px; background: var(--border); overflow: hidden; }
-.strength-fill { height: 100%; border-radius: 2px; transition: width 0.2s, background 0.2s; width: 0%; }
-
-.pw-hint { font-size: 0.72rem; color: var(--muted); margin-top: 4px; }
-
-/* ── CHANGE PASSWORD LINK ── */
-#change-pw-btn {
-  font-size: 0.72rem; color: var(--muted); background: none; border: none;
-  cursor: pointer; text-decoration: underline; padding: 0;
-  display: none;
-}
-#change-pw-btn:hover { color: var(--text); }
-
-/* ── HUB CONTENT ── */
-#hub { display: none; width: 100%; flex-direction: column; align-items: center; }
-
-h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; color: var(--text); margin-bottom: 4px; }
-.subtitle { font-size: 0.82rem; color: var(--muted); margin-bottom: 40px; }
-
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; width: 100%; max-width: 860px; }
-
-.card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 14px; padding: 20px 22px;
-  text-decoration: none; color: var(--text);
-  display: flex; flex-direction: column; gap: 10px;
-  transition: border-color 0.15s, transform 0.1s;
-  position: relative; overflow: hidden;
-}
-.card:hover { border-color: var(--accent); transform: translateY(-2px); }
-.card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
-.card-label { font-size: 0.67rem; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); }
-.card-title { font-size: 1.05rem; font-weight: 700; line-height: 1.3; }
-.card-meta { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
-.countdown-pill {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 20px; padding: 4px 12px;
-  font-size: 0.78rem; font-weight: 700; color: var(--accent);
-  margin-top: 4px; width: fit-content;
-}
-.card-arrow { font-size: 1.1rem; color: var(--muted); margin-top: auto; padding-top: 8px; transition: color 0.15s; }
-.card:hover .card-arrow { color: var(--accent); }
-.ca-card { --accent: #6c8ef5; }
-.wr-card { --accent: #4ade80; }
-.tool-card { --accent: #fb923c; }
-
-.hub-footer { margin-top: 36px; font-size: 0.72rem; color: var(--muted); display: flex; align-items: center; gap: 12px; }
-</style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>HydrarGyrum — Studiehub</title>
+  <!-- Apply saved theme before first paint -->
+  <script>
+    (function(){
+      var s = null;
+      try { s = localStorage.getItem('hg-theme'); } catch(e){}
+      if (!s) s = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', s);
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/hg-tokens.css">
+  <link rel="stylesheet" href="css/hub.css">
 </head>
 <body>
 
-<!-- ── AUTH SCREEN ── -->
-<div id="auth-screen">
-  <div class="auth-box">
-    <div class="auth-logo">&#128274;</div>
-    <div class="auth-title" id="auth-title">Welkom terug</div>
-    <div class="auth-sub" id="auth-sub">Voer je wachtwoord in om verder te gaan</div>
-
-    <!-- LOGIN FORM -->
-    <div id="login-form">
-      <div class="field">
-        <label>Wachtwoord</label>
-        <input type="password" id="login-pw" placeholder="••••••••" autocomplete="current-password" />
-      </div>
-      <button class="btn" onclick="doLogin()">Inloggen</button>
-      <div class="error-msg" id="login-error">Onjuist wachtwoord — probeer opnieuw</div>
-    </div>
-
-    <!-- SETUP FORM -->
-    <div id="setup-form" style="display:none">
-      <div class="field">
-        <label>Nieuw wachtwoord</label>
-        <input type="password" id="setup-pw1" placeholder="Kies een wachtwoord" autocomplete="new-password" oninput="checkStrength()" />
-        <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
-        <div class="pw-hint" id="pw-hint">Minimaal 6 tekens</div>
-      </div>
-      <div class="field">
-        <label>Herhaal wachtwoord</label>
-        <input type="password" id="setup-pw2" placeholder="Zelfde wachtwoord" autocomplete="new-password" />
-      </div>
-      <button class="btn" onclick="doSetup()">Wachtwoord instellen</button>
-      <div class="error-msg" id="setup-error">Wachtwoorden komen niet overeen</div>
-    </div>
-
-    <!-- CHANGE FORM -->
-    <div id="change-form" style="display:none">
-      <div class="field">
-        <label>Huidig wachtwoord</label>
-        <input type="password" id="change-old" placeholder="••••••••" autocomplete="current-password" />
-      </div>
-      <div class="field">
-        <label>Nieuw wachtwoord</label>
-        <input type="password" id="change-new1" placeholder="Nieuw wachtwoord" autocomplete="new-password" />
-      </div>
-      <div class="field">
-        <label>Herhaal nieuw wachtwoord</label>
-        <input type="password" id="change-new2" placeholder="Zelfde wachtwoord" autocomplete="new-password" />
-      </div>
-      <button class="btn" onclick="doChange()">Wachtwoord wijzigen</button>
-      <button class="btn danger" style="margin-top:8px" onclick="cancelChange()">Annuleren</button>
-      <div class="error-msg" id="change-error">Controleer je invoer en probeer opnieuw</div>
-    </div>
-  </div>
-</div>
-
-<!-- ── HUB ── -->
-<div id="hub">
-  <h1>&#127891; Examens juni 2026</h1>
-  <p class="subtitle">Blokperiode gestart &mdash; Henri Goudezeune</p>
-
-  <div class="grid">
-    <a href="STUDIEPLANNER_CA.html" class="card ca-card">
-      <div class="card-label">Studieplanner</div>
-      <div class="card-title">Computerarchitectuur</div>
-      <div class="card-meta">Q1&ndash;Q6 &mdash; getallenstelsels, assembly, caches, pijplijn &mdash; schriftelijk</div>
-      <div class="countdown-pill" id="ca-pill">&#128197; laden...</div>
-      <div class="card-arrow">&#8599;</div>
-    </a>
-    <a href="STUDIEPLANNER_WR.html" class="card wr-card">
-      <div class="card-label">Studieplanner</div>
-      <div class="card-title">Wetenschappelijk Rekenen</div>
-      <div class="card-meta">H1&ndash;H9 + H12 &mdash; theorie gesloten boek + SageMath open boek &mdash; schriftelijk</div>
-      <div class="countdown-pill" id="wr-pill">&#128197; laden...</div>
-      <div class="card-arrow">&#8599;</div>
-    </a>
-    <a href="OEFENTOOL_CA.html" class="card tool-card">
-      <div class="card-label">Oefentool</div>
-      <div class="card-title">CA Oefentool</div>
-      <div class="card-meta">Interactieve oefeningen per topic &mdash; Q1 t/m Q6 &mdash; getimed en willekeurig</div>
-      <div class="countdown-pill" style="color:var(--accent);">&#9654; Open oefentool</div>
-      <div class="card-arrow">&#8599;</div>
-    </a>
+  <!-- Auth loading overlay — removed by hub.js once auth confirmed -->
+  <div class="auth-guard" id="auth-guard">
+    <svg viewBox="0 0 100 120" aria-hidden="true">
+      <path d="M50 6 C50 6,18 52,18 78 A32 32 0 1 0 82 78 C82 52,50 6,50 6 Z" fill="currentColor"/>
+    </svg>
   </div>
 
-  <div class="hub-footer">
-    <span>Alles in dezelfde map</span>
-    <button id="change-pw-btn" onclick="showChangeForm()">Wachtwoord wijzigen</button>
-  </div>
-</div>
+  <!-- ── Top bar ── -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-brand">
+        <svg viewBox="0 0 100 120" aria-hidden="true">
+          <path d="M50 6 C50 6,18 52,18 78 A32 32 0 1 0 82 78 C82 52,50 6,50 6 Z" fill="currentColor"/>
+        </svg>
+        HydrarGyrum
+      </div>
+      <div class="topbar-sep"></div>
+      <span class="topbar-sub">Studiehub</span>
+      <div class="topbar-right">
+        <span class="user-chip" id="user-email"></span>
+        <button class="topbar-btn" id="theme-btn">
+          <span class="dot"></span>
+          <span class="theme-label">Dark</span>
+        </button>
+        <button class="topbar-btn logout" id="logout-btn">Uitloggen</button>
+      </div>
+    </div>
+  </header>
 
-<script>
-var HASH_KEY = 'hub_pw_hash_v1';
-var SESSION_KEY = 'hub_unlocked';
+  <!-- ── Main ── -->
+  <main class="hub-main">
 
-async function sha256(str) {
-  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
-}
+    <!-- Hero -->
+    <section class="hub-hero">
+      <div class="hub-kicker">
+        <span class="pip"></span>
+        <span class="mono">Blokperiode 2026</span>
+      </div>
+      <h1>Examens <em>juni 2026</em></h1>
+      <p>Twee examens, vier weken werk. Kies een planner of open de oefentool.</p>
+    </section>
 
-function daysUntil(dateStr) {
-  var d = new Date(dateStr), now = new Date();
-  now.setHours(0,0,0,0); d.setHours(0,0,0,0);
-  return Math.ceil((d - now) / 86400000);
-}
-function setPill(id, dateStr, label) {
-  var el = document.getElementById(id);
-  var d = daysUntil(dateStr);
-  if (d > 0) el.innerHTML = '&#128197; ' + label + ' &mdash; nog <strong>' + d + '</strong> dag' + (d !== 1 ? 'en' : '');
-  else if (d === 0) el.innerHTML = '&#127919; Vandaag is het examen!';
-  else el.innerHTML = '&#10003; Examen voorbij';
-}
+    <!-- Cards -->
+    <div class="hub-grid">
 
-function showHub() {
-  sessionStorage.setItem(SESSION_KEY, '1');
-  document.getElementById('auth-screen').style.display = 'none';
-  var hub = document.getElementById('hub');
-  hub.style.display = 'flex';
-  document.getElementById('change-pw-btn').style.display = 'inline';
-  setPill('ca-pill', '2026-06-08', 'ma 8 jun');
-  setPill('wr-pill', '2026-06-17', 'wo 17 jun');
-}
+      <!-- Computerarchitectuur -->
+      <a href="STUDIEPLANNER_CA.html" class="hub-card card-ca">
+        <div class="card-top">
+          <div class="card-icon">
+            <!-- Circuit / processor icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="6" height="6" rx="1"/>
+              <path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/>
+            </svg>
+          </div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div>
+          <div class="card-label">Studieplanner</div>
+          <div class="card-title">Computer&shy;architectuur</div>
+        </div>
+        <div class="card-meta">Q1–Q6 — getallenstelsels, assembly, caches, pijplijn — schriftelijk</div>
+        <div class="countdown-pill" id="ca-pill">
+          <span class="countdown-dot"></span>laden…
+        </div>
+      </a>
 
-function showError(id, msg) {
-  var el = document.getElementById(id);
-  if (msg) el.textContent = msg;
-  el.classList.add('visible');
-  setTimeout(function(){ el.classList.remove('visible'); }, 3000);
-}
+      <!-- Wetenschappelijk Rekenen -->
+      <a href="STUDIEPLANNER_WR.html" class="hub-card card-wr">
+        <div class="card-top">
+          <div class="card-icon">
+            <!-- Wave / sigma icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 12 Q6 6,10 12 T18 12 T22 12"/>
+            </svg>
+          </div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div>
+          <div class="card-label">Studieplanner</div>
+          <div class="card-title">Wetenschappelijk Rekenen</div>
+        </div>
+        <div class="card-meta">H1–H9 + H12 — theorie + SageMath open boek — schriftelijk</div>
+        <div class="countdown-pill" id="wr-pill">
+          <span class="countdown-dot"></span>laden…
+        </div>
+      </a>
 
-// ── ON LOAD ──
-window.addEventListener('load', function() {
-  if (sessionStorage.getItem(SESSION_KEY) === '1') { showHub(); return; }
-  var stored = localStorage.getItem(HASH_KEY);
-  if (!stored) {
-    document.getElementById('login-form').style.display = 'none';
-    document.getElementById('setup-form').style.display = 'block';
-    document.getElementById('auth-title').textContent = 'Kies een wachtwoord';
-    document.getElementById('auth-sub').textContent = 'Eerste keer hier? Stel je eigen wachtwoord in.';
-  }
-  document.getElementById('login-pw').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
-  document.getElementById('setup-pw2').addEventListener('keydown', function(e){ if(e.key==='Enter') doSetup(); });
-});
+      <!-- Oefentool -->
+      <a href="OEFENTOOL_CA.html" class="hub-card card-tool">
+        <div class="card-top">
+          <div class="card-icon">
+            <!-- Play / spark icon -->
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div>
+          <div class="card-label">Oefentool</div>
+          <div class="card-title">CA Oefentool</div>
+        </div>
+        <div class="card-meta">Interactieve oefeningen per topic — Q1 t/m Q6 — getimed en willekeurig</div>
+        <div class="countdown-pill">
+          <span class="countdown-dot"></span>Open oefentool →
+        </div>
+      </a>
 
-// ── LOGIN ──
-async function doLogin() {
-  var pw = document.getElementById('login-pw').value;
-  if (!pw) return;
-  var hash = await sha256(pw);
-  if (hash === localStorage.getItem(HASH_KEY)) {
-    localStorage.setItem('hub_user_key', hash);
-    showHub();
-  } else {
-    showError('login-error');
-    document.getElementById('login-pw').value = '';
-    document.getElementById('login-pw').focus();
-  }
-}
+    </div><!-- /hub-grid -->
 
-// ── SETUP ──
-function checkStrength() {
-  var pw = document.getElementById('setup-pw1').value;
-  var score = 0;
-  if (pw.length >= 6) score++;
-  if (pw.length >= 10) score++;
-  if (/[A-Z]/.test(pw)) score++;
-  if (/[0-9]/.test(pw)) score++;
-  if (/[^A-Za-z0-9]/.test(pw)) score++;
-  var fill = document.getElementById('strength-fill');
-  var hint = document.getElementById('pw-hint');
-  var pct = Math.min(100, score * 22);
-  fill.style.width = pct + '%';
-  fill.style.background = score <= 1 ? '#f87171' : score <= 3 ? '#fbbf24' : '#4ade80';
-  hint.textContent = score <= 1 ? 'Te kort of te eenvoudig' : score <= 3 ? 'Redelijk — kan sterker' : 'Sterk wachtwoord';
-}
+    <!-- Footer -->
+    <footer class="hub-footer">
+      <div class="footer-word">Hg<em>·80</em></div>
+      <div class="footer-meta">
+        <span class="mono">HydrarGyrum Studiehub</span>
+        <span>Henri Goudezeune · 2026</span>
+      </div>
+    </footer>
 
-async function doSetup() {
-  var pw1 = document.getElementById('setup-pw1').value;
-  var pw2 = document.getElementById('setup-pw2').value;
-  if (!pw1 || pw1.length < 4) { showError('setup-error', 'Wachtwoord is te kort (min. 4 tekens)'); return; }
-  if (pw1 !== pw2) { showError('setup-error', 'Wachtwoorden komen niet overeen'); return; }
-  var h = await sha256(pw1);
-  localStorage.setItem(HASH_KEY, h);
-  localStorage.setItem('hub_user_key', h);
-  showHub();
-}
+  </main>
 
-// ── CHANGE ──
-function showChangeForm() {
-  document.getElementById('auth-screen').style.display = 'flex';
-  document.getElementById('hub').style.display = 'none';
-  document.getElementById('login-form').style.display = 'none';
-  document.getElementById('setup-form').style.display = 'none';
-  document.getElementById('change-form').style.display = 'block';
-  document.getElementById('auth-title').textContent = 'Wachtwoord wijzigen';
-  document.getElementById('auth-sub').textContent = 'Voer je huidige wachtwoord in ter bevestiging';
-}
-
-function cancelChange() {
-  document.getElementById('change-form').style.display = 'none';
-  document.getElementById('change-old').value = '';
-  document.getElementById('change-new1').value = '';
-  document.getElementById('change-new2').value = '';
-  showHub();
-}
-
-async function doChange() {
-  var old = document.getElementById('change-old').value;
-  var n1  = document.getElementById('change-new1').value;
-  var n2  = document.getElementById('change-new2').value;
-  var oldHash = await sha256(old);
-  if (oldHash !== localStorage.getItem(HASH_KEY)) { showError('change-error', 'Huidig wachtwoord is onjuist'); return; }
-  if (!n1 || n1.length < 4) { showError('change-error', 'Nieuw wachtwoord is te kort (min. 4 tekens)'); return; }
-  if (n1 !== n2) { showError('change-error', 'Nieuwe wachtwoorden komen niet overeen'); return; }
-  var newH = await sha256(n1);
-  localStorage.setItem(HASH_KEY, newH);
-  localStorage.setItem('hub_user_key', newH);
-  cancelChange();
-}
-</script>
+  <script type="module" src="js/hub.js"></script>
 </body>
 </html>
