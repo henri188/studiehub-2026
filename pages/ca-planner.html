@@ -3,10 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CA Studieplanner — HydrarGyrum Studiehub</title>
+<meta name="description" content="Studieplanner voor het examen Computerarchitectuur — 4 weken voorbereiding met dagelijkse taken en timers."/>
+<meta name="robots" content="noindex, nofollow"/>
+<meta name="theme-color" content="#2F4A3A" media="(prefers-color-scheme: light)"/>
+<meta name="theme-color" content="#15161A" media="(prefers-color-scheme: dark)"/>
+<meta name="color-scheme" content="light dark"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Cpath d='M50 6 C50 6,18 52,18 78 A32 32 0 1 0 82 78 C82 52,50 6,50 6 Z' fill='%232F4A3A'/%3E%3C/svg%3E"/>
 <script>(function(){var s=null;try{s=localStorage.getItem('hg-theme');}catch(e){}if(!s)s=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',s);})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://firestore.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 <link rel="stylesheet" href="../css/hg-tokens.css">
+<link rel="stylesheet" href="../css/planner.css">
+<style>:root { --pl-accent: var(--moss); }</style>
 <!-- HydrarGyrum: stub zodat niet-module scripts onReady() kunnen aanroepen vóór module laadt -->
 <script>
   window._hgProgress = {
@@ -16,13 +29,12 @@
     onReady: function(cb) { this._pending.push(cb); }
   };
 </script>
+<link rel="modulepreload" href="../js/progress.js">
+<link rel="modulepreload" href="../js/firebase-config.js">
 <script type="module" src="../js/progress.js"></script>
-<script src="../js/sound-system.js"></script>
-<script src="../js/planner-widgets.js"></script>
-<script src="../js/data/ca-weeks.js"></script>
-<title>CA Studieplanner — 4 weken</title>
-<link rel="stylesheet" href="../css/planner.css">
-<style>:root { --pl-accent: var(--moss); }</style>
+<script defer src="../js/sound-system.js"></script>
+<script defer src="../js/planner-widgets.js"></script>
+<script defer src="../js/data/ca-weeks.js"></script>
 </head>
 <body>
 
@@ -66,22 +78,23 @@
 </div>
 
 <script>
-const EXAM_DATE  = new Date('2026-06-08');
-const START_DATE = new Date('2026-05-14');
-// weekdata: caWeeks — loaded from ../js/data/ca-weeks.js
+// Wacht tot defer-scripts (planner-widgets.js + ca-weeks.js) klaar zijn.
+document.addEventListener('DOMContentLoaded', function() {
+  var EXAM_DATE  = new Date('2026-06-08');
+  var START_DATE = new Date('2026-05-14');
+  var STATE_KEY = 'ca_planner_v1';
 
-const STATE_KEY = 'ca_planner_v1';
-
-HgPlanner.createPlanner({
-  stateKey:     STATE_KEY,
-  firestoreKey: 'ca',
-  examDate:     EXAM_DATE,
-  weeks:        caWeeks,
-  renderTask:   'simple',
-  getWeekIndex: function() {
-    var today = new Date();
-    return Math.min(3, Math.max(0, Math.floor((today - START_DATE) / (7*24*60*60*1000))));
-  }
+  HgPlanner.createPlanner({
+    stateKey:     STATE_KEY,
+    firestoreKey: 'ca',
+    examDate:     EXAM_DATE,
+    weeks:        caWeeks,
+    renderTask:   'simple',
+    getWeekIndex: function() {
+      var today = new Date();
+      return Math.min(3, Math.max(0, Math.floor((today - START_DATE) / (7*24*60*60*1000))));
+    }
+  });
 });
 </script>
 <script>

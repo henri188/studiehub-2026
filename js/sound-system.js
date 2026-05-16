@@ -4,13 +4,44 @@
 
   var MUTE_KEY = 'hg-sound-muted';
   var _ctx = null;
+  var _primed = false;
 
   function getCtx() {
     if (!_ctx || _ctx.state === 'closed') {
-      _ctx = new (global.AudioContext || global.webkitAudioContext)();
+      var Ctor = global.AudioContext || global.webkitAudioContext;
+      if (!Ctor) return null;
+      _ctx = new Ctor();
     }
-    if (_ctx.state === 'suspended') _ctx.resume();
+    if (_ctx.state === 'suspended' && typeof _ctx.resume === 'function') _ctx.resume();
     return _ctx;
+  }
+
+  // Pre-warm AudioContext on first user gesture so the first sound plays instantly.
+  // Browsers block audio until a gesture; without priming the very first .play() call
+  // creates the context lazily and the very first tone is often inaudible / delayed.
+  function prime() {
+    if (_primed) return;
+    _primed = true;
+    var ac = getCtx();
+    if (!ac) return;
+    // Schedule a near-silent tone so the audio graph is fully initialised.
+    try {
+      var osc = ac.createOscillator();
+      var gain = ac.createGain();
+      gain.gain.setValueAtTime(0.00001, ac.currentTime);
+      osc.frequency.value = 440;
+      osc.connect(gain); gain.connect(ac.destination);
+      osc.start(ac.currentTime);
+      osc.stop(ac.currentTime + 0.02);
+    } catch (e) {}
+  }
+
+  function attachPrimers() {
+    var opts = { once: true, capture: true, passive: true };
+    var fire = function() { prime(); };
+    ['pointerdown', 'keydown', 'touchstart', 'mousedown'].forEach(function(ev) {
+      global.addEventListener(ev, fire, opts);
+    });
   }
 
   // freq Hz, type, peak volume, start delay (s), duration (s)
@@ -87,14 +118,24 @@
     play: function(name) {
       try {
         if (global.HgSound.muted || !SOUNDS[name]) return;
-        SOUNDS[name](getCtx());
+        var ac = getCtx();
+        if (!ac) return;
+        SOUNDS[name](ac);
       } catch(e) {}
     },
+    prime: prime,
     toggleMute: function() {
       global.HgSound.muted = !global.HgSound.muted;
       try { localStorage.setItem(MUTE_KEY, global.HgSound.muted ? '1' : '0'); } catch(e) {}
       return global.HgSound.muted;
     },
   };
+
+  // Attach gesture-priming listeners as soon as DOM is ready (or now if already ready).
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attachPrimers, { once: true });
+  } else {
+    attachPrimers();
+  }
 
 })(window);

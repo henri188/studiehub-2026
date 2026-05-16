@@ -3,10 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WR Studieplanner — HydrarGyrum Studiehub</title>
+<meta name="description" content="Studieplanner voor het examen Wetenschappelijk Rekenen — juni 2026, theorie + SageMath."/>
+<meta name="robots" content="noindex, nofollow"/>
+<meta name="theme-color" content="#2F4A3A" media="(prefers-color-scheme: light)"/>
+<meta name="theme-color" content="#15161A" media="(prefers-color-scheme: dark)"/>
+<meta name="color-scheme" content="light dark"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Cpath d='M50 6 C50 6,18 52,18 78 A32 32 0 1 0 82 78 C82 52,50 6,50 6 Z' fill='%232F4A3A'/%3E%3C/svg%3E"/>
 <script>(function(){var s=null;try{s=localStorage.getItem('hg-theme');}catch(e){}if(!s)s=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',s);})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://firestore.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 <link rel="stylesheet" href="../css/hg-tokens.css">
+<link rel="stylesheet" href="../css/planner.css">
+<style>:root { --pl-accent: var(--cinnabar); }</style>
 <!-- HydrarGyrum: stub zodat niet-module scripts onReady() kunnen aanroepen vóór module laadt -->
 <script>
   window._hgProgress = {
@@ -16,13 +29,12 @@
     onReady: function(cb) { this._pending.push(cb); }
   };
 </script>
+<link rel="modulepreload" href="../js/progress.js">
+<link rel="modulepreload" href="../js/firebase-config.js">
 <script type="module" src="../js/progress.js"></script>
-<script src="../js/sound-system.js"></script>
-<script src="../js/planner-widgets.js"></script>
-<script src="../js/data/wr-weeks.js"></script>
-<title>WR Studieplanner — Juni 2026</title>
-<link rel="stylesheet" href="../css/planner.css">
-<style>:root { --pl-accent: var(--cinnabar); }</style>
+<script defer src="../js/sound-system.js"></script>
+<script defer src="../js/planner-widgets.js"></script>
+<script defer src="../js/data/wr-weeks.js"></script>
 </head>
 <body>
 
@@ -74,41 +86,41 @@
 </div>
 
 <script>
-const EXAM_DATE = new Date('2026-06-17');
-const STATE_KEY = 'wr_planner_v2';
+// Wacht tot defer-scripts (planner-widgets.js + wr-weeks.js) klaar zijn.
+document.addEventListener('DOMContentLoaded', function() {
+  var EXAM_DATE = new Date('2026-06-17');
+  var STATE_KEY = 'wr_planner_v2';
 
-// ── TYPE MAP ──────────────────────────────────────────────
-var TYPE = {
-  lees:    { label: 'LEES',    bk: 'tb-lees',    tk: 'tk-lees'    },
-  schrijf: { label: 'SCHRIJF', bk: 'tb-schrijf', tk: 'tk-schrijf' },
-  code:    { label: 'CODE',    bk: 'tb-code',    tk: 'tk-code'    },
-  herhaal: { label: 'HERHAAL', bk: 'tb-herhaal', tk: 'tk-herhaal' },
-  mock:    { label: 'MOCK',    bk: 'tb-mock',    tk: 'tk-mock'    },
-  nakijk:  { label: 'NAKIJK',  bk: 'tb-nakijk',  tk: 'tk-nakijk'  },
-  spiek:   { label: 'SPIEKBL.',bk: 'tb-spiek',   tk: 'tk-spiek'   },
-};
+  var TYPE = {
+    lees:    { label: 'LEES',    bk: 'tb-lees',    tk: 'tk-lees'    },
+    schrijf: { label: 'SCHRIJF', bk: 'tb-schrijf', tk: 'tk-schrijf' },
+    code:    { label: 'CODE',    bk: 'tb-code',    tk: 'tk-code'    },
+    herhaal: { label: 'HERHAAL', bk: 'tb-herhaal', tk: 'tk-herhaal' },
+    mock:    { label: 'MOCK',    bk: 'tb-mock',    tk: 'tk-mock'    },
+    nakijk:  { label: 'NAKIJK',  bk: 'tb-nakijk',  tk: 'tk-nakijk'  },
+    spiek:   { label: 'SPIEKBL.',bk: 'tb-spiek',   tk: 'tk-spiek'   },
+  };
 
-// weekdata: wrWeeks — loaded from ../js/data/wr-weeks.js
-
-HgPlanner.createPlanner({
-  stateKey:     STATE_KEY,
-  firestoreKey: 'wr',
-  examDate:     EXAM_DATE,
-  weeks:        wrWeeks,
-  renderTask:   'kanban',
-  typeMap:      TYPE,
-  getWeekIndex: function() {
-    var today = new Date();
-    var bounds = [
-      new Date('2026-05-15'), new Date('2026-05-21'),
-      new Date('2026-06-08'), new Date('2026-06-12'),
-      new Date('2026-06-18'),
-    ];
-    for (var i = 0; i < bounds.length - 1; i++) {
-      if (today >= bounds[i] && today < bounds[i+1]) return i;
+  HgPlanner.createPlanner({
+    stateKey:     STATE_KEY,
+    firestoreKey: 'wr',
+    examDate:     EXAM_DATE,
+    weeks:        wrWeeks,
+    renderTask:   'kanban',
+    typeMap:      TYPE,
+    getWeekIndex: function() {
+      var today = new Date();
+      var bounds = [
+        new Date('2026-05-15'), new Date('2026-05-21'),
+        new Date('2026-06-08'), new Date('2026-06-12'),
+        new Date('2026-06-18'),
+      ];
+      for (var i = 0; i < bounds.length - 1; i++) {
+        if (today >= bounds[i] && today < bounds[i+1]) return i;
+      }
+      return 3;
     }
-    return 3;
-  }
+  });
 });
 </script>
 <script>

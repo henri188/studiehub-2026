@@ -2,9 +2,8 @@
    Palette: paper/ink + moss (primary) + cinnabar (rare accent)
    Type: Hanken Grotesk + Newsreader + JetBrains Mono
    Grid: 8pt base
+   Note: font @import removed — fonts loaded via <link> in HTML for parallel fetching.
 */
-
-@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
   /* ── Palette (light) ── */
