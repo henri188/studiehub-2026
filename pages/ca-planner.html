@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){var s=null;try{s=localStorage.getItem('hg-theme');}catch(e){}if(!s)s=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',s);})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../css/hg-tokens.css">
+<!-- HydrarGyrum: stub zodat niet-module scripts onReady() kunnen aanroepen vóór module laadt -->
+<script>
+  window._hgProgress = {
+    userId: null, _pending: [],
+    load: function() { return Promise.resolve(null); },
+    save: function() { return Promise.resolve(false); },
+    onReady: function(cb) { this._pending.push(cb); }
+  };
+</script>
+<script type="module" src="../js/progress.js"></script>
+<script src="../js/planner-widgets.js"></script>
+<script src="../js/data/ca-weeks.js"></script>
+<title>CA Studieplanner — 4 weken</title>
+<link rel="stylesheet" href="../css/planner.css">
+<style>:root { --pl-accent: var(--moss); }</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="topbar-brand" href="../index.html">
+      <svg viewBox="0 0 100 120" aria-hidden="true">
+        <path d="M50 6 C50 6,18 52,18 78 A32 32 0 1 0 82 78 C82 52,50 6,50 6 Z" fill="currentColor"/>
+      </svg>
+      HydrarGyrum
+    </a>
+    <div class="topbar-sep"></div>
+    <span class="topbar-sub">CA Studieplanner</span>
+    <div class="topbar-right">
+      <div class="exam-countdown" id="countdown">laden…</div>
+      <div class="overall-progress">
+        <span id="done-count">0</span>/<span id="total-count">0</span>
+        <div class="overall-bar"><div class="overall-fill" id="overall-fill" style="width:0%"></div></div>
+      </div>
+      <span id="sync-status">○ laden…</span>
+      <button class="topbar-btn" id="theme-btn" type="button"><span class="dot"></span><span class="theme-label">Dark</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="science-strip">
+    <div class="sci-pill"><strong>🌅 9–11u: Piekconcentratie</strong>Nieuwe moeilijke stof, harde oefeningen, analytisch werk</div>
+    <div class="sci-pill"><strong>☀️ 11–13u: Nog hoog</strong>Oefeningen maken, actieve verwerking</div>
+    <div class="sci-pill"><strong>😴 13–15u: Post-lunch dip</strong>Alleen lichte herhaling of lezen</div>
+    <div class="sci-pill"><strong>📝 15–17u: Tweede piek</strong>Oefeningen, actief werken, vorige stof herhalen</div>
+    <div class="sci-pill"><strong>🌙 Na 20u: Geen nieuw materiaal</strong>Enkel flashcards of lichte herhaling</div>
+    <div class="sci-pill"><strong>📆 Spaced repetition</strong>Dag 0 → dag 1 → dag 3 → dag 7 → dag 14</div>
+  </div>
+
+  <div class="week-tabs" id="week-tabs"></div>
+  <div id="planner-weeks"></div>
+
+</div>
+
+<script>
+const EXAM_DATE  = new Date('2026-06-08');
+const START_DATE = new Date('2026-05-14');
+// weekdata: caWeeks — loaded from ../js/data/ca-weeks.js
+
+const STATE_KEY = 'ca_planner_v1';
+
+HgPlanner.createPlanner({
+  stateKey:     STATE_KEY,
+  firestoreKey: 'ca',
+  examDate:     EXAM_DATE,
+  weeks:        caWeeks,
+  renderTask:   'simple',
+  getWeekIndex: function() {
+    var today = new Date();
+    return Math.min(3, Math.max(0, Math.floor((today - START_DATE) / (7*24*60*60*1000))));
+  }
+});
+</script>
+<script>
+  (function() {
+    var root = document.documentElement;
+    var btn  = document.getElementById('theme-btn');
+    function updateLabel() {
+      var lbl = btn && btn.querySelector('.theme-label');
+      if (lbl) lbl.textContent = root.getAttribute('data-theme') === 'dark' ? 'Light' : 'Dark';
+    }
+    updateLabel();
+    if (btn) btn.addEventListener('click', function() {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('hg-theme', next); } catch(e) {}
+      updateLabel();
+    });
+  })();
+</script>
+</body>
+</html>

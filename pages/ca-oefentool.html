@@ -6,15 +6,15 @@
 <script>(function(){var s=null;try{s=localStorage.getItem('hg-theme');}catch(e){}if(!s)s=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',s);})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="css/hg-tokens.css">
+<link rel="stylesheet" href="../css/hg-tokens.css">
 <!-- HydrarGyrum auth guard: redirect to login if not authenticated -->
 <script type="module">
-  import { auth } from './js/firebase-config.js';
+  import { auth } from '../js/firebase-config.js';
   import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
   document.documentElement.style.visibility = 'hidden';
   onAuthStateChanged(auth, (user) => {
     if (user) { document.documentElement.style.visibility = ''; }
-    else { window.location.replace('login.html'); }
+    else { window.location.replace('../login.html'); }
   });
 </script>
 <title>Computerarchitectuur — Oefentool</title>
@@ -105,7 +105,7 @@
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="topbar-brand" href="index.html">
+    <a class="topbar-brand" href="../index.html">
       <svg viewBox="0 0 100 120" aria-hidden="true">
         <path d="M50 6 C50 6,18 52,18 78 A32 32 0 1 0 82 78 C82 52,50 6,50 6 Z" fill="currentColor"/>
       </svg>
