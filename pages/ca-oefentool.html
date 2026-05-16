@@ -97,8 +97,20 @@
   .empty-state { text-align: center; padding: 60px 20px; color: var(--graphite); font-family: var(--font-body); font-style: italic; }
   .empty-state .icon { font-size: 3rem; margin-bottom: 16px; }
 
-  /* ── Category filter select ── */
-  select { padding: 6px 12px; background: var(--bone); border: 1px solid var(--line-strong); color: var(--ink); border-radius: var(--r-m); font-family: var(--font-display); font-size: 13px; }
+  /* ── Score bar select alignment ── */
+  .score-bar .hg-select { margin-left: auto; }
+
+  /* ── Correct / wrong buttons ── */
+  .btn-correct { border-color: var(--moss);     color: var(--moss);     background: color-mix(in oklab, var(--moss)     8%, var(--paper)); }
+  .btn-wrong   { border-color: var(--cinnabar); color: var(--cinnabar); background: color-mix(in oklab, var(--cinnabar) 8%, var(--paper)); }
+
+  /* ── Exam structure table ── */
+  .exam-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .exam-table th, .exam-table td { padding: 10px 14px; text-align: left; border: 1px solid var(--line); vertical-align: top; line-height: 1.5; }
+  .exam-table thead tr { background: var(--bone); }
+  .exam-table thead th { color: var(--moss); font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border-color: var(--line-strong); }
+  .exam-table tbody tr:nth-child(even) { background: var(--bone); }
+  .exam-table td.q-row { color: var(--moss); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.04em; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -132,17 +144,15 @@
       <span class="score-pill score-correct">✓ <span id="n-correct">0</span> correct</span>
       <span class="score-pill score-wrong">✗ <span id="n-wrong">0</span> fout</span>
       <span class="score-pill score-total">Vraag <span id="q-index">1</span>/<span id="q-total">?</span></span>
-      <div style="margin-left:auto; display:flex; gap:8px; flex-wrap:wrap;">
-        <select id="category-filter" onchange="filterCategory()" style="padding:6px 12px; background:var(--surface); border:1px solid var(--border); color:var(--text); border-radius:8px; font-size:0.85rem;">
-          <option value="all">Alle categorieën</option>
-          <option value="Q1">Q1: Getallenstelsels</option>
-          <option value="Q2">Q2: Assemblercode</option>
-          <option value="Q3">Q3: Boolean/Karnaugh</option>
-          <option value="Q4">Q4: VLIW/Voorspellers</option>
-          <option value="Q5">Q5: Caches</option>
-          <option value="Q6">Q6: Actuele trends</option>
-        </select>
-      </div>
+      <select class="hg-select" id="category-filter" onchange="filterCategory()">
+        <option value="all">Alle categorieën</option>
+        <option value="Q1">Q1: Getallenstelsels</option>
+        <option value="Q2">Q2: Assemblercode</option>
+        <option value="Q3">Q3: Boolean/Karnaugh</option>
+        <option value="Q4">Q4: VLIW/Voorspellers</option>
+        <option value="Q5">Q5: Caches</option>
+        <option value="Q6">Q6: Actuele trends</option>
+      </select>
     </div>
     <div class="progress"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
     <div id="question-area"></div>
@@ -237,65 +247,65 @@
   <div id="tab-examens" style="display:none;">
     <div class="section-title">Examenstructuur per jaar (2021–2025)</div>
     <div style="overflow-x:auto;">
-      <table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+      <table class="exam-table">
         <thead>
-          <tr style="background:var(--surface2); color:var(--accent);">
-            <th style="padding:10px; text-align:left; border:1px solid var(--border);">Vraag</th>
-            <th style="padding:10px; text-align:left; border:1px solid var(--border);">2021</th>
-            <th style="padding:10px; text-align:left; border:1px solid var(--border);">2022</th>
-            <th style="padding:10px; text-align:left; border:1px solid var(--border);">2023</th>
-            <th style="padding:10px; text-align:left; border:1px solid var(--border);">2024</th>
-            <th style="padding:10px; text-align:left; border:1px solid var(--border);">2025</th>
+          <tr>
+            <th>Vraag</th>
+            <th>2021</th>
+            <th>2022</th>
+            <th>2023</th>
+            <th>2024</th>
+            <th>2025</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td style="padding:10px;border:1px solid var(--border);color:var(--accent);font-weight:700;">Q1 (2pt)</td>
-            <td style="padding:10px;border:1px solid var(--border);">Gray, FP1|3|4, BCD9-comp, 2-comp</td>
-            <td style="padding:10px;border:1px solid var(--border);">Octaal, bfloat16, 1-comp, 10-comp</td>
-            <td style="padding:10px;border:1px solid var(--border);">Octaal, bfloat16 hex, 1-comp hex, packed 10-comp</td>
-            <td style="padding:10px;border:1px solid var(--border);">FP4 (1|3|0) alle waarden, 2-comp, gray code</td>
-            <td style="padding:10px;border:1px solid var(--border);">2-comp, 10-comp packed, UPC-A barcode</td>
-          </tr>
-          <tr style="background:var(--surface2);">
-            <td style="padding:10px;border:1px solid var(--border);color:var(--accent);font-weight:700;">Q2 (4pt)</td>
-            <td style="padding:10px;border:1px solid var(--border);">isPalindroom("rotator")</td>
-            <td style="padding:10px;border:1px solid var(--border);">F/M mutuele recursie, F(3)</td>
-            <td style="padding:10px;border:1px solid var(--border);">product(3,5) — recursief vermenigvuldigen</td>
-            <td style="padding:10px;border:1px solid var(--border);">fun(27) — switch + sprongtabel</td>
-            <td style="padding:10px;border:1px solid var(--border);">bc(3,1) — binomiaalcoëfficiënt</td>
+            <td class="q-row">Q1 (2pt)</td>
+            <td>Gray, FP1|3|4, BCD9-comp, 2-comp</td>
+            <td>Octaal, bfloat16, 1-comp, 10-comp</td>
+            <td>Octaal, bfloat16 hex, 1-comp hex, packed 10-comp</td>
+            <td>FP4 (1|3|0) alle waarden, 2-comp, gray code</td>
+            <td>2-comp, 10-comp packed, UPC-A barcode</td>
           </tr>
           <tr>
-            <td style="padding:10px;border:1px solid var(--border);color:var(--accent);font-weight:700;">Q3 (4pt)</td>
-            <td style="padding:10px;border:1px solid var(--border);">Multiplexer: waarheidstabel, SOP, NAND</td>
-            <td style="padding:10px;border:1px solid var(--border);">2×2 vermenigvuldiger: Karnaugh + XOR-SOP</td>
-            <td style="padding:10px;border:1px solid var(--border);">Carry-save opteller: poortvertragingen</td>
-            <td style="padding:10px;border:1px solid var(--border);">A⊕B⊕C: Karnaugh, SOP, CMOS</td>
-            <td style="padding:10px;border:1px solid var(--border);">a&gt;b en a==b: waarheidstabel, Karnaugh</td>
-          </tr>
-          <tr style="background:var(--surface2);">
-            <td style="padding:10px;border:1px solid var(--border);color:var(--accent);font-weight:700;">Q4 (4pt)</td>
-            <td style="padding:10px;border:1px solid var(--border);">Delayslots + VLIW scheduling</td>
-            <td style="padding:10px;border:1px solid var(--border);">Delayslots + VLIW scheduling</td>
-            <td style="padding:10px;border:1px solid var(--border);">Delayslots + VLIW scheduling</td>
-            <td style="padding:10px;border:1px solid var(--border);">1-bit, 2-bit, globale sprongvoorspeller</td>
-            <td style="padding:10px;border:1px solid var(--border);">Microcodering: call + ret implementeren</td>
+            <td class="q-row">Q2 (4pt)</td>
+            <td>isPalindroom("rotator")</td>
+            <td>F/M mutuele recursie, F(3)</td>
+            <td>product(3,5) — recursief vermenigvuldigen</td>
+            <td>fun(27) — switch + sprongtabel</td>
+            <td>bc(3,1) — binomiaalcoëfficiënt</td>
           </tr>
           <tr>
-            <td style="padding:10px;border:1px solid var(--border);color:var(--accent);font-weight:700;">Q5 (4pt)</td>
-            <td style="padding:10px;border:1px solid var(--border);">Lus cache: DM/2WSA/4WSA/FA, hits/misses</td>
-            <td style="padding:10px;border:1px solid var(--border);">2WSA cache: adresbits, treffer/misser, hitrate</td>
-            <td style="padding:10px;border:1px solid var(--border);">2-niveau cache: L1/L2 missers, AMAT</td>
-            <td style="padding:10px;border:1px solid var(--border);">4WSA cache: adresbits, treffer/misser, hitrate</td>
-            <td style="padding:10px;border:1px solid var(--border);">Cacheparameters afleiden uit adresstroom</td>
+            <td class="q-row">Q3 (4pt)</td>
+            <td>Multiplexer: waarheidstabel, SOP, NAND</td>
+            <td>2×2 vermenigvuldiger: Karnaugh + XOR-SOP</td>
+            <td>Carry-save opteller: poortvertragingen</td>
+            <td>A⊕B⊕C: Karnaugh, SOP, CMOS</td>
+            <td>a&gt;b en a==b: waarheidstabel, Karnaugh</td>
           </tr>
-          <tr style="background:var(--surface2);">
-            <td style="padding:10px;border:1px solid var(--border);color:var(--accent);font-weight:700;">Q6 (2pt)</td>
-            <td style="padding:10px;border:1px solid var(--border);">PUE, paradox wetenschap, in-memory computing, Europese valorisatie</td>
-            <td style="padding:10px;border:1px solid var(--border);">Wet van Moore, red/green AI, verticaal vs horizontaal, stand-by power</td>
-            <td style="padding:10px;border:1px solid var(--border);">Moore/Dennard, hyperscaler, datafasen, streaming energie</td>
-            <td style="padding:10px;border:1px solid var(--border);">Edge AI, embodied/operational emissions, Moore's artikel, immersion cooling</td>
-            <td style="padding:10px;border:1px solid var(--border);">AI inferentiekost, AI vs Moore, Nature index, enablement</td>
+          <tr>
+            <td class="q-row">Q4 (4pt)</td>
+            <td>Delayslots + VLIW scheduling</td>
+            <td>Delayslots + VLIW scheduling</td>
+            <td>Delayslots + VLIW scheduling</td>
+            <td>1-bit, 2-bit, globale sprongvoorspeller</td>
+            <td>Microcodering: call + ret implementeren</td>
+          </tr>
+          <tr>
+            <td class="q-row">Q5 (4pt)</td>
+            <td>Lus cache: DM/2WSA/4WSA/FA, hits/misses</td>
+            <td>2WSA cache: adresbits, treffer/misser, hitrate</td>
+            <td>2-niveau cache: L1/L2 missers, AMAT</td>
+            <td>4WSA cache: adresbits, treffer/misser, hitrate</td>
+            <td>Cacheparameters afleiden uit adresstroom</td>
+          </tr>
+          <tr>
+            <td class="q-row">Q6 (2pt)</td>
+            <td>PUE, paradox wetenschap, in-memory computing, Europese valorisatie</td>
+            <td>Wet van Moore, red/green AI, verticaal vs horizontaal, stand-by power</td>
+            <td>Moore/Dennard, hyperscaler, datafasen, streaming energie</td>
+            <td>Edge AI, embodied/operational emissions, Moore's artikel, immersion cooling</td>
+            <td>AI inferentiekost, AI vs Moore, Nature index, enablement</td>
           </tr>
         </tbody>
       </table>
@@ -488,8 +498,8 @@ function renderQuestion() {
   if (current >= filtered.length) {
     area.innerHTML = `<div class="card" style="text-align:center; padding:40px;">
       <div style="font-size:2.5rem; margin-bottom:16px;">🎉</div>
-      <div style="font-size:1.2rem; font-weight:700; color:var(--accent); margin-bottom:8px;">Alle vragen gedaan!</div>
-      <div style="color:var(--muted); margin-bottom:20px;">Correct: ${correct} | Fout: ${wrong}</div>
+      <div style="font-size:1.2rem; font-weight:700; color:var(--moss); margin-bottom:8px;">Alle vragen gedaan!</div>
+      <div style="color:var(--graphite); margin-bottom:20px;">Correct: ${correct} | Fout: ${wrong}</div>
       <button class="btn btn-next" onclick="current=0;correct=0;wrong=0;document.getElementById('n-correct').textContent=0;document.getElementById('n-wrong').textContent=0;renderQuestion()">Opnieuw beginnen</button>
     </div>`;
     return;
@@ -511,8 +521,8 @@ function renderQuestion() {
       <div class="btn-row">
         <button class="btn btn-hint" onclick="toggleHint()">💡 Hint</button>
         <button class="btn btn-answer" onclick="toggleAnswer()">👁 Toon antwoord</button>
-        <button class="btn" style="background:#14532d;color:var(--green);" onclick="markCorrect()">✓ Correct</button>
-        <button class="btn" style="background:#450a0a;color:var(--red);" onclick="markWrong()">✗ Fout</button>
+        <button class="btn btn-correct" onclick="markCorrect()">✓ Correct</button>
+        <button class="btn btn-wrong" onclick="markWrong()">✗ Fout</button>
         <button class="btn btn-next" onclick="nextQ()">Volgende →</button>
       </div>
     </div>`;
