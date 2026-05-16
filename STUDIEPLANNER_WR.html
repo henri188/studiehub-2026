@@ -17,126 +17,10 @@
   };
 </script>
 <script type="module" src="./js/progress.js"></script>
+<script src="js/planner-widgets.js"></script>
 <title>WR Studieplanner — Juni 2026</title>
-<style>
-/* ── HydrarGyrum WR Studieplanner ── */
-/* Compat alias so inline JS template strings still resolve */
-:root { --muted: var(--graphite); }
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-display); font-size: 15px; background: var(--paper); color: var(--ink); min-height: 100vh; -webkit-font-smoothing: antialiased; }
-
-/* ── Topbar ── */
-.topbar { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); background: color-mix(in oklab, var(--paper) 82%, transparent); border-bottom: 1px solid var(--line); }
-.topbar-inner { max-width: 1100px; margin: 0 auto; padding: 12px var(--u4); display: flex; align-items: center; gap: var(--u2); flex-wrap: wrap; }
-.topbar-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 14px; font-weight: 500; letter-spacing: -0.015em; color: var(--ink); text-decoration: none; }
-.topbar-brand svg { width: 13px; height: auto; color: var(--cinnabar); flex-shrink: 0; }
-.topbar-sep { width: 1px; height: 16px; background: var(--line-strong); flex-shrink: 0; }
-.topbar-sub { font-family: var(--font-body); font-style: italic; font-weight: 300; font-size: 14px; color: var(--graphite); }
-.topbar-right { margin-left: auto; display: flex; align-items: center; gap: var(--u2); flex-wrap: wrap; }
-.topbar-btn { background: transparent; border: 1px solid var(--line-strong); border-radius: var(--r-full); padding: 5px 12px; font-family: var(--font-display); font-size: 12px; color: var(--graphite); display: flex; align-items: center; gap: 6px; transition: color var(--t-fast), border-color var(--t-fast); cursor: pointer; white-space: nowrap; }
-.topbar-btn:hover { color: var(--ink); border-color: var(--ink); }
-.topbar-btn .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
-
-/* ── Header widgets ── */
-.exam-countdown { background: color-mix(in oklab, var(--cinnabar) 12%, var(--bone)); color: var(--cinnabar); border: 1px solid color-mix(in oklab, var(--cinnabar) 28%, transparent); padding: 4px 12px; border-radius: var(--r-full); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; white-space: nowrap; }
-.overall-progress { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--graphite); white-space: nowrap; }
-.overall-bar { width: 72px; height: 3px; background: var(--line); border-radius: var(--r-full); }
-.overall-fill { height: 100%; background: var(--cinnabar); border-radius: var(--r-full); transition: width 0.4s var(--ease-mercury); }
-#sync-status { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); letter-spacing: 0.04em; white-space: nowrap; }
-
-/* ── Main container ── */
-.container { max-width: 1100px; margin: 0 auto; padding: var(--u3) var(--u4); }
-
-/* ── Science strip ── */
-.science-strip { display: flex; gap: 8px; margin-bottom: var(--u3); flex-wrap: wrap; }
-.sci-pill { background: var(--bone); border: 1px solid var(--line); border-radius: var(--r-l); padding: 10px 14px; font-size: 13px; color: var(--graphite); flex: 1; min-width: 175px; line-height: 1.45; }
-.sci-pill strong { font-family: var(--font-display); color: var(--ink); display: block; margin-bottom: 3px; font-size: 13px; font-weight: 500; letter-spacing: -0.01em; }
-
-/* ── Week tabs ── */
-.week-tabs { display: flex; gap: 6px; margin-bottom: var(--u3); flex-wrap: wrap; }
-.week-tab { padding: 8px 16px; border-radius: var(--r-m); border: 1px solid var(--line-strong); background: var(--bone); color: var(--graphite); cursor: pointer; font-family: var(--font-display); font-size: 13px; font-weight: 500; letter-spacing: -0.01em; transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast); text-align: center; line-height: 1.4; }
-.week-tab:hover { border-color: var(--cinnabar); color: var(--ink); }
-.week-tab.active { background: var(--cinnabar); border-color: var(--cinnabar); color: var(--paper); }
-.week-tab .wprog { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; opacity: 0.85; display: block; }
-
-/* ── Day grid ── */
-.day-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--u2); }
-.day-card { background: var(--bone); border: 1px solid var(--line); border-radius: var(--r-l); overflow: hidden; transition: border-color var(--t-fast); }
-.day-card.today { border-color: var(--cinnabar); box-shadow: 0 0 0 1px var(--cinnabar); }
-.day-header { padding: 12px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); background: var(--paper); }
-.day-label { font-family: var(--font-display); font-weight: 600; font-size: 14px; color: var(--ink); letter-spacing: -0.01em; }
-.day-tag { font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border-radius: var(--r-s); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
-.today-dot { width: 7px; height: 7px; background: var(--cinnabar); border-radius: 50%; flex-shrink: 0; }
-
-/* ── Sessions ── */
-.session { border-bottom: 1px solid var(--line); }
-.session:last-child { border-bottom: none; }
-.session-header { padding: 10px 16px; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; transition: background var(--t-fast); }
-.session-header:hover { background: var(--paper); }
-.time-badge { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); background: var(--paper); border: 1px solid var(--line); padding: 2px 8px; border-radius: var(--r-s); white-space: nowrap; letter-spacing: 0.04em; }
-.session-title { font-family: var(--font-display); font-size: 13px; font-weight: 500; flex: 1; color: var(--ink); letter-spacing: -0.01em; }
-.session-dur { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); white-space: nowrap; }
-.chevron { color: var(--graphite); font-size: 11px; transition: transform var(--t-fast); }
-.chevron.open { transform: rotate(90deg); }
-
-/* ── Kanban ticket list ── */
-.tasks { padding: 8px 12px 12px; display: none; }
-.tasks.open { display: block; }
-.task { display: flex; align-items: flex-start; gap: 10px; padding: 8px 10px; background: var(--paper); border-radius: var(--r-m); border-left: 3px solid var(--line-strong); margin-bottom: 6px; cursor: pointer; transition: opacity var(--t-fast), transform var(--t-fast); }
-.task:last-child { margin-bottom: 0; }
-.task:hover { opacity: 0.8; transform: translateX(2px); }
-.task.task-done { opacity: 0.45; }
-.task-check { width: 15px; height: 15px; border: 1.5px solid var(--line-strong); border-radius: var(--r-s); flex-shrink: 0; margin-top: 3px; display: flex; align-items: center; justify-content: center; transition: all var(--t-fast); }
-.task-check.done { background: var(--moss); border-color: var(--moss); }
-.task-check.done::after { content: '✓'; color: var(--paper); font-size: 9px; font-weight: 900; }
-.task-body { flex: 1; min-width: 0; }
-.task-badge { font-family: var(--font-mono); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 1px 5px; border-radius: var(--r-s); display: inline-block; margin-bottom: 3px; }
-.task-text { font-size: 13px; line-height: 1.45; color: var(--ink); }
-.task-text.done { text-decoration: line-through; color: var(--graphite); }
-.task-time { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
-
-/* ── Ticket type border colors ── */
-.tk-lees    { border-left-color: var(--moss); }
-.tk-schrijf { border-left-color: var(--ink); }
-.tk-code    { border-left-color: #4A8C6E; }
-.tk-herhaal { border-left-color: #C9963A; }
-.tk-mock    { border-left-color: var(--cinnabar); }
-.tk-nakijk  { border-left-color: var(--graphite); }
-.tk-spiek   { border-left-color: var(--moss); }
-
-/* ── Ticket badge colors ── */
-.tb-lees    { background: color-mix(in oklab, var(--moss)      12%, var(--paper)); color: var(--moss); }
-.tb-schrijf { background: color-mix(in oklab, var(--ink)       10%, var(--paper)); color: var(--graphite); }
-.tb-code    { background: color-mix(in oklab, #4A8C6E          12%, var(--paper)); color: #4A8C6E; }
-.tb-herhaal { background: color-mix(in oklab, #C9963A          12%, var(--paper)); color: #C9963A; }
-.tb-mock    { background: color-mix(in oklab, var(--cinnabar)  12%, var(--paper)); color: var(--cinnabar); }
-.tb-nakijk  { background: color-mix(in oklab, var(--graphite)  12%, var(--paper)); color: var(--graphite); }
-.tb-spiek   { background: color-mix(in oklab, var(--moss)      12%, var(--paper)); color: var(--moss); }
-
-.break-indicator { text-align: center; padding: 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--graphite); background: var(--paper); }
-
-/* ── Day topic tags (WR) ── */
-.t-th     { background: color-mix(in oklab, var(--moss)      15%, var(--paper)); color: var(--moss); }
-.t-sa     { background: color-mix(in oklab, var(--graphite)  12%, var(--paper)); color: var(--graphite); }
-.t-ex     { background: color-mix(in oklab, var(--cinnabar)  14%, var(--paper)); color: var(--cinnabar); }
-.t-mock   { background: color-mix(in oklab, var(--cinnabar)  18%, var(--paper)); color: var(--cinnabar); }
-.t-exam   { background: color-mix(in oklab, var(--cinnabar)  20%, var(--paper)); color: var(--cinnabar); }
-.t-review { background: color-mix(in oklab, var(--moss)      15%, var(--paper)); color: var(--moss); }
-.t-rest   { background: color-mix(in oklab, var(--ink)        6%, var(--paper)); color: var(--graphite); }
-
-/* ── Week stats ── */
-.week-stats { display: flex; gap: 10px; margin-bottom: var(--u2); flex-wrap: wrap; }
-.wstat { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-m); padding: 10px 14px; }
-.wstat-n { font-family: var(--font-display); font-size: 22px; font-weight: 400; letter-spacing: -0.02em; color: var(--cinnabar); }
-.wstat-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--graphite); display: block; margin-top: 2px; }
-
-.week-content { display: none; }
-.week-content.active { display: block; }
-
-.exam-note { background: color-mix(in oklab, var(--cinnabar) 8%, var(--paper)); border: 1px solid color-mix(in oklab, var(--cinnabar) 25%, transparent); border-radius: var(--r-m); padding: 10px 14px; font-size: 13px; color: var(--cinnabar); margin-bottom: var(--u2); line-height: 1.6; }
-.exam-note strong { font-weight: 600; }
-</style>
+<link rel="stylesheet" href="css/planner.css">
+<style>:root { --pl-accent: var(--cinnabar); }</style>
 </head>
 <body>
 
@@ -181,33 +65,14 @@ body { font-family: var(--font-display); font-size: 15px; background: var(--pape
     Cursus: H1&ndash;H9 + H12 &nbsp;&bull;&nbsp; SageMath: NB0&ndash;NB6
   </div>
 
-  <div class="week-tabs" id="week-tabs">
-    <div class="week-tab" onclick="showWeek(0)">Week 1 &mdash; Eerste sweep (15 mei&rarr;)<br><span class="wprog" id="wp0">0%</span></div>
-    <div class="week-tab" onclick="showWeek(1)">Week 2 &mdash; Deeltijd<br><span class="wprog" id="wp1">0%</span></div>
-    <div class="week-tab" onclick="showWeek(2)">Week 3 &mdash; Intensief<br><span class="wprog" id="wp2">0%</span></div>
-    <div class="week-tab" onclick="showWeek(3)">Week 4 &mdash; Mock + Examen<br><span class="wprog" id="wp3">0%</span></div>
-  </div>
-
-  <div id="week-0" class="week-content"></div>
-  <div id="week-1" class="week-content"></div>
-  <div id="week-2" class="week-content"></div>
-  <div id="week-3" class="week-content"></div>
+  <div class="week-tabs" id="week-tabs"></div>
+  <div id="planner-weeks"></div>
 
 </div>
 
 <script>
 const EXAM_DATE = new Date('2026-06-17');
 const STATE_KEY = 'wr_planner_v2';
-
-function isToday(d) { var t = new Date(); return new Date(d).toDateString() === t.toDateString(); }
-
-function updateCountdown() {
-  var diff = Math.ceil((EXAM_DATE - new Date()) / 86400000);
-  var el = document.getElementById('countdown');
-  if (diff > 0) el.textContent = '📅 Examen over ' + diff + ' dag' + (diff !== 1 ? 'en' : '');
-  else if (diff === 0) el.textContent = '🎯 VANDAAG is het examen!';
-  else el.textContent = '✅ Examen voorbij';
-}
 
 // ── TYPE MAP ──────────────────────────────────────────────
 var TYPE = {
@@ -761,177 +626,25 @@ var weeks = [
 
 ]; // end weeks
 
-// ── FIREBASE (via window._hgProgress — geladen door progress.js) ──
-function setSyncStatus(s) {
-  var el = document.getElementById('sync-status');
-  if (!el) return;
-  if (s === 'syncing') { el.textContent = '↻ Synchroniseren...'; el.style.color = '#fbbf24'; }
-  else if (s === 'synced')  { el.textContent = '☁ Gesynchroniseerd'; el.style.color = '#4ade80'; }
-  else if (s === 'offline') { el.textContent = '○ Lokaal opgeslagen'; el.style.color = '#94a3b8'; }
-  else                      { el.textContent = '⚠ Sync mislukt';      el.style.color = '#f87171'; }
-}
-
-var syncTimer;
-
-// ── STATE ──────────────────────────────────────────────────────────
-var state = {};
-function saveState() {
-  try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
-  if (!window._hgProgress?.userId) { setSyncStatus('offline'); return; }
-  setSyncStatus('syncing');
-  clearTimeout(syncTimer);
-  syncTimer = setTimeout(async function() {
-    var ok = await window._hgProgress.save('wr', state);
-    setSyncStatus(ok ? 'synced' : 'error');
-  }, 1500);
-}
-function getTaskId(wi, di, si, ti) { return wi+'_'+di+'_'+si+'_'+ti; }
-
-// ── RENDER ─────────────────────────────────────────────────────────
-function renderAll() {
-  var totalTasks = 0, doneTasks = 0;
-
-  weeks.forEach(function(week, wi) {
-    var container = document.getElementById('week-'+wi);
-    var weekTotal = 0, weekDone = 0;
-
-    week.days.forEach(function(day, di) {
-      day.sessions.forEach(function(sess, si) {
-        sess.tasks.forEach(function(_, ti) {
-          weekTotal++;
-          if (state[getTaskId(wi,di,si,ti)]) weekDone++;
-        });
-      });
-    });
-    totalTasks += weekTotal;
-    doneTasks += weekDone;
-    var weekPct = weekTotal ? Math.round(weekDone/weekTotal*100) : 0;
-    document.getElementById('wp'+wi).textContent = weekPct+'%';
-
-    var html = '<div class="week-stats">'
-      + '<div class="wstat"><div class="wstat-n">'+weekDone+'/'+weekTotal+'</div><div class="wstat-label">taken klaar</div></div>'
-      + '<div class="wstat"><div class="wstat-n">'+weekPct+'%</div><div class="wstat-label">voltooiing</div></div>'
-      + '<div class="wstat"><div class="wstat-n">'+week.days.length+'</div><div class="wstat-label">studiedagen</div></div>'
-      + '<div class="wstat" style="flex:1"><div class="wstat-n" style="font-size:0.9rem;color:var(--muted)">'+week.subtitle+'</div></div>'
-      + '</div><div class="day-grid">';
-
-    week.days.forEach(function(day, di) {
-      var todayClass = day.today ? ' today' : '';
-      html += '<div class="day-card'+todayClass+'">'
-        + '<div class="day-header">'
-        + (day.today ? '<div class="today-dot"></div>' : '')
-        + '<div class="day-label">'+day.label+' <span style="color:var(--muted);font-weight:400">'+day.date+'</span></div>'
-        + '<span class="day-tag '+day.tag+'">'+day.tagText+'</span>'
-        + '</div>';
-
-      day.sessions.forEach(function(sess, si) {
-        if (sess.isBreak && sess.tasks.length === 0) {
-          html += '<div class="break-indicator">'
-            + (sess.time && sess.time !== 'rest' ? sess.time+' &mdash; ' : '')
-            + sess.title+'</div>';
-          return;
-        }
-
-        var sessId = 'sess_'+wi+'_'+di+'_'+si;
-        var isOpen = state['open_'+sessId] !== undefined ? state['open_'+sessId] : (day.today && si === 0);
-        var sessDone = 0;
-        sess.tasks.forEach(function(_, ti) { if (state[getTaskId(wi,di,si,ti)]) sessDone++; });
-        var sessComplete = sess.tasks.length > 0 && sessDone === sess.tasks.length;
-
-        html += '<div class="session">'
-          + '<div class="session-header" onclick="toggleSession(\''+sessId+'\', this)">'
-          + (sess.time ? '<span class="time-badge">'+sess.time+'</span>' : '')
-          + '<span class="session-title" style="'+(sessComplete ? 'color:var(--green)' : '')+'">'+(sessComplete ? '&#10003; ' : '')+sess.title+'</span>'
-          + (sess.dur ? '<span class="session-dur">'+sess.dur+'</span>' : '')
-          + (sess.tasks.length > 0 ? '<span class="chevron '+(isOpen ? 'open' : '')+'">&#9658;</span>' : '')
-          + '</div>';
-
-        if (sess.tasks.length > 0) {
-          html += '<div class="tasks '+(isOpen ? 'open' : '')+'" id="'+sessId+'">';
-          sess.tasks.forEach(function(task, ti) {
-            var tid = getTaskId(wi,di,si,ti);
-            var done = !!state[tid];
-            var tm = task.type ? TYPE[task.type] : null;
-            var tkCls = tm ? tm.tk : '';
-            html += '<div class="task '+tkCls+(done ? ' task-done' : '')+'" onclick="toggleTask(\''+tid+'\',event)">'
-              + '<div class="task-check '+(done ? 'done' : '')+'"></div>'
-              + '<div class="task-body">'
-              + (tm ? '<span class="task-badge '+tm.bk+'">'+tm.label+'</span>' : '')
-              + '<div class="task-text '+(done ? 'done' : '')+'">'+task.text+'</div>'
-              + '</div>'
-              + (task.min > 0 ? '<span class="task-time">'+task.min+' min</span>' : '')
-              + '</div>';
-          });
-          html += '</div>';
-        }
-        html += '</div>';
-      });
-
-      html += '</div>';
-    });
-
-    html += '</div>';
-    container.innerHTML = html;
-  });
-
-  var pct = totalTasks ? Math.round(doneTasks/totalTasks*100) : 0;
-  document.getElementById('done-count').textContent = doneTasks;
-  document.getElementById('total-count').textContent = totalTasks;
-  document.getElementById('overall-fill').style.width = pct+'%';
-}
-
-function toggleTask(tid, e) {
-  if (e) e.stopPropagation();
-  state[tid] = !state[tid];
-  saveState();
-  renderAll();
-}
-
-function toggleSession(sessId, headerEl) {
-  var key = 'open_'+sessId;
-  state[key] = !state[key];
-  saveState();
-  var tasksEl = document.getElementById(sessId);
-  var chevron = headerEl.querySelector('.chevron');
-  if (tasksEl) tasksEl.classList.toggle('open', state[key]);
-  if (chevron) chevron.classList.toggle('open', state[key]);
-}
-
-function showWeek(idx) {
-  document.querySelectorAll('.week-content').forEach(function(el, i) { el.classList.toggle('active', i === idx); });
-  document.querySelectorAll('.week-tab').forEach(function(el, i) { el.classList.toggle('active', i === idx); });
-}
-
-function autoSelectWeek() {
-  var today = new Date();
-  var bounds = [
-    new Date('2026-05-15'),
-    new Date('2026-05-21'),
-    new Date('2026-06-08'),
-    new Date('2026-06-12'),
-    new Date('2026-06-18'),
-  ];
-  var idx = 0;
-  for (var i = 0; i < bounds.length - 1; i++) {
-    if (today >= bounds[i] && today < bounds[i+1]) { idx = i; break; }
+HgPlanner.createPlanner({
+  stateKey:     STATE_KEY,
+  firestoreKey: 'wr',
+  examDate:     EXAM_DATE,
+  weeks:        weeks,
+  renderTask:   'kanban',
+  typeMap:      TYPE,
+  getWeekIndex: function() {
+    var today = new Date();
+    var bounds = [
+      new Date('2026-05-15'), new Date('2026-05-21'),
+      new Date('2026-06-08'), new Date('2026-06-12'),
+      new Date('2026-06-18'),
+    ];
+    for (var i = 0; i < bounds.length - 1; i++) {
+      if (today >= bounds[i] && today < bounds[i+1]) return i;
+    }
+    return 3;
   }
-  if (today >= bounds[bounds.length-1]) idx = 3;
-  showWeek(idx);
-}
-
-updateCountdown();
-window._hgProgress.onReady(async function() {
-  var cloud = await window._hgProgress.load('wr');
-  if (cloud) {
-    state = cloud;
-    try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
-    setSyncStatus('synced');
-  } else {
-    try { state = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch(e) {}
-    setSyncStatus('offline');
-  }
-  renderAll();
-  autoSelectWeek();
 });
 </script>
 <script>
