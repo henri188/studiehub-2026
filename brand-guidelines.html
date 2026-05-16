@@ -1,0 +1,1107 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>HydrarGyrum — Brand Guidelines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ----- TOKENS ----- */
+  :root {
+    /* Light theme — warm paper & ink */
+    --paper:      #ECEBE6;
+    --bone:       #E1DED7;
+    --quicksilver:#A7A39A;
+    --graphite:   #6B6862;
+    --ink:        #1F1F22;
+    --moss:       #2F4A3A;
+    --cinnabar:   #B85C3E;
+    --line:       rgba(31,31,34,0.12);
+    --line-strong:rgba(31,31,34,0.28);
+    --shadow:     0 1px 0 rgba(31,31,34,0.04), 0 24px 64px -32px rgba(31,31,34,0.18);
+
+    /* Type */
+    --font-display: "Hanken Grotesk", "Söhne", "Helvetica Neue", Helvetica, sans-serif;
+    --font-body:    "Newsreader", "Source Serif Pro", Georgia, serif;
+    --font-mono:    "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+    /* Scale (8pt base) */
+    --u:    8px;
+    --u2:   16px;
+    --u3:   24px;
+    --u4:   32px;
+    --u5:   40px;
+    --u6:   56px;
+    --u7:   80px;
+    --u8:   120px;
+    --u9:   160px;
+
+    /* Radius — natural, never sharp on UI surfaces */
+    --r-s: 2px;
+    --r-m: 6px;
+    --r-l: 14px;
+
+    /* Motion */
+    --ease-mercury: cubic-bezier(.22,.61,.36,1);
+    --ease-settle:  cubic-bezier(.4,.0,.2,1);
+    --t-fast: 180ms;
+    --t-med:  320ms;
+    --t-slow: 560ms;
+  }
+  [data-theme="dark"] {
+    --paper:      #15161A;
+    --bone:       #1D1E22;
+    --quicksilver:#6B6862;
+    --graphite:   #A7A39A;
+    --ink:        #ECEBE6;
+    --moss:       #7AA08A;
+    --cinnabar:   #D9805C;
+    --line:       rgba(236,235,230,0.10);
+    --line-strong:rgba(236,235,230,0.28);
+    --shadow:     0 1px 0 rgba(0,0,0,0.4), 0 32px 64px -32px rgba(0,0,0,0.55);
+  }
+
+  /* ----- RESET / BASE ----- */
+  *,*::before,*::after { box-sizing: border-box; }
+  html,body { margin:0; padding:0; }
+  html { background: var(--paper); }
+  body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background var(--t-med) var(--ease-mercury), color var(--t-med) var(--ease-mercury);
+  }
+  ::selection { background: var(--moss); color: var(--paper); }
+
+  h1,h2,h3,h4,h5 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+    margin: 0;
+  }
+  p { margin: 0; text-wrap: pretty; }
+  a { color: var(--ink); }
+
+  .mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--graphite); }
+  .ital { font-family: var(--font-body); font-style: italic; color: var(--graphite); }
+  .lead { font-family: var(--font-body); font-size: 22px; line-height: 1.45; color: var(--ink); font-weight: 300; }
+  .lead em { font-style: italic; color: var(--graphite); }
+
+  /* ----- LAYOUT ----- */
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 var(--u5); }
+  .section { padding: var(--u9) 0; border-top: 1px solid var(--line); }
+  .section:first-of-type { border-top: 0; }
+  .section-head {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--u6);
+    margin-bottom: var(--u7);
+    align-items: start;
+  }
+  .section-head .index { display: flex; flex-direction: column; gap: 4px; padding-top: 8px; }
+  .section-head h2 {
+    font-size: 56px;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+    max-width: 720px;
+  }
+  .section-head h2 em { font-family: var(--font-body); font-weight: 300; color: var(--graphite); }
+
+  /* ----- TOP CHROME ----- */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    background: color-mix(in oklab, var(--paper) 78%, transparent);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 14px var(--u5);
+    display: flex; align-items: center; gap: var(--u4);
+    font-family: var(--font-display);
+    font-size: 13px;
+  }
+  .topbar .brand { display: flex; align-items: center; gap: 10px; font-weight: 500; letter-spacing: -0.01em; }
+  .topbar nav { display: flex; gap: var(--u3); margin-left: var(--u4); }
+  .topbar nav a { text-decoration: none; color: var(--graphite); transition: color var(--t-fast); }
+  .topbar nav a:hover { color: var(--ink); }
+  .topbar .right { margin-left: auto; display: flex; align-items: center; gap: var(--u3); color: var(--graphite); }
+  .theme-toggle {
+    background: transparent; border: 1px solid var(--line-strong);
+    border-radius: 999px; padding: 6px 12px;
+    font: inherit; color: var(--graphite); cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: color var(--t-fast), border-color var(--t-fast);
+  }
+  .theme-toggle:hover { color: var(--ink); border-color: var(--ink); }
+  .theme-toggle .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--ink); }
+
+  /* ----- HERO ----- */
+  .hero { padding: var(--u9) 0 var(--u8); position: relative; overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: var(--u7); align-items: end; }
+  .hero h1 {
+    font-size: clamp(64px, 9.2vw, 132px);
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+    font-weight: 400;
+  }
+  .hero h1 .ital {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--graphite);
+    letter-spacing: -0.02em;
+  }
+  .hero .kicker { display: flex; gap: var(--u3); align-items: center; margin-bottom: var(--u4); color: var(--graphite); }
+  .hero .kicker .pip { width: 6px; height: 6px; border-radius: 999px; background: var(--moss); }
+  .hero p.lead { margin-top: var(--u4); max-width: 30em; }
+  .hero-mark {
+    aspect-ratio: 1 / 1.1;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .hero-mark .drop { width: 78%; height: auto; }
+
+  /* The mark itself — abstract mercury droplet */
+  .drop {
+    color: var(--ink);
+    filter: drop-shadow(0 28px 36px rgba(31,31,34,0.18));
+    transition: filter var(--t-med) var(--ease-mercury), color var(--t-med) var(--ease-mercury);
+  }
+  [data-theme="dark"] .drop { filter: drop-shadow(0 28px 36px rgba(0,0,0,0.6)); }
+
+  /* ----- ORIGIN STRIP ----- */
+  .meta-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--u5);
+    padding: var(--u5) 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .meta-cell .mono { display: block; margin-bottom: 8px; }
+  .meta-cell .val { font-family: var(--font-display); font-size: 28px; letter-spacing: -0.02em; font-weight: 400; }
+  .meta-cell .val em { font-family: var(--font-body); font-style: italic; font-weight: 300; color: var(--graphite); }
+
+  /* ----- THE MARK ----- */
+  .mark-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--u6); align-items: stretch; }
+  .mark-display {
+    background: var(--bone);
+    border-radius: var(--r-l);
+    padding: var(--u7);
+    display: flex; align-items: center; justify-content: center;
+    aspect-ratio: 4 / 3;
+    position: relative;
+    overflow: hidden;
+  }
+  .mark-display .drop { width: 38%; }
+  .mark-rule {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to right, var(--line) 1px, transparent 1px) 0 0/12.5% 100%,
+      linear-gradient(to bottom, var(--line) 1px, transparent 1px) 0 0/100% 12.5%;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .mark-display.with-rule .mark-rule { display: block; }
+
+  .mark-notes { display: flex; flex-direction: column; justify-content: space-between; padding: var(--u3) 0; }
+  .mark-notes h3 { font-size: 28px; letter-spacing: -0.02em; font-weight: 400; margin-bottom: var(--u3); }
+  .mark-notes p { margin-bottom: var(--u3); }
+
+  .lockup-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--u3); margin-top: var(--u5); }
+  .lockup {
+    background: var(--bone);
+    border-radius: var(--r-l);
+    padding: var(--u5);
+    aspect-ratio: 1.4 / 1;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .lockup .label {
+    position: absolute; left: var(--u3); bottom: var(--u3);
+    font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--graphite);
+  }
+  .lockup .drop { width: 30%; }
+  .lockup-h { display: flex; align-items: center; gap: 14px; }
+  .lockup-h .drop { width: 44px; }
+  .lockup-h .word { font-family: var(--font-display); font-size: 26px; letter-spacing: -0.025em; font-weight: 500; }
+  .lockup-h .word em { font-family: var(--font-body); font-style: italic; font-weight: 300; color: var(--graphite); }
+  .lockup-mono {
+    width: 88px; height: 88px; border-radius: 999px;
+    background: var(--ink); color: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 30px; font-weight: 500; letter-spacing: -0.02em;
+  }
+  .lockup-mono em { font-family: var(--font-body); font-style: italic; font-weight: 300; }
+
+  /* ----- COLOR ----- */
+  .palette { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; border-radius: var(--r-l); overflow: hidden; }
+  .swatch { aspect-ratio: 3 / 4; padding: var(--u3); display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+  .swatch .name { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.01em; font-weight: 500; }
+  .swatch .meta { display: flex; flex-direction: column; gap: 2px; font-family: var(--font-mono); font-size: 10px; line-height: 1.5; text-transform: uppercase; letter-spacing: 0.06em; }
+  .swatch.s-paper       { background: #ECEBE6; color: #26262a; }
+  .swatch.s-bone        { background: #E1DED7; color: #26262a; }
+  .swatch.s-quicksilver { background: #A7A39A; color: #1F1F22; }
+  .swatch.s-graphite    { background: #6B6862; color: #ECEBE6; }
+  .swatch.s-ink         { background: #1F1F22; color: #ECEBE6; }
+  .swatch.s-moss        { background: #2F4A3A; color: #ECEBE6; }
+  .swatch.s-cinnabar    { background: #B85C3E; color: #ECEBE6; }
+
+  .color-roles { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--u4); margin-top: var(--u6); }
+  .role-card { padding: var(--u4); border: 1px solid var(--line); border-radius: var(--r-l); display: flex; flex-direction: column; gap: 12px; }
+  .role-card h4 { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; }
+  .role-card p { font-size: 15px; color: var(--graphite); }
+  .role-chips { display: flex; gap: 6px; margin-top: 4px; }
+  .role-chips i { width: 22px; height: 22px; border-radius: 999px; border: 1px solid var(--line); display: inline-block; }
+
+  /* ----- TYPE ----- */
+  .type-grid { display: grid; grid-template-columns: 220px 1fr; gap: var(--u6); }
+  .type-row { padding: var(--u5) 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 220px 1fr; gap: var(--u6); align-items: baseline; }
+  .type-row:first-child { border-top: 0; padding-top: 0; }
+  .type-row .label { display: flex; flex-direction: column; gap: 4px; }
+  .type-row .label .name { font-family: var(--font-display); font-size: 15px; font-weight: 500; }
+  .type-row .sample-display { font-family: var(--font-display); font-size: 88px; line-height: 0.95; letter-spacing: -0.035em; font-weight: 400; }
+  .type-row .sample-display em { font-family: var(--font-body); font-style: italic; font-weight: 300; color: var(--graphite); }
+  .type-row .sample-body { font-family: var(--font-body); font-size: 22px; line-height: 1.45; max-width: 32em; font-weight: 400; }
+  .type-row .sample-body em { color: var(--graphite); }
+  .type-row .sample-mono { font-family: var(--font-mono); font-size: 13px; line-height: 1.6; letter-spacing: 0.02em; max-width: 40em; }
+
+  .scale-table { width: 100%; border-collapse: collapse; margin-top: var(--u5); }
+  .scale-table th, .scale-table td { text-align: left; padding: 14px 0; border-bottom: 1px solid var(--line); font-family: var(--font-display); }
+  .scale-table th { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--graphite); font-weight: 400; }
+  .scale-table td { font-size: 16px; }
+  .scale-table td:nth-child(1) { font-family: var(--font-mono); font-size: 11px; color: var(--graphite); width: 16%; text-transform: uppercase; letter-spacing: 0.05em; }
+  .scale-table .demo { width: 40%; }
+
+  /* ----- GRID ----- */
+  .grid-demo { background: var(--bone); border-radius: var(--r-l); padding: var(--u5); position: relative; min-height: 320px; }
+  .grid-cols { position: absolute; inset: var(--u5); display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; pointer-events: none; }
+  .grid-cols span { background: color-mix(in oklab, var(--moss) 14%, transparent); border-radius: var(--r-s); }
+  .grid-content { position: relative; display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+  .grid-content .blk { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-s); padding: var(--u3); min-height: 64px; }
+  .grid-content .blk.b1 { grid-column: span 7; min-height: 220px; }
+  .grid-content .blk.b2 { grid-column: span 5; min-height: 220px; }
+  .grid-content .blk.b3 { grid-column: span 4; }
+  .grid-content .blk.b4 { grid-column: span 4; }
+  .grid-content .blk.b5 { grid-column: span 4; }
+  .grid-content .blk .mono { display:block; margin-bottom: 6px; }
+  .grid-content .blk .ph { background: repeating-linear-gradient(135deg, var(--bone) 0 6px, transparent 6px 12px); width: 100%; height: 60%; border-radius: var(--r-s); margin-top: 8px; }
+
+  .space-scale { display: grid; grid-template-columns: repeat(8, 1fr); gap: var(--u2); margin-top: var(--u6); }
+  .space-cell { display: flex; flex-direction: column; gap: 10px; }
+  .space-cell .bar { background: var(--ink); border-radius: 2px; height: 6px; }
+  .space-cell .mono { display: block; }
+
+  /* ----- ICONS ----- */
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2px;
+    border-radius: var(--r-l);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .icon-cell {
+    background: var(--paper);
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    transition: background var(--t-fast);
+  }
+  .icon-cell:hover { background: var(--bone); }
+  .icon-cell svg { width: 38%; height: 38%; color: var(--ink); }
+  .icon-cell .lbl {
+    position: absolute; left: 12px; bottom: 10px;
+    font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--graphite);
+  }
+
+  /* ----- MOTION ----- */
+  .motion-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--u4); }
+  .motion-card { border: 1px solid var(--line); border-radius: var(--r-l); padding: var(--u4); display: flex; flex-direction: column; gap: var(--u3); }
+  .motion-card .track {
+    height: 56px; background: var(--bone); border-radius: var(--r-m); position: relative; overflow: hidden;
+  }
+  .motion-card .ball {
+    position: absolute; top: 50%; left: 8px;
+    width: 28px; height: 28px; border-radius: 999px; background: var(--ink);
+    transform: translateY(-50%);
+    animation: slide 2400ms infinite both;
+  }
+  .motion-card.m-fast .ball { animation-duration: 1200ms; animation-timing-function: var(--ease-settle); }
+  .motion-card.m-med  .ball { animation-duration: 2000ms; animation-timing-function: var(--ease-mercury); }
+  .motion-card.m-slow .ball { animation-duration: 3200ms; animation-timing-function: cubic-bezier(.7,0,.2,1); }
+  @keyframes slide {
+    0%   { left: 8px; }
+    45%  { left: calc(100% - 36px); }
+    55%  { left: calc(100% - 36px); }
+    100% { left: 8px; }
+  }
+  .motion-card .mono { display: flex; justify-content: space-between; }
+  .motion-card h4 { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; }
+  .motion-card p { font-size: 14px; color: var(--graphite); }
+
+  /* ----- APPLICATIONS ----- */
+  .app-row { display: grid; grid-template-columns: 200px 1fr; gap: var(--u6); margin-bottom: var(--u8); }
+  .app-row:last-child { margin-bottom: 0; }
+  .app-row .heading h3 { font-size: 32px; font-weight: 400; letter-spacing: -0.025em; margin-bottom: var(--u2); }
+  .app-row .heading h3 em { font-family: var(--font-body); font-style: italic; font-weight: 300; color: var(--graphite); }
+  .app-row .heading p { font-size: 15px; color: var(--graphite); margin-top: var(--u3); }
+
+  /* Website mock */
+  .web-mock {
+    border-radius: var(--r-l); overflow: hidden; box-shadow: var(--shadow);
+    background: var(--paper); border: 1px solid var(--line);
+  }
+  .web-chrome { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--bone); border-bottom: 1px solid var(--line); }
+  .web-chrome i { width: 10px; height: 10px; border-radius: 999px; background: var(--quicksilver); opacity: 0.55; }
+  .web-chrome .url { margin-left: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--graphite); letter-spacing: 0.04em; }
+  .web-body { padding: var(--u4) var(--u5); }
+  .web-nav { display: flex; align-items: center; gap: var(--u3); padding-bottom: var(--u4); border-bottom: 1px solid var(--line); }
+  .web-nav .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 500; font-size: 16px; letter-spacing: -0.01em; }
+  .web-nav .brand .drop { width: 22px; }
+  .web-nav .links { margin-left: auto; display: flex; gap: var(--u3); font-family: var(--font-display); font-size: 13px; color: var(--graphite); }
+  .web-hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: var(--u5); align-items: end; padding: var(--u7) 0 var(--u5); }
+  .web-hero h2 { font-size: 64px; line-height: 0.96; letter-spacing: -0.035em; font-weight: 400; }
+  .web-hero h2 em { font-family: var(--font-body); font-style: italic; font-weight: 300; color: var(--graphite); }
+  .web-hero .lead { font-size: 19px; margin-top: var(--u4); max-width: 26em; color: var(--graphite); }
+  .web-hero .cta { margin-top: var(--u4); display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; background: var(--ink); color: var(--paper); border-radius: 999px; font-family: var(--font-display); font-size: 14px; font-weight: 500; }
+  .web-hero .right { display:flex; align-items: center; justify-content: center; aspect-ratio: 1; background: var(--bone); border-radius: var(--r-l); }
+  .web-hero .right .drop { width: 42%; }
+  .web-feature-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--u4); padding: var(--u5) 0 var(--u4); border-top: 1px solid var(--line); }
+  .web-feature { display: flex; flex-direction: column; gap: 10px; }
+  .web-feature .icn { width: 28px; height: 28px; color: var(--moss); }
+  .web-feature h5 { font-family: var(--font-display); font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
+  .web-feature p { font-size: 14px; color: var(--graphite); line-height: 1.5; }
+
+  /* Document */
+  .doc-mock {
+    background: #FBFAF6;
+    color: #1F1F22;
+    aspect-ratio: 1 / 1.414;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 88px;
+    box-shadow: 0 0 0 1px var(--line), 0 40px 80px -40px rgba(31,31,34,0.25);
+    border-radius: 2px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 1.55;
+    color: #1F1F22;
+    position: relative;
+  }
+  [data-theme="dark"] .doc-mock { box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 40px 80px -40px rgba(0,0,0,0.7); }
+  .doc-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 12px; border-bottom: 1px solid rgba(31,31,34,0.18); }
+  .doc-head .brand { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 500; font-size: 12px; letter-spacing: -0.005em; }
+  .doc-head .brand .drop { width: 14px; color: #1F1F22; filter: none; }
+  .doc-head .meta { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: #6B6862; }
+  .doc-title { font-family: var(--font-display); font-size: 32px; font-weight: 400; letter-spacing: -0.03em; margin-top: 32px; line-height: 1.05; }
+  .doc-title em { font-family: var(--font-body); font-style: italic; font-weight: 300; color: #6B6862; }
+  .doc-sub { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; color: #6B6862; margin-top: 16px; }
+  .doc-cols { display: grid; grid-template-columns: 120px 1fr; gap: 32px; margin-top: 28px; }
+  .doc-side .mono { display: block; margin-bottom: 8px; font-size: 9px; }
+  .doc-side p { font-size: 11px; color: #6B6862; }
+  .doc-body p { margin-bottom: 12px; }
+  .doc-body h4 { font-family: var(--font-display); font-size: 14px; font-weight: 500; margin: 18px 0 8px; letter-spacing: -0.01em; }
+  .doc-body .drop-cap::first-letter { font-family: var(--font-display); font-size: 56px; line-height: .8; float: left; padding: 6px 8px 0 0; font-weight: 400; color: #2F4A3A; }
+  .doc-foot { position: absolute; left: 88px; right: 88px; bottom: 56px; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: #6B6862; padding-top: 12px; border-top: 1px solid rgba(31,31,34,0.18); }
+
+  /* Slide cover */
+  .slide-mock {
+    aspect-ratio: 16/9;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--r-l);
+    padding: var(--u6);
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .slide-mock .top { display: flex; justify-content: space-between; align-items: center; }
+  .slide-mock .top .b { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-weight: 500; }
+  .slide-mock .top .b .drop { width: 28px; color: var(--paper); filter: none; }
+  .slide-mock .top .mono { color: color-mix(in oklab, var(--paper) 60%, transparent); }
+  .slide-mock h2 { font-size: clamp(48px, 6vw, 88px); line-height: 0.98; letter-spacing: -0.035em; font-weight: 400; color: var(--paper); max-width: 14ch; }
+  .slide-mock h2 em { font-family: var(--font-body); font-style: italic; font-weight: 300; color: color-mix(in oklab, var(--paper) 60%, transparent); }
+  .slide-mock .bottom { display: flex; justify-content: space-between; align-items: end; }
+  .slide-mock .bottom .meta { color: color-mix(in oklab, var(--paper) 65%, transparent); }
+  .slide-mock .pip { width: 8px; height: 8px; border-radius: 999px; background: var(--cinnabar); display: inline-block; margin-right: 8px; vertical-align: middle; }
+  .slide-mock .bg-drop { position: absolute; right: -8%; bottom: -22%; width: 56%; opacity: 0.06; color: var(--paper); filter: none; }
+
+  /* Email signature */
+  .sig-mock {
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-m);
+    padding: var(--u4) var(--u5);
+    max-width: 520px;
+    font-family: var(--font-display);
+  }
+  .sig-mock .row { display: flex; gap: 18px; align-items: center; }
+  .sig-mock .row .drop { width: 38px; filter: none; }
+  .sig-mock .name { font-size: 16px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink); }
+  .sig-mock .role { font-family: var(--font-body); font-style: italic; font-weight: 300; color: var(--graphite); font-size: 14px; margin-top: 2px; }
+  .sig-mock .div { width: 1px; height: 36px; background: var(--line-strong); }
+  .sig-mock .stack { display: flex; flex-direction: column; gap: 3px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--graphite); }
+  .sig-mock .stack span { color: var(--ink); text-transform: none; font-family: var(--font-display); font-size: 12px; letter-spacing: 0; font-weight: 400; }
+
+  /* Footer */
+  .colophon {
+    padding: var(--u8) 0 var(--u6);
+    border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--u5);
+    align-items: end;
+  }
+  .colophon .word {
+    font-family: var(--font-display); font-size: 88px; line-height: 0.9; letter-spacing: -0.04em; font-weight: 400;
+  }
+  .colophon .word em { font-family: var(--font-body); font-style: italic; font-weight: 300; color: var(--graphite); }
+  .colophon .stack { display: flex; flex-direction: column; gap: 6px; }
+  .colophon .stack .mono { display: block; }
+  .colophon .stack p { color: var(--graphite); font-size: 14px; max-width: 24em; }
+
+  /* Responsive */
+  @media (max-width: 980px) {
+    .section { padding: var(--u8) 0; }
+    .section-head { grid-template-columns: 1fr; gap: var(--u3); }
+    .section-head h2 { font-size: 40px; }
+    .hero-grid, .mark-grid, .web-hero, .doc-cols, .app-row, .type-grid, .type-row, .colophon { grid-template-columns: 1fr; gap: var(--u4); }
+    .meta-strip { grid-template-columns: repeat(2, 1fr); }
+    .palette { grid-template-columns: repeat(2, 1fr); }
+    .color-roles, .icon-grid, .motion-grid, .lockup-row, .web-feature-row { grid-template-columns: repeat(2, 1fr); }
+    .space-scale { grid-template-columns: repeat(4, 1fr); }
+    .topbar nav { display: none; }
+    .doc-mock { padding: 48px 40px; }
+    .doc-foot { left: 40px; right: 40px; }
+  }
+</style>
+</head>
+<body data-screen-label="Brand Guidelines">
+
+<!-- ───────── SHARED ASSETS ───────── -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- The mark: refined mercury droplet -->
+    <symbol id="drop" viewBox="0 0 100 120">
+      <path d="M50 6
+               C 50 6, 18 52, 18 78
+               A 32 32 0 1 0 82 78
+               C 82 52, 50 6, 50 6 Z" fill="currentColor"/>
+    </symbol>
+
+    <!-- Natural pictograms — minimal silhouettes, mostly geometric -->
+    <symbol id="i-drop" viewBox="0 0 24 24">
+      <path d="M12 2 C 12 2, 5 11.5, 5 16.5 A 7 7 0 1 0 19 16.5 C 19 11.5, 12 2, 12 2 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="5.5" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24">
+      <path d="M16 3 a 9 9 0 1 0 5 9 a 7 7 0 0 1 -5 -9 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24">
+      <path d="M4 20 C 4 8, 12 4, 20 4 C 20 14, 14 20, 4 20 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-stone" viewBox="0 0 24 24">
+      <ellipse cx="12" cy="13" rx="9" ry="6" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-mountain" viewBox="0 0 24 24">
+      <path d="M2 20 L 9 8 L 13 14 L 17 9 L 22 20 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24">
+      <path d="M2 14 Q 6 10, 9 14 T 16 14 T 22 14 L 22 18 L 2 18 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-seed" viewBox="0 0 24 24">
+      <ellipse cx="12" cy="12" rx="4" ry="9" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-vessel" viewBox="0 0 24 24">
+      <path d="M5 6 L 19 6 L 17 19 A 2 2 0 0 1 15 21 L 9 21 A 2 2 0 0 1 7 19 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-circle" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+    <symbol id="i-arc" viewBox="0 0 24 24">
+      <path d="M3 18 A 9 9 0 0 1 21 18" fill="none" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24">
+      <path d="M12 2 L 14 10 L 22 12 L 14 14 L 12 22 L 10 14 L 2 12 L 10 10 Z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ───────── TOP BAR ───────── -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="brand">
+      <svg class="drop" width="18" height="22" aria-hidden="true"><use href="#drop"/></svg>
+      HydrarGyrum
+    </span>
+    <nav>
+      <a href="#identity">Identity</a>
+      <a href="#color">Color</a>
+      <a href="#type">Type</a>
+      <a href="#grid">Grid</a>
+      <a href="#icons">Icons</a>
+      <a href="#motion">Motion</a>
+      <a href="#applications">Applications</a>
+    </nav>
+    <span class="right">
+      <span class="mono">v 1.0 — 2026</span>
+      <button class="theme-toggle" id="themeToggle" type="button">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="themeLabel">Dark</span>
+      </button>
+    </span>
+  </div>
+</header>
+
+<!-- ───────── HERO ───────── -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="kicker">
+          <span class="pip"></span>
+          <span class="mono">Brand Guidelines — Volume One</span>
+        </div>
+        <h1>HydrarGyrum<br/><span class="ital">a quiet mark.</span></h1>
+        <p class="lead">A personal identity drawn from <em>quicksilver</em> — fluid, weighted, reflective. Built on the discipline of Braun, the silence of Apple, and the geometry of natural forms. Used across documents, screens, and surfaces as a single, recognizable signal.</p>
+      </div>
+      <div class="hero-mark">
+        <svg class="drop" viewBox="0 0 100 120" aria-label="HydrarGyrum mark"><use href="#drop"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── ORIGIN STRIP ───────── -->
+<section class="wrap">
+  <div class="meta-strip">
+    <div class="meta-cell">
+      <span class="mono">Element</span>
+      <div class="val">Hg <em>— mercury</em></div>
+    </div>
+    <div class="meta-cell">
+      <span class="mono">Atomic Number</span>
+      <div class="val">80</div>
+    </div>
+    <div class="meta-cell">
+      <span class="mono">From the Greek</span>
+      <div class="val">ὑδράργυρος <em>hydrárgyros</em></div>
+    </div>
+    <div class="meta-cell">
+      <span class="mono">Source Ore</span>
+      <div class="val">Cinnabar <em>— HgS</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── IDENTITY / THE MARK ───────── -->
+<section class="section" id="identity">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="index">
+        <span class="mono">§ 01</span>
+        <span class="mono">Identity</span>
+      </div>
+      <h2>The mark is a droplet. <em>Whole, weighted, never sharp.</em></h2>
+    </div>
+
+    <div class="mark-grid">
+      <div class="mark-display with-rule">
+        <div class="mark-rule"></div>
+        <svg class="drop" viewBox="0 0 100 120" aria-hidden="true"><use href="#drop"/></svg>
+      </div>
+      <div class="mark-notes">
+        <div>
+          <h3>One form, no ornament.</h3>
+          <p>The droplet is the entire identity. It carries surface tension at its base and rises to a single point — the visual signature of a substance that wants to be whole. Use it as the primary mark across every surface.</p>
+          <p>Avoid: outlining, rotating off-axis, adding gradients, recoloring outside the system palette.</p>
+        </div>
+        <div>
+          <span class="mono">Clear space</span>
+          <p style="margin-top: 8px;">Minimum margin equal to the width of the mark's widest point — half the mark's diameter — on every side. Never crowd.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="lockup-row">
+      <div class="lockup">
+        <span class="label">Primary — mark only</span>
+        <svg class="drop" viewBox="0 0 100 120" aria-hidden="true"><use href="#drop"/></svg>
+      </div>
+      <div class="lockup">
+        <span class="label">Horizontal lockup</span>
+        <div class="lockup-h">
+          <svg class="drop" viewBox="0 0 100 120" aria-hidden="true"><use href="#drop"/></svg>
+          <span class="word">Hydrar<em>Gyrum</em></span>
+        </div>
+      </div>
+      <div class="lockup">
+        <span class="label">Monogram — disc</span>
+        <div class="lockup-mono">Hg</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── COLOR ───────── -->
+<section class="section" id="color">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="index">
+        <span class="mono">§ 02</span>
+        <span class="mono">Color</span>
+      </div>
+      <h2>Paper, ink, and the colors of quiet matter. <em>Two earth accents, used with restraint.</em></h2>
+    </div>
+
+    <div class="palette">
+      <div class="swatch s-paper">
+        <span class="name">Paper</span>
+        <div class="meta">
+          <span>#ECEBE6</span>
+          <span>oklch 96 .006 80</span>
+          <span>Surface — primary</span>
+        </div>
+      </div>
+      <div class="swatch s-bone">
+        <span class="name">Bone</span>
+        <div class="meta">
+          <span>#E1DED7</span>
+          <span>oklch 92 .008 80</span>
+          <span>Surface — recessed</span>
+        </div>
+      </div>
+      <div class="swatch s-quicksilver">
+        <span class="name">Quicksilver</span>
+        <div class="meta">
+          <span>#A7A39A</span>
+          <span>oklch 70 .010 80</span>
+          <span>Hairlines, dividers</span>
+        </div>
+      </div>
+      <div class="swatch s-graphite">
+        <span class="name">Graphite</span>
+        <div class="meta">
+          <span>#6B6862</span>
+          <span>oklch 47 .008 80</span>
+          <span>Secondary text, labels</span>
+        </div>
+      </div>
+      <div class="swatch s-ink">
+        <span class="name">Ink</span>
+        <div class="meta">
+          <span>#1F1F22</span>
+          <span>oklch 22 .005 270</span>
+          <span>Body, headings, mark</span>
+        </div>
+      </div>
+      <div class="swatch s-moss">
+        <span class="name">Moss</span>
+        <div class="meta">
+          <span>#2F4A3A</span>
+          <span>oklch 38 .045 150</span>
+          <span>Accent — calm, alive</span>
+        </div>
+      </div>
+      <div class="swatch s-cinnabar">
+        <span class="name">Cinnabar</span>
+        <div class="meta">
+          <span>#B85C3E</span>
+          <span>oklch 58 .115 42</span>
+          <span>Accent — rare, ore-red</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-roles">
+      <div class="role-card">
+        <span class="mono">Calm — daily surfaces</span>
+        <h4>Paper · Ink · Quicksilver</h4>
+        <p>The default. Long-form reading, documents, body copy. Designed for sustained attention without fatigue.</p>
+        <div class="role-chips"><i style="background:#ECEBE6"></i><i style="background:#1F1F22"></i><i style="background:#A7A39A"></i></div>
+      </div>
+      <div class="role-card">
+        <span class="mono">Living — primary accent</span>
+        <h4>Moss</h4>
+        <p>For confirmation, vitality, links, and the small positive moments. Reads as plant matter — never neon, never bright.</p>
+        <div class="role-chips"><i style="background:#ECEBE6"></i><i style="background:#2F4A3A"></i><i style="background:#1F1F22"></i></div>
+      </div>
+      <div class="role-card">
+        <span class="mono">Mineral — secondary accent</span>
+        <h4>Cinnabar</h4>
+        <p>The ore that gives mercury. Used sparingly — title flourishes, a single pip, a print fold. Never as a button.</p>
+        <div class="role-chips"><i style="background:#ECEBE6"></i><i style="background:#B85C3E"></i><i style="background:#1F1F22"></i></div>
+      </div>
+    </div>
+
+    <p class="mono" style="margin-top: var(--u5);">Psychological intent — paper warms the eye, ink rests it, moss reassures, cinnabar wakes it. The palette breathes.</p>
+  </div>
+</section>
+
+<!-- ───────── TYPE ───────── -->
+<section class="section" id="type">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="index">
+        <span class="mono">§ 03</span>
+        <span class="mono">Typography</span>
+      </div>
+      <h2>Two voices. <em>One precise, one literary.</em></h2>
+    </div>
+
+    <div class="type-row">
+      <div class="label">
+        <span class="mono">Display · Headlines · UI</span>
+        <span class="name">Hanken Grotesk</span>
+        <span class="mono">300 · 400 · 500 · 700</span>
+      </div>
+      <div>
+        <div class="sample-display">Quiet matter, <em>at rest</em>.</div>
+        <p class="mono" style="margin-top: var(--u3);">A neo-grotesk with a soft heart. Tight tracking, geometric numerals, used for everything structural.</p>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="label">
+        <span class="mono">Body · Long-form · Italic emphasis</span>
+        <span class="name">Newsreader</span>
+        <span class="mono">300 · 400 · 500 — Optical sizes</span>
+      </div>
+      <div>
+        <p class="sample-body">A liquid metal pools where it is welcomed. <em>It does not announce itself</em> — it is recognized by weight, by silver edge, by the way it gathers light. The typeface that names this work should do the same: warm, literate, generous in italic, never showy.</p>
+        <p class="mono" style="margin-top: var(--u3);">Humanist serif. Used for body copy, italic flourish in display lockups, and any text meant to be read slowly.</p>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="label">
+        <span class="mono">Caption · Labels · Metadata</span>
+        <span class="name">JetBrains Mono</span>
+        <span class="mono">400 · 500</span>
+      </div>
+      <div>
+        <p class="sample-mono">§ 01 — Identity / clear space / mark · ratio 5:6 · trim 24mm · weight 400 · optical size 14 · spec rev 1.0 · 2026 — for personal use across surfaces.</p>
+        <p class="mono" style="margin-top: var(--u3);">A monospace for technical seasoning. Reserved for tags, indices, file metadata, and the small frame around the work.</p>
+      </div>
+    </div>
+
+    <table class="scale-table">
+      <thead>
+        <tr><th>Token</th><th>Size · Line · Tracking</th><th>Use</th><th class="demo">Sample</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>display-xl</td><td>112 / 0.94 / −0.04em</td><td>Hero, slide cover</td><td class="demo" style="font-family:var(--font-display); font-size:36px; letter-spacing:-0.03em;">HydrarGyrum</td></tr>
+        <tr><td>display-l</td><td>72 / 0.96 / −0.03em</td><td>Section opener</td><td class="demo" style="font-family:var(--font-display); font-size:28px; letter-spacing:-0.025em;">Quiet matter</td></tr>
+        <tr><td>display-m</td><td>48 / 1.02 / −0.025em</td><td>Page title, document</td><td class="demo" style="font-family:var(--font-display); font-size:22px; letter-spacing:-0.02em;">A note on weight</td></tr>
+        <tr><td>title</td><td>22 / 1.3 / −0.015em</td><td>Card, sub-section</td><td class="demo" style="font-family:var(--font-display); font-size:18px; letter-spacing:-0.01em;">Surface tension</td></tr>
+        <tr><td>body</td><td>17 / 1.55 / 0</td><td>Default reading</td><td class="demo" style="font-family:var(--font-body); font-size:15px;">The droplet rises to a single point.</td></tr>
+        <tr><td>caption</td><td>11 / 1.55 / 0.06em</td><td>Mono labels, indices</td><td class="demo mono" style="font-size:11px;">§ 03 — TYPOGRAPHY</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ───────── GRID ───────── -->
+<section class="section" id="grid">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="index">
+        <span class="mono">§ 04</span>
+        <span class="mono">Grid &amp; Space</span>
+      </div>
+      <h2>An 8-point base, twelve columns, generous margins. <em>Space is a material.</em></h2>
+    </div>
+
+    <div class="grid-demo">
+      <div class="grid-cols">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="grid-content">
+        <div class="blk b1">
+          <span class="mono">7 cols</span>
+          <h4 style="font-family:var(--font-display); font-size:20px; font-weight:500; letter-spacing:-0.015em;">A primary surface</h4>
+          <div class="ph"></div>
+        </div>
+        <div class="blk b2">
+          <span class="mono">5 cols</span>
+          <h4 style="font-family:var(--font-display); font-size:20px; font-weight:500; letter-spacing:-0.015em;">A companion</h4>
+          <div class="ph"></div>
+        </div>
+        <div class="blk b3"><span class="mono">4 cols</span><div class="ph"></div></div>
+        <div class="blk b4"><span class="mono">4 cols</span><div class="ph"></div></div>
+        <div class="blk b5"><span class="mono">4 cols</span><div class="ph"></div></div>
+      </div>
+    </div>
+
+    <div class="space-scale">
+      <div class="space-cell"><div class="bar" style="width: 8px;"></div><span class="mono">u — 8</span></div>
+      <div class="space-cell"><div class="bar" style="width: 16px;"></div><span class="mono">u2 — 16</span></div>
+      <div class="space-cell"><div class="bar" style="width: 24px;"></div><span class="mono">u3 — 24</span></div>
+      <div class="space-cell"><div class="bar" style="width: 32px;"></div><span class="mono">u4 — 32</span></div>
+      <div class="space-cell"><div class="bar" style="width: 40px;"></div><span class="mono">u5 — 40</span></div>
+      <div class="space-cell"><div class="bar" style="width: 56px;"></div><span class="mono">u6 — 56</span></div>
+      <div class="space-cell"><div class="bar" style="width: 80px;"></div><span class="mono">u7 — 80</span></div>
+      <div class="space-cell"><div class="bar" style="width: 120px;"></div><span class="mono">u8 — 120</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── ICONS ───────── -->
+<section class="section" id="icons">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="index">
+        <span class="mono">§ 05</span>
+        <span class="mono">Icons</span>
+      </div>
+      <h2>Natural pictograms — filled silhouettes, drawn at 24. <em>Always whole shapes, never outlined.</em></h2>
+    </div>
+
+    <div class="icon-grid">
+      <div class="icon-cell"><svg aria-hidden="true"><use href="#i-drop"/></svg><span class="lbl">Drop</span></div>
+      <div class="icon-cell"><svg aria-hidden="true"><use href="#i-sun"/></svg><span class="lbl">Sun</span></div>
+      <div class="icon-cell"><svg aria-hidden="true"><use href="#i-moon"/></svg><span class="lbl">Moon</span></div>
+      <div class="icon-cell"><svg aria-hidden="true"><use href="#i-leaf"/></svg><span class="lbl">Leaf</span></div>
+      <div class="icon-cell"><svg aria-hidden="true"><use href="#i-stone"/></svg><span class="lbl">Stone</span></div>
+      <div class="icon-cell"><svg aria-hidden="true"><use href="#i-mountain"/></svg><span class="lbl">Mountain</span></div>
+      <div class="icon-cell"><svg aria-hidden="true"><use href="#i-wave"/></svg><span class="lbl">Wave</span></div>
+      <div class="icon-cell"><svg aria-hidden="true"><use href="#i-seed"/></svg><span class="lbl">Seed</span></div>
+      <div class="icon-cell"><svg aria-hidden="true"><use href="#i-vessel"/></svg><span class="lbl">Vessel</span></div>
+      <div class="icon-cell"><svg aria-hidden="true"><use href="#i-circle"/></svg><span class="lbl">Circle</span></div>
+      <div class="icon-cell"><svg aria-hidden="true"><use href="#i-arc"/></svg><span class="lbl">Arc</span></div>
+      <div class="icon-cell"><svg aria-hidden="true"><use href="#i-spark"/></svg><span class="lbl">Spark</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── MOTION ───────── -->
+<section class="section" id="motion">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="index">
+        <span class="mono">§ 06</span>
+        <span class="mono">Motion</span>
+      </div>
+      <h2>Movement borrows from liquid metal. <em>Soft start, decisive arrival.</em></h2>
+    </div>
+
+    <div class="motion-grid">
+      <div class="motion-card m-fast">
+        <div class="track"><div class="ball"></div></div>
+        <div class="mono"><span>Settle</span><span>180ms</span></div>
+        <h4>Reactive</h4>
+        <p>For hovers, taps, toggles. Confirms a touch — quick enough to feel direct, slow enough to feel material.</p>
+      </div>
+      <div class="motion-card m-med">
+        <div class="track"><div class="ball"></div></div>
+        <div class="mono"><span>Mercury</span><span>320ms</span></div>
+        <h4>Carry</h4>
+        <p>The default. For panels, transitions, content arriving. A faint viscosity in the ease — never bouncy.</p>
+      </div>
+      <div class="motion-card m-slow">
+        <div class="track"><div class="ball"></div></div>
+        <div class="mono"><span>Pour</span><span>560ms</span></div>
+        <h4>Deliberate</h4>
+        <p>Reserved for hero entrances and the first frame of an experience. Used once per surface, not more.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── APPLICATIONS ───────── -->
+<section class="section" id="applications">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="index">
+        <span class="mono">§ 07</span>
+        <span class="mono">Applications</span>
+      </div>
+      <h2>The system applied. <em>Same vocabulary across surfaces.</em></h2>
+    </div>
+
+    <!-- WEBSITE -->
+    <div class="app-row">
+      <div class="heading">
+        <h3>Personal site <em>— landing</em></h3>
+        <span class="mono">§ 07 · A</span>
+        <p>Generous top margin. Two-column hero. Mark sits as object, not ornament. Body copy carries the meaning; the page is mostly space.</p>
+      </div>
+      <div class="web-mock">
+        <div class="web-chrome"><i></i><i></i><i></i><span class="url">hydrargyrum.studio</span></div>
+        <div class="web-body">
+          <div class="web-nav">
+            <div class="brand"><svg class="drop" viewBox="0 0 100 120"><use href="#drop"/></svg> HydrarGyrum</div>
+            <div class="links"><span>Work</span><span>Notes</span><span>Index</span><span>Contact</span></div>
+          </div>
+          <div class="web-hero">
+            <div>
+              <span class="mono">A personal index — 2026 →</span>
+              <h2 style="margin-top: var(--u2);">A quiet body<br/>of <em>work.</em></h2>
+              <p class="lead">Projects, writing, and objects gathered under a single mark. Drawn from a slow practice of paying attention.</p>
+              <span class="cta">Enter the index <span style="opacity:.6;">→</span></span>
+            </div>
+            <div class="right">
+              <svg class="drop" viewBox="0 0 100 120"><use href="#drop"/></svg>
+            </div>
+          </div>
+          <div class="web-feature-row">
+            <div class="web-feature">
+              <svg class="icn"><use href="#i-leaf"/></svg>
+              <h5>Field notes</h5>
+              <p>Short writing on materials, light, and form. Updated when something is worth saying.</p>
+            </div>
+            <div class="web-feature">
+              <svg class="icn"><use href="#i-stone"/></svg>
+              <h5>Selected work</h5>
+              <p>A small portfolio of objects and projects. Each entry sits on its own page.</p>
+            </div>
+            <div class="web-feature">
+              <svg class="icn"><use href="#i-vessel"/></svg>
+              <h5>Index</h5>
+              <p>Everything else. Books, sources, recommendations, the occasional letter.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOCUMENT -->
+    <div class="app-row">
+      <div class="heading">
+        <h3>Document <em>— letter / report</em></h3>
+        <span class="mono">§ 07 · B</span>
+        <p>A4 with 24mm margins. Header carries mark and meta. Body in Newsreader, 11pt. A single moss drop-cap signals the first paragraph.</p>
+      </div>
+      <div class="doc-mock">
+        <div class="doc-head">
+          <div class="brand"><svg class="drop" viewBox="0 0 100 120"><use href="#drop"/></svg> HydrarGyrum</div>
+          <span class="meta">Memorandum — 05 · 2026</span>
+        </div>
+        <h1 class="doc-title">On the weight of <em>quiet things</em>.</h1>
+        <span class="doc-sub">Field note · Vol. I, No. 003</span>
+
+        <div class="doc-cols">
+          <aside class="doc-side">
+            <span class="mono">Subject</span>
+            <p style="margin-bottom: 12px;">A defense of restraint as a positive quality, not the absence of one.</p>
+            <span class="mono">Length</span>
+            <p style="margin-bottom: 12px;">Two pages, approx. 740 words.</p>
+            <span class="mono">For</span>
+            <p>The personal record.</p>
+          </aside>
+          <div class="doc-body">
+            <p class="drop-cap">Mercury is unusual among the metals — it is liquid at the temperatures we live in. This makes it useful for instruments and dangerous for everything else. The name we have for it in Greek, hydrárgyros, simply means water-silver, which is exactly what it looks like in the palm of a hand.</p>
+            <p>What follows is a short argument for taking that quality — the willingness to hold its own shape without insisting on it — as a posture for the small body of work collected under this mark.</p>
+            <h4>I. Weight, not loudness.</h4>
+            <p>A drop of mercury weighs more than its size suggests. The same principle applies to writing, to objects, and to the surfaces they sit on. A page should feel heavier than it looks. A sentence should carry more than it announces.</p>
+            <h4>II. The room around the thing.</h4>
+            <p>The Bauhaus understood this, and Braun later. So did the Japanese print designers who left a quarter of a page empty and called it composition. The silence is the work.</p>
+          </div>
+        </div>
+        <div class="doc-foot">
+          <span>HydrarGyrum · Memo</span>
+          <span>1 / 2</span>
+          <span>Hg · 80</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE -->
+    <div class="app-row">
+      <div class="heading">
+        <h3>Slide <em>— cover</em></h3>
+        <span class="mono">§ 07 · C</span>
+        <p>Ink ground, paper type. Mark and section in the upper corners; title sits low on the page. Cinnabar pip marks the chapter.</p>
+      </div>
+      <div class="slide-mock">
+        <svg class="bg-drop" viewBox="0 0 100 120"><use href="#drop"/></svg>
+        <div class="top">
+          <div class="b"><svg class="drop" viewBox="0 0 100 120"><use href="#drop"/></svg> HydrarGyrum</div>
+          <span class="mono">§ 01 — Premise</span>
+        </div>
+        <h2>On the weight<br/>of <em>quiet things</em>.</h2>
+        <div class="bottom">
+          <span class="mono meta"><span class="pip"></span>Field note · May 2026</span>
+          <span class="mono meta">01 / 12</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EMAIL SIGNATURE -->
+    <div class="app-row">
+      <div class="heading">
+        <h3>Email <em>— signature block</em></h3>
+        <span class="mono">§ 07 · D</span>
+        <p>One line, three columns. Mark, name, contact. Mono for metadata. The block respects the message; it sits below the line, not on top of it.</p>
+      </div>
+      <div class="sig-mock">
+        <div class="row">
+          <svg class="drop" viewBox="0 0 100 120"><use href="#drop"/></svg>
+          <div>
+            <div class="name">— your name</div>
+            <div class="role">Working under <em>HydrarGyrum</em></div>
+          </div>
+          <div class="div"></div>
+          <div class="stack">
+            <div>Mail · <span>hello@hydrargyrum.studio</span></div>
+            <div>Web · <span>hydrargyrum.studio</span></div>
+            <div>Index · <span>Hg — 80</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── COLOPHON ───────── -->
+<section class="wrap">
+  <div class="colophon">
+    <div class="word">Hg<em>·80</em></div>
+    <div class="stack">
+      <span class="mono">Colophon</span>
+      <p>Set in Hanken Grotesk and Newsreader, with JetBrains Mono for metadata. Drawn on an 8-point grid. Mark constructed from a single closed path.</p>
+    </div>
+    <div class="stack">
+      <span class="mono">Version</span>
+      <p>v 1.0 · May 2026 · Personal use across documents, screens, and surfaces. Revise twice a year, no more.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Theme toggle
+  (function () {
+    const root = document.documentElement;
+    const btn  = document.getElementById('themeToggle');
+    const lbl  = document.getElementById('themeLabel');
+    function apply(theme) {
+      root.setAttribute('data-theme', theme);
+      lbl.textContent = theme === 'dark' ? 'Light' : 'Dark';
+      try { localStorage.setItem('hg-theme', theme); } catch(e) {}
+    }
+    try {
+      const saved = localStorage.getItem('hg-theme');
+      if (saved) apply(saved);
+    } catch(e) {}
+    btn.addEventListener('click', () => {
+      const cur = root.getAttribute('data-theme');
+      apply(cur === 'dark' ? 'light' : 'dark');
+    });
+  })();
+</script>
+</body>
+</html>

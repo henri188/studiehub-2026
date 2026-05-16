@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){var s=null;try{s=localStorage.getItem('hg-theme');}catch(e){}if(!s)s=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',s);})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="css/hg-tokens.css">
 <!-- HydrarGyrum: stub zodat niet-module scripts onReady() kunnen aanroepen vóór module laadt -->
 <script>
   window._hgProgress = {
@@ -15,110 +19,126 @@
 <script type="module" src="./js/progress.js"></script>
 <title>CA Studieplanner — 4 weken</title>
 <style>
-:root {
-  --bg: #0f1117; --surface: #1a1d27; --surface2: #222535; --surface3: #2a2e45;
-  --accent: #6c8ef5; --accent2: #a78bfa; --green: #4ade80; --red: #f87171;
-  --yellow: #fbbf24; --orange: #fb923c; --teal: #2dd4bf; --pink: #f472b6;
-  --text: #e2e8f0; --muted: #94a3b8; --border: #2d3148;
-}
+/* ── HydrarGyrum CA Studieplanner ── */
+/* Compat alias so inline JS template strings still resolve */
+:root { --muted: var(--graphite); }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+body { font-family: var(--font-display); font-size: 15px; background: var(--paper); color: var(--ink); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-header h1 { font-size: 1.2rem; color: var(--accent); }
-.exam-countdown { background: #1e3a5f; color: #93c5fd; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; }
-.overall-progress { display: flex; align-items: center; gap: 10px; margin-left: auto; }
-.overall-bar { width: 120px; height: 6px; background: var(--surface2); border-radius: 3px; }
-.overall-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.3s; }
+/* ── Topbar ── */
+.topbar { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); background: color-mix(in oklab, var(--paper) 82%, transparent); border-bottom: 1px solid var(--line); }
+.topbar-inner { max-width: 1100px; margin: 0 auto; padding: 12px var(--u4); display: flex; align-items: center; gap: var(--u2); flex-wrap: wrap; }
+.topbar-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 14px; font-weight: 500; letter-spacing: -0.015em; color: var(--ink); text-decoration: none; }
+.topbar-brand svg { width: 13px; height: auto; color: var(--moss); flex-shrink: 0; }
+.topbar-sep { width: 1px; height: 16px; background: var(--line-strong); flex-shrink: 0; }
+.topbar-sub { font-family: var(--font-body); font-style: italic; font-weight: 300; font-size: 14px; color: var(--graphite); }
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: var(--u2); flex-wrap: wrap; }
+.topbar-btn { background: transparent; border: 1px solid var(--line-strong); border-radius: var(--r-full); padding: 5px 12px; font-family: var(--font-display); font-size: 12px; color: var(--graphite); display: flex; align-items: center; gap: 6px; transition: color var(--t-fast), border-color var(--t-fast); cursor: pointer; white-space: nowrap; }
+.topbar-btn:hover { color: var(--ink); border-color: var(--ink); }
+.topbar-btn .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
 
-.container { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
+/* ── Header widgets ── */
+.exam-countdown { background: color-mix(in oklab, var(--moss) 12%, var(--bone)); color: var(--moss); border: 1px solid color-mix(in oklab, var(--moss) 28%, transparent); padding: 4px 12px; border-radius: var(--r-full); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; white-space: nowrap; }
+.overall-progress { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--graphite); white-space: nowrap; }
+.overall-bar { width: 72px; height: 3px; background: var(--line); border-radius: var(--r-full); }
+.overall-fill { height: 100%; background: var(--moss); border-radius: var(--r-full); transition: width 0.4s var(--ease-mercury); }
+#sync-status { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); letter-spacing: 0.04em; white-space: nowrap; }
 
-/* Science strip */
-.science-strip { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-.sci-pill { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 0.78rem; color: var(--muted); flex: 1; min-width: 180px; }
-.sci-pill strong { color: var(--text); display: block; margin-bottom: 3px; font-size: 0.8rem; }
+/* ── Main container ── */
+.container { max-width: 1100px; margin: 0 auto; padding: var(--u3) var(--u4); }
 
-/* Week tabs */
-.week-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-.week-tab { padding: 8px 18px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; font-size: 0.85rem; transition: all 0.15s; }
-.week-tab:hover { border-color: var(--accent); color: var(--text); }
-.week-tab.active { background: var(--accent); border-color: var(--accent); color: white; font-weight: 700; }
-.week-tab .wprog { font-size: 0.72rem; opacity: 0.8; }
+/* ── Science strip ── */
+.science-strip { display: flex; gap: 8px; margin-bottom: var(--u3); flex-wrap: wrap; }
+.sci-pill { background: var(--bone); border: 1px solid var(--line); border-radius: var(--r-l); padding: 10px 14px; font-size: 13px; color: var(--graphite); flex: 1; min-width: 180px; line-height: 1.45; }
+.sci-pill strong { font-family: var(--font-display); color: var(--ink); display: block; margin-bottom: 3px; font-size: 13px; font-weight: 500; letter-spacing: -0.01em; }
 
-/* Day grid */
-.day-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
-.day-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-.day-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
-.day-label { font-weight: 700; font-size: 0.95rem; }
-.day-date { color: var(--muted); font-size: 0.8rem; margin-left: auto; }
-.day-tag { font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+/* ── Week tabs ── */
+.week-tabs { display: flex; gap: 6px; margin-bottom: var(--u3); flex-wrap: wrap; }
+.week-tab { padding: 8px 16px; border-radius: var(--r-m); border: 1px solid var(--line-strong); background: var(--bone); color: var(--graphite); cursor: pointer; font-family: var(--font-display); font-size: 13px; font-weight: 500; letter-spacing: -0.01em; transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast); text-align: center; line-height: 1.4; }
+.week-tab:hover { border-color: var(--moss); color: var(--ink); }
+.week-tab.active { background: var(--moss); border-color: var(--moss); color: var(--paper); }
+.week-tab .wprog { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; opacity: 0.85; display: block; }
 
-/* Sessions */
-.session { border-bottom: 1px solid var(--border); }
+/* ── Day grid ── */
+.day-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--u2); }
+.day-card { background: var(--bone); border: 1px solid var(--line); border-radius: var(--r-l); overflow: hidden; transition: border-color var(--t-fast); }
+.day-card.today { border-color: var(--moss); box-shadow: 0 0 0 1px var(--moss); }
+.day-header { padding: 12px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); background: var(--paper); }
+.day-label { font-family: var(--font-display); font-weight: 600; font-size: 14px; color: var(--ink); letter-spacing: -0.01em; }
+.day-date { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--graphite); margin-left: auto; }
+.day-tag { font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border-radius: var(--r-s); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+.today-dot { width: 7px; height: 7px; background: var(--moss); border-radius: 50%; flex-shrink: 0; }
+
+/* ── Sessions ── */
+.session { border-bottom: 1px solid var(--line); }
 .session:last-child { border-bottom: none; }
-.session-header { padding: 10px 16px; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
-.session-header:hover { background: var(--surface2); }
-.time-badge { font-size: 0.72rem; color: var(--muted); background: var(--surface2); padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
-.session-title { font-size: 0.88rem; font-weight: 600; flex: 1; }
-.session-dur { font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
-.chevron { color: var(--muted); font-size: 0.75rem; transition: transform 0.2s; }
+.session-header { padding: 10px 16px; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; transition: background var(--t-fast); }
+.session-header:hover { background: var(--paper); }
+.time-badge { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); background: var(--paper); border: 1px solid var(--line); padding: 2px 8px; border-radius: var(--r-s); white-space: nowrap; letter-spacing: 0.04em; }
+.session-title { font-family: var(--font-display); font-size: 13px; font-weight: 500; flex: 1; color: var(--ink); letter-spacing: -0.01em; }
+.session-dur { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); white-space: nowrap; }
+.chevron { color: var(--graphite); font-size: 11px; transition: transform var(--t-fast); }
 .chevron.open { transform: rotate(90deg); }
 
-.tasks { padding: 8px 16px 12px 16px; display: none; }
+/* ── Tasks ── */
+.tasks { padding: 8px 16px 12px; display: none; }
 .tasks.open { display: block; }
-
-.task { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; border-bottom: 1px solid #1e2235; cursor: pointer; }
+.task { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--line); cursor: pointer; transition: opacity var(--t-fast); }
 .task:last-child { border-bottom: none; }
-.task:hover { opacity: 0.85; }
-.task-check { width: 16px; height: 16px; border: 2px solid var(--border); border-radius: 4px; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
-.task-check.done { background: var(--green); border-color: var(--green); }
-.task-check.done::after { content: '✓'; color: #0f1117; font-size: 10px; font-weight: 900; }
-.task-text { font-size: 0.82rem; line-height: 1.4; color: var(--text); flex: 1; }
-.task-text.done { text-decoration: line-through; color: var(--muted); }
-.task-time { font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+.task:hover { opacity: 0.7; }
+.task-check { width: 15px; height: 15px; border: 1.5px solid var(--line-strong); border-radius: var(--r-s); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: all var(--t-fast); }
+.task-check.done { background: var(--moss); border-color: var(--moss); }
+.task-check.done::after { content: '✓'; color: var(--paper); font-size: 9px; font-weight: 900; line-height: 1; }
+.task-text { font-size: 13px; line-height: 1.45; color: var(--ink); flex: 1; }
+.task-text.done { text-decoration: line-through; color: var(--graphite); }
+.task-time { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); white-space: nowrap; }
+.break-indicator { text-align: center; padding: 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--graphite); background: var(--paper); }
 
-.break-indicator { text-align: center; padding: 6px; color: var(--muted); font-size: 0.72rem; background: var(--surface2); }
+/* ── Topic color tags (CA) ── */
+.t-q1  { background: color-mix(in oklab, var(--moss)      15%, var(--paper)); color: var(--moss); }
+.t-q2  { background: color-mix(in oklab, var(--moss)      10%, var(--paper)); color: var(--moss); }
+.t-q3  { background: color-mix(in oklab, var(--cinnabar)  14%, var(--paper)); color: var(--cinnabar); }
+.t-q4  { background: color-mix(in oklab, var(--graphite)  15%, var(--paper)); color: var(--graphite); }
+.t-q5  { background: color-mix(in oklab, var(--cinnabar)  10%, var(--paper)); color: var(--cinnabar); }
+.t-q6  { background: color-mix(in oklab, var(--ink)        8%, var(--paper)); color: var(--graphite); }
+.t-exam   { background: color-mix(in oklab, var(--cinnabar) 20%, var(--paper)); color: var(--cinnabar); }
+.t-review { background: color-mix(in oklab, var(--moss)    15%, var(--paper)); color: var(--moss); }
+.t-rest   { background: color-mix(in oklab, var(--ink)      6%, var(--paper)); color: var(--graphite); }
 
-/* Topic color tags */
-.t-q1 { background: #1e3a5f; color: #93c5fd; }
-.t-q2 { background: #14532d; color: #86efac; }
-.t-q3 { background: #422006; color: #fdba74; }
-.t-q4 { background: #4a1d96; color: #c4b5fd; }
-.t-q5 { background: #701a75; color: #f0abfc; }
-.t-q6 { background: #1c1917; color: #a8a29e; }
-.t-exam { background: #450a0a; color: #fca5a5; }
-.t-review { background: #1c2a1c; color: #86efac; }
-.t-rest { background: #1c1917; color: #78716c; }
-
-/* Progress per week */
-.week-stats { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
-.wstat { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 0.82rem; }
-.wstat-n { font-size: 1.3rem; font-weight: 700; color: var(--accent); }
-.wstat-label { color: var(--muted); font-size: 0.75rem; }
+/* ── Week stats ── */
+.week-stats { display: flex; gap: 10px; margin-bottom: var(--u2); flex-wrap: wrap; }
+.wstat { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-m); padding: 10px 14px; }
+.wstat-n { font-family: var(--font-display); font-size: 22px; font-weight: 400; letter-spacing: -0.02em; color: var(--moss); }
+.wstat-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--graphite); display: block; margin-top: 2px; }
 
 .week-content { display: none; }
 .week-content.active { display: block; }
-
-.spaced-badge { background: #1e3b1e; color: #86efac; font-size: 0.7rem; padding: 1px 6px; border-radius: 6px; margin-left: 4px; }
-
-/* Today highlight */
-.day-card.today { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
-.today-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
-#sync-status { font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+.spaced-badge { background: color-mix(in oklab, var(--moss) 12%, var(--bone)); color: var(--moss); font-family: var(--font-mono); font-size: 9px; padding: 1px 6px; border-radius: var(--r-s); margin-left: 4px; letter-spacing: 0.04em; }
 </style>
 </head>
 <body>
 
-<header>
-  <div>
-    <h1>⚙️ CA Studieplanner</h1>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="topbar-brand" href="index.html">
+      <svg viewBox="0 0 100 120" aria-hidden="true">
+        <path d="M50 6 C50 6,18 52,18 78 A32 32 0 1 0 82 78 C82 52,50 6,50 6 Z" fill="currentColor"/>
+      </svg>
+      HydrarGyrum
+    </a>
+    <div class="topbar-sep"></div>
+    <span class="topbar-sub">CA Studieplanner</span>
+    <div class="topbar-right">
+      <div class="exam-countdown" id="countdown">laden…</div>
+      <div class="overall-progress">
+        <span id="done-count">0</span>/<span id="total-count">0</span>
+        <div class="overall-bar"><div class="overall-fill" id="overall-fill" style="width:0%"></div></div>
+      </div>
+      <span id="sync-status">○ laden…</span>
+      <button class="topbar-btn" id="theme-btn" type="button"><span class="dot"></span><span class="theme-label">Dark</span></button>
+    </div>
   </div>
-  <div class="exam-countdown" id="countdown">📅 Examen: ~27 dagen</div>
-  <div class="overall-progress">
-    <span style="font-size:0.8rem;color:var(--muted);">Totaal: <span id="done-count">0</span>/<span id="total-count">0</span></span>
-    <div class="overall-bar"><div class="overall-fill" id="overall-fill" style="width:0%"></div></div>
-  </div>
-  <div id="sync-status">&#9675; Laden...</div>
 </header>
 
 <div class="container">
@@ -782,6 +802,23 @@ window._hgProgress.onReady(async function() {
   const weekIdx = Math.min(3, Math.max(0, Math.floor((today - START_DATE) / (7 * 24 * 60 * 60 * 1000))));
   showWeek(weekIdx);
 });
+</script>
+<script>
+  (function() {
+    var root = document.documentElement;
+    var btn  = document.getElementById('theme-btn');
+    function updateLabel() {
+      var lbl = btn && btn.querySelector('.theme-label');
+      if (lbl) lbl.textContent = root.getAttribute('data-theme') === 'dark' ? 'Light' : 'Dark';
+    }
+    updateLabel();
+    if (btn) btn.addEventListener('click', function() {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('hg-theme', next); } catch(e) {}
+      updateLabel();
+    });
+  })();
 </script>
 </body>
 </html>
