@@ -120,20 +120,7 @@
       + '</div>';
   }
 
-  function playTimerSound() {
-    try {
-      var ctx = new (window.AudioContext || window.webkitAudioContext)();
-      var osc = ctx.createOscillator();
-      var gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = 880;
-      gain.gain.value = 0.04;
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      setTimeout(function() { osc.stop(); ctx.close(); }, 350);
-    } catch (e) {}
-  }
+  function snd(name) { if (window.HgSound) window.HgSound.play(name); }
 
   function updateTimerDom(cfg, state) {
     var now = Date.now();
@@ -461,7 +448,7 @@
             timer.running = false;
             timer.startedAt = 0;
             saveState();
-            playTimerSound();
+            snd('timer-done');
             updateTimerDom(cfg, state);
             updateDaySummaries(cfg, state);
           }
@@ -472,6 +459,7 @@
     global.toggleTask = function(taskId, e) {
       if (e) e.stopPropagation();
       state[taskId] = !state[taskId];
+      snd(state[taskId] ? 'task-check' : 'task-uncheck');
       saveState();
       renderAndSync();
     };
@@ -493,6 +481,7 @@
         timer.trackedSec = getTrackedSeconds(timer, Date.now());
         timer.running = false;
         timer.startedAt = 0;
+        snd('timer-stop');
       } else {
         if (!timer.targetSec) {
           var el = document.querySelector('.session-timer[data-sess="' + sessId + '"]');
@@ -501,6 +490,7 @@
         }
         timer.running = true;
         timer.startedAt = Date.now();
+        snd('timer-start');
       }
       saveState();
       updateTimerDom(cfg, state);

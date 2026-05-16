@@ -17,6 +17,7 @@
   };
 </script>
 <script type="module" src="../js/progress.js"></script>
+<script src="../js/sound-system.js"></script>
 <script src="../js/planner-widgets.js"></script>
 <script src="../js/data/wr-weeks.js"></script>
 <title>WR Studieplanner — Juni 2026</title>
@@ -27,7 +28,7 @@
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="topbar-brand" href="../index.html">
+    <a class="topbar-brand" href="../index.html" onclick="if(window.HgSound)window.HgSound.play('navigate')">
       <svg viewBox="0 0 100 120" aria-hidden="true">
         <path d="M50 6 C50 6,18 52,18 78 A32 32 0 1 0 82 78 C82 52,50 6,50 6 Z" fill="currentColor"/>
       </svg>
@@ -123,6 +124,7 @@ HgPlanner.createPlanner({
       var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('hg-theme', next); } catch(e) {}
+      if (window.HgSound) window.HgSound.play(next === 'dark' ? 'theme-dark' : 'theme-light');
       updateLabel();
     });
   })();

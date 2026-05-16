@@ -10,13 +10,14 @@
 <!-- HydrarGyrum auth guard: redirect to login if not authenticated -->
 <script type="module">
   import { auth } from '../js/firebase-config.js';
-  import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
   document.documentElement.style.visibility = 'hidden';
   onAuthStateChanged(auth, (user) => {
     if (user) { document.documentElement.style.visibility = ''; }
     else { window.location.replace('../login.html'); }
   });
 </script>
+<script src="../js/sound-system.js"></script>
 <title>Computerarchitectuur — Oefentool</title>
 <style>
   /* ── HydrarGyrum CA Oefentool ── */
@@ -117,7 +118,7 @@
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="topbar-brand" href="../index.html">
+    <a class="topbar-brand" href="../index.html" onclick="if(window.HgSound)window.HgSound.play('navigate')">
       <svg viewBox="0 0 100 120" aria-hidden="true">
         <path d="M50 6 C50 6,18 52,18 78 A32 32 0 1 0 82 78 C82 52,50 6,50 6 Z" fill="currentColor"/>
       </svg>
@@ -481,6 +482,7 @@ function filterCategory() {
   current = 0; correct = 0; wrong = 0;
   document.getElementById('n-correct').textContent = 0;
   document.getElementById('n-wrong').textContent = 0;
+  if (window.HgSound) window.HgSound.play('filter-change');
   renderQuestion();
 }
 
@@ -500,7 +502,7 @@ function renderQuestion() {
       <div style="font-size:2.5rem; margin-bottom:16px;">🎉</div>
       <div style="font-size:1.2rem; font-weight:700; color:var(--moss); margin-bottom:8px;">Alle vragen gedaan!</div>
       <div style="color:var(--graphite); margin-bottom:20px;">Correct: ${correct} | Fout: ${wrong}</div>
-      <button class="btn btn-next" onclick="current=0;correct=0;wrong=0;document.getElementById('n-correct').textContent=0;document.getElementById('n-wrong').textContent=0;renderQuestion()">Opnieuw beginnen</button>
+      <button class="btn btn-next" onclick="restartQuiz()">Opnieuw beginnen</button>
     </div>`;
     return;
   }
@@ -523,7 +525,7 @@ function renderQuestion() {
         <button class="btn btn-answer" onclick="toggleAnswer()">👁 Toon antwoord</button>
         <button class="btn btn-correct" onclick="markCorrect()">✓ Correct</button>
         <button class="btn btn-wrong" onclick="markWrong()">✗ Fout</button>
-        <button class="btn btn-next" onclick="nextQ()">Volgende →</button>
+        <button class="btn btn-next" onclick="goNext()">Volgende →</button>
       </div>
     </div>`;
 }
@@ -531,23 +533,38 @@ function renderQuestion() {
 function toggleHint() {
   hintShown = !hintShown;
   document.getElementById('hint-box').classList.toggle('show', hintShown);
+  if (hintShown && window.HgSound) window.HgSound.play('hint-reveal');
 }
 function toggleAnswer() {
   answerShown = !answerShown;
   document.getElementById('answer-box').classList.toggle('show', answerShown);
+  if (answerShown && window.HgSound) window.HgSound.play('hint-reveal');
 }
 function markCorrect() {
   correct++;
   document.getElementById('n-correct').textContent = correct;
+  if (window.HgSound) window.HgSound.play('correct');
   nextQ();
 }
 function markWrong() {
   wrong++;
   document.getElementById('n-wrong').textContent = wrong;
+  if (window.HgSound) window.HgSound.play('wrong');
   nextQ();
 }
 function nextQ() {
   current++;
+  renderQuestion();
+}
+function goNext() {
+  if (window.HgSound) window.HgSound.play('next-q');
+  nextQ();
+}
+function restartQuiz() {
+  current = 0; correct = 0; wrong = 0;
+  document.getElementById('n-correct').textContent = 0;
+  document.getElementById('n-wrong').textContent = 0;
+  if (window.HgSound) window.HgSound.play('restart');
   renderQuestion();
 }
 
@@ -558,6 +575,7 @@ function showTab(name) {
   document.querySelectorAll('.tab').forEach((el, i) => {
     el.classList.toggle('active', ['oefenen','ref','examens'][i] === name);
   });
+  if (window.HgSound) window.HgSound.play('tab-switch');
 }
 
 // Init
@@ -576,6 +594,7 @@ renderQuestion();
       var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('hg-theme', next); } catch(e) {}
+      if (window.HgSound) window.HgSound.play(next === 'dark' ? 'theme-dark' : 'theme-light');
       updateLabel();
     });
   })();

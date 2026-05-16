@@ -55,6 +55,13 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
   window.location.replace('login.html');
 });
 
+// ── Navigation sounds ──────────────────────────────────────────────────────────
+document.querySelectorAll('.hub-card').forEach((card) => {
+  card.addEventListener('click', () => {
+    if (window.HgSound) window.HgSound.play('navigate');
+  });
+});
+
 // ── Theme toggle ───────────────────────────────────────────────────────────────
 const root     = document.documentElement;
 const themeBtn = document.getElementById('theme-btn');
@@ -65,6 +72,7 @@ if (themeBtn) {
     const next = cur === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     try { localStorage.setItem('hg-theme', next); } catch { /* quota */ }
+    if (window.HgSound) window.HgSound.play(next === 'dark' ? 'theme-dark' : 'theme-light');
     updateThemeLabel(next);
   });
 }
