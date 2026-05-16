@@ -100,3 +100,20 @@ button { font-family: var(--font-display); cursor: pointer; }
   text-transform: uppercase;
   color: var(--graphite);
 }
+
+/* ── Form: select / dropdown ── */
+.hg-select {
+  padding: 5px 12px;
+  background: var(--bone);
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  border-radius: var(--r-m);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.hg-select:hover { border-color: var(--ink); }
+.hg-select:focus { outline: none; border-color: var(--moss); box-shadow: 0 0 0 2px color-mix(in oklab, var(--moss) 20%, transparent); }

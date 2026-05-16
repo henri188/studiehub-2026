@@ -1,0 +1,142 @@
+/* ── HydrarGyrum Planner — shared structural styles ─────────────────────── */
+/* Set --pl-accent in a page-level <style> to override the accent color.     */
+:root { --pl-accent: var(--moss); --muted: var(--graphite); }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-display); font-size: 15px; background: var(--paper); color: var(--ink); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+/* ── Topbar ── */
+.topbar { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); background: color-mix(in oklab, var(--paper) 82%, transparent); border-bottom: 1px solid var(--line); }
+.topbar-inner { max-width: 1100px; margin: 0 auto; padding: 12px var(--u4); display: flex; align-items: center; gap: var(--u2); flex-wrap: wrap; }
+.topbar-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 14px; font-weight: 500; letter-spacing: -0.015em; color: var(--ink); text-decoration: none; }
+.topbar-brand svg { width: 13px; height: auto; color: var(--pl-accent); flex-shrink: 0; }
+.topbar-sep { width: 1px; height: 16px; background: var(--line-strong); flex-shrink: 0; }
+.topbar-sub { font-family: var(--font-body); font-style: italic; font-weight: 300; font-size: 14px; color: var(--graphite); }
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: var(--u2); flex-wrap: wrap; }
+.topbar-btn { background: transparent; border: 1px solid var(--line-strong); border-radius: var(--r-full); padding: 5px 12px; font-family: var(--font-display); font-size: 12px; color: var(--graphite); display: flex; align-items: center; gap: 6px; transition: color var(--t-fast), border-color var(--t-fast); cursor: pointer; white-space: nowrap; }
+.topbar-btn:hover { color: var(--ink); border-color: var(--ink); }
+.topbar-btn .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+/* ── Header widgets ── */
+.exam-countdown { background: color-mix(in oklab, var(--pl-accent) 12%, var(--bone)); color: var(--pl-accent); border: 1px solid color-mix(in oklab, var(--pl-accent) 28%, transparent); padding: 4px 12px; border-radius: var(--r-full); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; white-space: nowrap; }
+.overall-progress { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--graphite); white-space: nowrap; }
+.overall-bar { width: 72px; height: 3px; background: var(--line); border-radius: var(--r-full); }
+.overall-fill { height: 100%; background: var(--pl-accent); border-radius: var(--r-full); transition: width 0.4s var(--ease-mercury); }
+#sync-status { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); letter-spacing: 0.04em; white-space: nowrap; }
+
+/* ── Main container ── */
+.container { max-width: 1100px; margin: 0 auto; padding: var(--u3) var(--u4); }
+
+/* ── Science strip ── */
+.science-strip { display: flex; gap: 8px; margin-bottom: var(--u3); flex-wrap: wrap; }
+.sci-pill { background: var(--bone); border: 1px solid var(--line); border-radius: var(--r-l); padding: 10px 14px; font-size: 13px; color: var(--graphite); flex: 1; min-width: 175px; line-height: 1.45; }
+.sci-pill strong { font-family: var(--font-display); color: var(--ink); display: block; margin-bottom: 3px; font-size: 13px; font-weight: 500; letter-spacing: -0.01em; }
+
+/* ── Week tabs ── */
+.week-tabs { display: flex; gap: 6px; margin-bottom: var(--u3); flex-wrap: wrap; }
+.week-tab { padding: 8px 16px; border-radius: var(--r-m); border: 1px solid var(--line-strong); background: var(--bone); color: var(--graphite); cursor: pointer; font-family: var(--font-display); font-size: 13px; font-weight: 500; letter-spacing: -0.01em; transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast); text-align: center; line-height: 1.4; }
+.week-tab:hover { border-color: var(--pl-accent); color: var(--ink); }
+.week-tab.active { background: var(--pl-accent); border-color: var(--pl-accent); color: var(--paper); }
+.week-tab .wprog { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; opacity: 0.85; display: block; }
+
+/* ── Day grid ── */
+.day-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--u2); }
+.day-card { background: var(--bone); border: 1px solid var(--line); border-radius: var(--r-l); overflow: hidden; transition: border-color var(--t-fast); }
+.day-card.today { border-color: var(--pl-accent); box-shadow: 0 0 0 1px var(--pl-accent); }
+.day-header { padding: 12px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); background: var(--paper); }
+.day-label { font-family: var(--font-display); font-weight: 600; font-size: 14px; color: var(--ink); letter-spacing: -0.01em; }
+.day-tag { font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border-radius: var(--r-s); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+.today-dot { width: 7px; height: 7px; background: var(--pl-accent); border-radius: 50%; flex-shrink: 0; }
+
+/* ── Sessions ── */
+.session { border-bottom: 1px solid var(--line); }
+.session:last-child { border-bottom: none; }
+.session-header { padding: 10px 16px; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; transition: background var(--t-fast); }
+.session-header:hover { background: var(--paper); }
+.time-badge { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); background: var(--paper); border: 1px solid var(--line); padding: 2px 8px; border-radius: var(--r-s); white-space: nowrap; letter-spacing: 0.04em; }
+.session-title { font-family: var(--font-display); font-size: 13px; font-weight: 500; flex: 1; color: var(--ink); letter-spacing: -0.01em; }
+.session-title[data-complete] { color: var(--pl-accent); }
+.session-dur { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); white-space: nowrap; }
+.chevron { color: var(--graphite); font-size: 11px; transition: transform var(--t-fast); }
+.chevron.open { transform: rotate(90deg); }
+
+/* ── Task containers ── */
+.tasks { padding: 8px 16px 12px; display: none; }
+.tasks.open { display: block; }
+.tasks-kanban { padding: 8px 12px 12px; display: none; }
+.tasks-kanban.open { display: block; }
+
+/* ── Simple task (CA mode) ── */
+.task { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--line); cursor: pointer; transition: opacity var(--t-fast); }
+.task:last-child { border-bottom: none; }
+.task:hover { opacity: 0.7; }
+
+/* ── Kanban ticket (WR mode) ── */
+.ticket { display: flex; align-items: flex-start; gap: 10px; padding: 8px 10px; background: var(--paper); border-radius: var(--r-m); border-left: 3px solid var(--line-strong); margin-bottom: 6px; cursor: pointer; transition: opacity var(--t-fast), transform var(--t-fast); }
+.ticket:last-child { margin-bottom: 0; }
+.ticket:hover { opacity: 0.8; transform: translateX(2px); }
+.ticket.ticket-done { opacity: 0.45; }
+
+/* ── Shared task elements ── */
+.task-check { width: 15px; height: 15px; border: 1.5px solid var(--line-strong); border-radius: var(--r-s); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: all var(--t-fast); }
+.task-check.done { background: var(--pl-accent); border-color: var(--pl-accent); }
+.task-check.done::after { content: '✓'; color: var(--paper); font-size: 9px; font-weight: 900; line-height: 1; }
+.task-text { font-size: 13px; line-height: 1.45; color: var(--ink); flex: 1; }
+.task-text.done { text-decoration: line-through; color: var(--graphite); }
+.task-time { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+.task-body { flex: 1; min-width: 0; }
+.task-badge { font-family: var(--font-mono); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 1px 5px; border-radius: var(--r-s); display: inline-block; margin-bottom: 3px; }
+
+/* ── Break indicator ── */
+.break-indicator { text-align: center; padding: 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--graphite); background: var(--paper); }
+
+/* ── Week stats ── */
+.week-stats { display: flex; gap: 10px; margin-bottom: var(--u2); flex-wrap: wrap; }
+.wstat { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-m); padding: 10px 14px; }
+.wstat-sub { flex: 1; }
+.wstat-n { font-family: var(--font-display); font-size: 22px; font-weight: 400; letter-spacing: -0.02em; color: var(--pl-accent); }
+.wstat-sub .wstat-n { font-size: 0.85rem; color: var(--graphite); line-height: 1.45; }
+.wstat-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--graphite); display: block; margin-top: 2px; }
+
+/* ── Week content visibility ── */
+.week-content { display: none; }
+.week-content.active { display: block; }
+
+/* ── Kanban ticket type colors ── */
+.tk-lees    { border-left-color: var(--moss); }
+.tk-schrijf { border-left-color: var(--ink); }
+.tk-code    { border-left-color: #4A8C6E; }
+.tk-herhaal { border-left-color: #C9963A; }
+.tk-mock    { border-left-color: var(--cinnabar); }
+.tk-nakijk  { border-left-color: var(--graphite); }
+.tk-spiek   { border-left-color: var(--moss); }
+
+.tb-lees    { background: color-mix(in oklab, var(--moss)      12%, var(--paper)); color: var(--moss); }
+.tb-schrijf { background: color-mix(in oklab, var(--ink)       10%, var(--paper)); color: var(--graphite); }
+.tb-code    { background: color-mix(in oklab, #4A8C6E          12%, var(--paper)); color: #4A8C6E; }
+.tb-herhaal { background: color-mix(in oklab, #C9963A          12%, var(--paper)); color: #C9963A; }
+.tb-mock    { background: color-mix(in oklab, var(--cinnabar)  12%, var(--paper)); color: var(--cinnabar); }
+.tb-nakijk  { background: color-mix(in oklab, var(--graphite)  12%, var(--paper)); color: var(--graphite); }
+.tb-spiek   { background: color-mix(in oklab, var(--moss)      12%, var(--paper)); color: var(--moss); }
+
+/* ── Topic tags ── */
+.t-q1     { background: color-mix(in oklab, var(--moss)      15%, var(--paper)); color: var(--moss); }
+.t-q2     { background: color-mix(in oklab, var(--moss)      10%, var(--paper)); color: var(--moss); }
+.t-q3     { background: color-mix(in oklab, var(--cinnabar)  14%, var(--paper)); color: var(--cinnabar); }
+.t-q4     { background: color-mix(in oklab, var(--graphite)  15%, var(--paper)); color: var(--graphite); }
+.t-q5     { background: color-mix(in oklab, var(--cinnabar)  10%, var(--paper)); color: var(--cinnabar); }
+.t-q6     { background: color-mix(in oklab, var(--ink)        8%, var(--paper)); color: var(--graphite); }
+.t-th     { background: color-mix(in oklab, var(--moss)      15%, var(--paper)); color: var(--moss); }
+.t-sa     { background: color-mix(in oklab, var(--graphite)  12%, var(--paper)); color: var(--graphite); }
+.t-ex     { background: color-mix(in oklab, var(--cinnabar)  14%, var(--paper)); color: var(--cinnabar); }
+.t-mock   { background: color-mix(in oklab, var(--cinnabar)  18%, var(--paper)); color: var(--cinnabar); }
+.t-exam   { background: color-mix(in oklab, var(--cinnabar)  20%, var(--paper)); color: var(--cinnabar); }
+.t-review { background: color-mix(in oklab, var(--moss)      15%, var(--paper)); color: var(--moss); }
+.t-rest   { background: color-mix(in oklab, var(--ink)        6%, var(--paper)); color: var(--graphite); }
+
+/* ── Exam note banner (WR) ── */
+.exam-note { background: color-mix(in oklab, var(--pl-accent) 8%, var(--paper)); border: 1px solid color-mix(in oklab, var(--pl-accent) 25%, transparent); border-radius: var(--r-m); padding: 10px 14px; font-size: 13px; color: var(--pl-accent); margin-bottom: var(--u2); line-height: 1.6; }
+.exam-note strong { font-weight: 600; }
+
+/* ── Spaced badge ── */
+.spaced-badge { background: color-mix(in oklab, var(--pl-accent) 12%, var(--bone)); color: var(--pl-accent); font-family: var(--font-mono); font-size: 9px; padding: 1px 6px; border-radius: var(--r-s); margin-left: 4px; letter-spacing: 0.04em; }
