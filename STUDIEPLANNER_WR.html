@@ -907,17 +907,21 @@ function autoSelectWeek() {
 
 updateCountdown();
 window._hgProgress.onReady(async function() {
+  // Render immediately from localStorage — page is never blank while Firestore loads
+  try { state = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch(e) { state = {}; }
+  renderAll();
+  autoSelectWeek();
+  setSyncStatus('offline');
+
+  // Background-sync with Firestore; re-render only if cloud state is found
   var cloud = await window._hgProgress.load('wr');
   if (cloud) {
     state = cloud;
     try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
+    renderAll();
+    autoSelectWeek();
     setSyncStatus('synced');
-  } else {
-    try { state = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch(e) {}
-    setSyncStatus('offline');
   }
-  renderAll();
-  autoSelectWeek();
 });
 </script>
 </body>

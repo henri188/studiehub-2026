@@ -768,19 +768,23 @@ function showWeek(idx) {
 // Init
 updateCountdown();
 window._hgProgress.onReady(async function() {
-  var cloud = await window._hgProgress.load('ca');
+  // Render immediately from localStorage — page is never blank while Firestore loads
+  try { state = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch(e) { state = {}; }
+  const today = new Date();
+  const weekIdx = Math.min(3, Math.max(0, Math.floor((today - START_DATE) / (7 * 24 * 60 * 60 * 1000))));
+  renderAll();
+  showWeek(weekIdx);
+  setSyncStatus('offline');
+
+  // Background-sync with Firestore; re-render only if cloud state is found
+  const cloud = await window._hgProgress.load('ca');
   if (cloud) {
     state = cloud;
     try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
+    renderAll();
+    showWeek(weekIdx);
     setSyncStatus('synced');
-  } else {
-    try { state = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch(e) {}
-    setSyncStatus('offline');
   }
-  renderAll();
-  const today = new Date();
-  const weekIdx = Math.min(3, Math.max(0, Math.floor((today - START_DATE) / (7 * 24 * 60 * 60 * 1000))));
-  showWeek(weekIdx);
 });
 </script>
 </body>
