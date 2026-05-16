@@ -23,6 +23,7 @@ body { font-family: var(--font-display); font-size: 15px; background: var(--pape
 .overall-bar { width: 72px; height: 3px; background: var(--line); border-radius: var(--r-full); }
 .overall-fill { height: 100%; background: var(--pl-accent); border-radius: var(--r-full); transition: width 0.4s var(--ease-mercury); }
 #sync-status { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); letter-spacing: 0.04em; white-space: nowrap; }
+.planner-cross { background: color-mix(in oklab, var(--pl-accent) 10%, var(--bone)); color: var(--pl-accent); border: 1px solid color-mix(in oklab, var(--pl-accent) 24%, transparent); padding: 4px 10px; border-radius: var(--r-full); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; white-space: nowrap; }
 
 /* ── Main container ── */
 .container { max-width: 1100px; margin: 0 auto; padding: var(--u3) var(--u4); }
@@ -48,6 +49,14 @@ body { font-family: var(--font-display); font-size: 15px; background: var(--pape
 .day-tag { font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border-radius: var(--r-s); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
 .today-dot { width: 7px; height: 7px; background: var(--pl-accent); border-radius: 50%; flex-shrink: 0; }
 
+.day-summary { padding: 8px 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; border-bottom: 1px solid var(--line); background: color-mix(in oklab, var(--paper) 75%, transparent); }
+.day-stat { display: flex; flex-direction: column; gap: 2px; min-width: 70px; }
+.day-stat-right { margin-left: auto; text-align: right; }
+.day-stat-n { font-family: var(--font-mono); font-size: 12px; color: var(--ink); }
+.day-stat-l { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--graphite); }
+.day-bar { flex: 1; min-width: 90px; height: 4px; background: var(--line); border-radius: var(--r-full); overflow: hidden; }
+.day-bar-fill { height: 100%; background: var(--pl-accent); transition: width 0.4s var(--ease-mercury); }
+
 /* ── Sessions ── */
 .session { border-bottom: 1px solid var(--line); }
 .session:last-child { border-bottom: none; }
@@ -59,6 +68,18 @@ body { font-family: var(--font-display); font-size: 15px; background: var(--pape
 .session-dur { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); white-space: nowrap; }
 .chevron { color: var(--graphite); font-size: 11px; transition: transform var(--t-fast); }
 .chevron.open { transform: rotate(90deg); }
+
+.session-timer { padding: 6px 16px 8px; display: flex; align-items: center; gap: 8px; border-top: 1px dashed var(--line); background: var(--paper); }
+.session-timer.running .timer-remaining { color: var(--pl-accent); }
+.session-timer.done { background: color-mix(in oklab, var(--pl-accent) 10%, var(--paper)); }
+.timer-btn { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--line-strong); background: transparent; color: var(--graphite); font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: color var(--t-fast), border-color var(--t-fast); }
+.timer-btn:hover { color: var(--ink); border-color: var(--ink); }
+.timer-reset { font-size: 11px; }
+.timer-remaining { font-family: var(--font-mono); font-size: 12px; color: var(--ink); min-width: 48px; }
+.timer-progress { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); }
+.timer-quick { display: flex; gap: 4px; margin-left: auto; }
+.timer-chip { border: 1px solid var(--line-strong); background: var(--bone); color: var(--graphite); font-family: var(--font-mono); font-size: 9px; padding: 2px 6px; border-radius: var(--r-full); cursor: pointer; transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast); }
+.timer-chip:hover { color: var(--ink); border-color: var(--ink); background: var(--paper); }
 
 /* ── Task containers ── */
 .tasks { padding: 8px 16px 12px; display: none; }
