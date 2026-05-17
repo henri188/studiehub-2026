@@ -1,7 +1,7 @@
 {
   "id": "wr",
   "title": "WR Oefentool",
-  "accent": "var(--slate)",
+  "accent": "var(--cinnabar)",
   "categories": [
     { "value": "H1", "label": "H1: Getal­voor­stelling & fout­analyse" },
     { "value": "H2", "label": "H2: Oplossen van stel­sels" },

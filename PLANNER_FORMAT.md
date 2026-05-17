@@ -98,11 +98,11 @@ All seven types above are already styled in `planner.css`. Custom types need ext
 ```json
 {
   "mode": "boundaries",
-  "dates": ["2026-05-15", "2026-05-21", "2026-06-08", "2026-06-12"],
-  "default": 0
+  "dates": ["2026-05-15", "2026-05-21", "2026-06-08", "2026-06-12", "2026-06-18"],
+  "default": 3
 }
 ```
-Returns index `i` when `today >= dates[i]`. Falls back to `default` when today is before all dates.
+`dates` has **N+1 entries** for N weeks. Returns index `i` when `dates[i] <= today < dates[i+1]`. Falls back to `default` when no interval matches (e.g. after the last date).
 
 ---
 
