@@ -1,0 +1,227 @@
+{
+  "_note": "Weeks 3 and 4 have empty 'days' arrays — the full data is in js/data/wr-weeks.js. Weeks 1–2 are complete and serve as kanban-mode examples.",
+  "id": "wr",
+  "title": "WR Studieplanner",
+  "subtitle": "WR Studieplanner",
+  "description": "Studieplanner voor het examen Wetenschappelijk Rekenen — juni 2026, theorie + SageMath.",
+  "accent": "var(--cinnabar)",
+  "stateKey": "wr_planner_v2",
+  "firestoreKey": "wr",
+  "examDate": "2026-06-17",
+  "renderTask": "kanban",
+  "typeMap": {
+    "lees":    { "label": "LEES",     "bk": "tb-lees",    "tk": "tk-lees"    },
+    "schrijf": { "label": "SCHRIJF",  "bk": "tb-schrijf", "tk": "tk-schrijf" },
+    "code":    { "label": "CODE",     "bk": "tb-code",    "tk": "tk-code"    },
+    "herhaal": { "label": "HERHAAL",  "bk": "tb-herhaal", "tk": "tk-herhaal" },
+    "mock":    { "label": "MOCK",     "bk": "tb-mock",    "tk": "tk-mock"    },
+    "nakijk":  { "label": "NAKIJK",   "bk": "tb-nakijk",  "tk": "tk-nakijk"  },
+    "spiek":   { "label": "SPIEKBL.", "bk": "tb-spiek",   "tk": "tk-spiek"   }
+  },
+  "weekIndex": {
+    "mode": "boundaries",
+    "dates": ["2026-05-15", "2026-05-21", "2026-06-08", "2026-06-12", "2026-06-18"],
+    "default": 3
+  },
+  "scienceStrip": [
+    { "strong": "🌟 9–11u — Nieuwe leerstof",      "text": "Moeilijkste theorie, nieuwe begrippen, gesloten-boek recall. Piekconcentratie — plan hier H4, H8, H12." },
+    { "strong": "☀️ 11–13u — Actief verwerken",    "text": "Theorievragen beantwoorden, pseudocode opschrijven. Nog hoog — actief studeren, niet lezen." },
+    { "strong": "😴 13–15u — Post-lunch dip",       "text": "Licht: oplossingen lezen, spiekblad aanvullen, notebooks doorlopen. Geen nieuwe theorie." },
+    { "strong": "🔄 15–17u — Tweede piek",          "text": "SageMath coderen, implementaties uitschrijven, oud examen maken. Creatief probleemoplossen." },
+    { "strong": "📚 Gesloten boek = echt gesloten", "text": "Altijd op papier, zonder notes, met timer. Dan nakijken. Nooit anders oefenen." },
+    { "strong": "💻 Open boek = oefenen zonder boek","text": "Codeer ZONDER spiekblad. Spiekblad = noodanker op het examen, geen kruk." },
+    { "strong": "📅 Spaced rep: dag 1 → 3 → 7 → 14","text": "Ingebouwd in de planning. Rood = vergeten. Groen = zeker. Fouten zijn de planning." }
+  ],
+  "examNote": "<strong>🎓 Examen Di 17 juni 08:30–13:30 (5u)</strong> &nbsp;&bull;&nbsp; Deel 1: Theorie <strong>gesloten boek</strong> &mdash; begrippen, algoritmen, bewijzen &nbsp;&bull;&nbsp; Deel 2: SageMath op PC <strong>open boek</strong> &mdash; cursus + notities + spiekblad toegelaten &nbsp;&bull;&nbsp; Cursus: H1–H9 + H12 &nbsp;&bull;&nbsp; SageMath: NB0–NB6",
+  "weeks": [
+    {
+      "label": "Week 1 — Eerste sweep (15 mei→)",
+      "subtitle": "H1–H12 eerste lezing — 15:00 start elke dag, CA ochtenden",
+      "days": [
+        {
+          "weekday": "Vr", "dateDisplay": "15 mei", "isoDate": "2026-05-15",
+          "tag": "t-th", "tagText": "H1 + H2 (start vandaag)",
+          "sessions": [
+            { "title": "📅 CA ochtend — Q1: getallenstelsels", "time": "9:00", "dur": "", "isBreak": true, "tasks": [] },
+            { "title": "H1 — Floating-point lezen", "time": "15:00", "dur": "25 min", "isBreak": false, "tasks": [
+              { "type": "lees",    "text": "Cursus H1: floating-point, IEEE 754, machineprecisie ε_mach, afrondingsfout vs afknottingsfout", "min": 15 },
+              { "type": "schrijf", "text": "Schrijf van buiten: definitie computationele fout, conditioneringsgetal κ, wat \"well-posed\" betekent", "min": 10 }
+            ]},
+            { "title": "☕", "time": "15:25", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "H1 — Theorievragen + notebook", "time": "15:35", "dur": "30 min", "isBreak": false, "tasks": [
+              { "type": "schrijf", "text": "Beantwoord alle theorievragen H1 (repo: theorie_vragen/hoofdstuk1.tex) schriftelijk, zonder kijken", "min": 20 },
+              { "type": "lees",    "text": "Bekijk \"h1 - cancellation bij het plotten van functies.ipynb\" — begrijp wat er misgaat", "min": 10 }
+            ]},
+            { "title": "☕", "time": "16:05", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "H2 — LU + pivoting lezen", "time": "16:15", "dur": "30 min", "isBreak": false, "tasks": [
+              { "type": "lees",    "text": "Cursus H2: LU-factorisatie, partiële pivoting, Cholesky, iteratief verfijnen", "min": 20 },
+              { "type": "schrijf", "text": "Noteer LU als pseudocode op papier: L·y=b (forward), U·x=y (backward)", "min": 10 }
+            ]},
+            { "title": "☕", "time": "16:45", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "H2 — Theorievragen + NB preview", "time": "16:55", "dur": "30 min", "isBreak": false, "tasks": [
+              { "type": "schrijf", "text": "Beantwoord alle theorievragen H2 (repo) schriftelijk, zonder kijken", "min": 20 },
+              { "type": "lees",    "text": "Bekijk \"h2 - directe methoden.ipynb\" — focus op Hilbert-matrix conditionering", "min": 10 }
+            ]}
+          ]
+        },
+        {
+          "weekday": "Za", "dateDisplay": "16 mei", "isoDate": "2026-05-16",
+          "tag": "t-th", "tagText": "H3 + H4 + H5 + NB0",
+          "sessions": [
+            { "title": "📅 CA ochtend — Q2: assembly basis", "time": "9:00", "dur": "", "isBreak": true, "tasks": [] },
+            { "title": "H3 — Kleinste-kwadraten lezen", "time": "15:00", "dur": "25 min", "isBreak": false, "tasks": [
+              { "type": "lees",    "text": "Cursus H3: normaalvergelijkingen, QR (Householder vs Gram-Schmidt), SVD, pseudoinverse", "min": 15 },
+              { "type": "schrijf", "text": "Beantwoord alle theorievragen H3 (repo) schriftelijk — noteer verschil QR vs normaalvergelijkingen (κ² vs κ)", "min": 10 }
+            ]},
+            { "title": "☕", "time": "15:25", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "H4 — Eigenwaarden lezen + vragen", "time": "15:35", "dur": "30 min", "isBreak": false, "tasks": [
+              { "type": "lees",    "text": "Cursus H4: machtiteratie, inverse iteratie, Rayleigh-quotiënt iteratie, QR-iteratie", "min": 15 },
+              { "type": "schrijf", "text": "Tabel: convergentieorde machtiteratie (1) / inverse (1) / Rayleigh (3) + alle theorievragen H4 schriftelijk", "min": 15 }
+            ]},
+            { "title": "☕", "time": "16:05", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "H5 — Niet-lineaire vergelijkingen", "time": "16:15", "dur": "25 min", "isBreak": false, "tasks": [
+              { "type": "lees",    "text": "Cursus H5: bisectie, vaste-puntiteratie, Newton-Raphson, secantmethode", "min": 15 },
+              { "type": "schrijf", "text": "Convergentieorden: bisectie=1, secant≈1.618, Newton=2 + pseudocode Newton op papier zonder kijken", "min": 10 }
+            ]},
+            { "title": "☕", "time": "16:40", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "NB0 — Sage basis + spiekblad", "time": "16:50", "dur": "30 min", "isBreak": false, "tasks": [
+              { "type": "lees",  "text": "Open NB0 \"0. Werken met Sage.ipynb\" — voer alle cellen uit, noteer nieuw syntax", "min": 15 },
+              { "type": "spiek", "text": "Spiekblad p1: var(), matrix(), solve(), diff(), integrate() — met korte voorbeelden", "min": 15 }
+            ]}
+          ]
+        },
+        {
+          "weekday": "Zo", "dateDisplay": "17 mei", "isoDate": "2026-05-17",
+          "tag": "t-th", "tagText": "H6 + H7 + H8 + NB1",
+          "sessions": [
+            { "title": "📅 CA ochtend — Q2: CVG + stapel tekenen", "time": "9:00", "dur": "", "isBreak": true, "tasks": [] },
+            { "title": "H6 — Optimalisatie lezen + vragen", "time": "15:00", "dur": "25 min", "isBreak": false, "tasks": [
+              { "type": "lees",    "text": "Cursus H6: lokaal/globaal minimum, KKT-voorwaarden, steepest descent, Newton voor optimalisatie", "min": 15 },
+              { "type": "schrijf", "text": "KKT-voorwaarden + verschil gradient vs Newton (convergentieorde + kosten) uit het hoofd", "min": 10 }
+            ]},
+            { "title": "☕", "time": "15:25", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "H7 — Interpolatie lezen + vragen", "time": "15:35", "dur": "30 min", "isBreak": false, "tasks": [
+              { "type": "lees",    "text": "Cursus H7: Lagrange-interpolatie, Newton verdeelde differenties, Runge-fenomeen, stuksgewijze interp., splines", "min": 18 },
+              { "type": "schrijf", "text": "Beantwoord alle theorievragen H7 schriftelijk, zonder kijken", "min": 12 }
+            ]},
+            { "title": "☕", "time": "16:05", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "H8 — Integratie lezen + vragen", "time": "16:15", "dur": "30 min", "isBreak": false, "tasks": [
+              { "type": "lees",    "text": "Cursus H8: trapeziumregel, Simpson, Newton-Cotes, Gauss-kwadratuur, Romberg, adaptieve integratie", "min": 18 },
+              { "type": "schrijf", "text": "Tabel nauwkeurigheidsorde (rechthoek=1, trap=2, Simpson=4, Gauss-n=2n-1) + alle theorievragen H8", "min": 12 }
+            ]},
+            { "title": "☕", "time": "16:45", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "NB1 — Symbolisch rekenen + plots", "time": "16:55", "dur": "30 min", "isBreak": false, "tasks": [
+              { "type": "lees", "text": "Open NB1 \"1. Symbolisch rekenen en plots.ipynb\" — voer alle cellen uit", "min": 15 },
+              { "type": "code", "text": "Oefen: diff(sin(x)*x^2,x), integrate(exp(-x^2),x,-oo,oo), plot(sin(x),(x,0,2*pi))", "min": 15 }
+            ]}
+          ]
+        },
+        {
+          "weekday": "Ma", "dateDisplay": "18 mei", "isoDate": "2026-05-18",
+          "tag": "t-th", "tagText": "H9 + H12 + NB2",
+          "sessions": [
+            { "title": "📅 CA ochtend — Q3: Booleaanse algebra + K-map", "time": "9:00", "dur": "", "isBreak": true, "tasks": [] },
+            { "title": "H9 — GDV lezen + vragen", "time": "15:00", "dur": "30 min", "isBreak": false, "tasks": [
+              { "type": "lees",    "text": "Cursus H9: Euler-methode, Runge-Kutta RK4, trapeziumregel voor ODE, stabiliteit, stijve stelsels", "min": 20 },
+              { "type": "schrijf", "text": "Beantwoord alle theorievragen H9 schriftelijk, zonder kijken", "min": 10 }
+            ]},
+            { "title": "☕", "time": "15:30", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "H12 — DFT + FFT lezen + vragen", "time": "15:40", "dur": "35 min", "isBreak": false, "tasks": [
+              { "type": "lees",    "text": "Cursus H12: DFT-matrix, FFT Cooley-Tukey (even/oneven), complexiteit O(n log n)", "min": 20 },
+              { "type": "schrijf", "text": "Schrijf W_n^{jk} = e^{-2πijk/n} + Cooley-Tukey recursie uit het hoofd + alle theorievragen H12", "min": 15 }
+            ]},
+            { "title": "☕", "time": "16:15", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "NB2 + Aanvullingen", "time": "16:25", "dur": "35 min", "isBreak": false, "tasks": [
+              { "type": "lees",  "text": "Open NB2 \"2. Datastructuren.ipynb\" — loop door: lijsten, tuples, dict, sets, matrix-operaties", "min": 15 },
+              { "type": "spiek", "text": "Spiekblad p2: matrix aanmaken, rij/kolom, inverse, determinant, eigenvalues()", "min": 10 },
+              { "type": "lees",  "text": "Bekijk aanvullingen \"reeksontwikkelingen\" + \"meerdereveranderlijken\" — beknopte lezing", "min": 10 }
+            ]}
+          ]
+        },
+        {
+          "weekday": "Di", "dateDisplay": "19 mei", "isoDate": "2026-05-19",
+          "tag": "t-review", "tagText": "SR H1–H4 + NB0 zelf",
+          "sessions": [
+            { "title": "📅 CA ochtend — Q3 NAND + carry lookahead", "time": "9:00", "dur": "", "isBreak": true, "tasks": [] },
+            { "title": "⟳ Spaced rep — H1 + H2 (dag 4)", "time": "15:00", "dur": "25 min", "isBreak": false, "tasks": [
+              { "type": "herhaal", "text": "Beantwoord 8 H1-vragen volledig uit het hoofd (gesloten boek, timer 12 min) — dan nakijken, fouten markeren", "min": 13 },
+              { "type": "herhaal", "text": "Beantwoord 8 H2-vragen volledig uit het hoofd (timer 12 min) — dan nakijken, fouten markeren", "min": 12 }
+            ]},
+            { "title": "☕", "time": "15:25", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "⟳ Spaced rep — H3 + H4 (dag 3)", "time": "15:35", "dur": "25 min", "isBreak": false, "tasks": [
+              { "type": "herhaal", "text": "Beantwoord 8 H3-vragen uit het hoofd (timer 10 min) — dan nakijken", "min": 13 },
+              { "type": "herhaal", "text": "Beantwoord 8 H4-vragen uit het hoofd (timer 10 min) — dan nakijken", "min": 12 }
+            ]},
+            { "title": "☕", "time": "16:00", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "NB0 — Zelf oefenen zonder kijken", "time": "16:10", "dur": "30 min", "isBreak": false, "tasks": [
+              { "type": "code",  "text": "Schrijf ZELF: definieer x, maak 3×3 matrix, bereken det + inverse, los A·x=b op — geen NB open", "min": 20 },
+              { "type": "spiek", "text": "Voeg ontbrekende syntax toe aan spiekblad op basis van wat je vergat", "min": 10 }
+            ]}
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Week 2 — Deeltijd",
+      "subtitle": "WR-slots naast CA + MM — NB3–NB6 + spiekblad + mock theorie",
+      "days": [
+        {
+          "weekday": "Do", "dateDisplay": "21 mei", "isoDate": "2026-05-21",
+          "tag": "t-sa", "tagText": "NB3 + Spiekblad",
+          "sessions": [
+            { "title": "NB3 — Bisectiemethode implementeren", "time": "10:00", "dur": "30 min", "isBreak": false, "tasks": [
+              { "type": "lees", "text": "Open NB3 \"3. Programmeren.ipynb\" — loop door: for-lussen, while, functies, recursie", "min": 10 },
+              { "type": "code", "text": "Schrijf ZELF: bisectiemethode voor f(x)=x³−2, interval [1,2], tol=1e-6, max 50 iter.", "min": 20 }
+            ]},
+            { "title": "☕", "time": "10:30", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "NB3 — Newton implementeren", "time": "10:40", "dur": "30 min", "isBreak": false, "tasks": [
+              { "type": "code",  "text": "Schrijf ZELF: Newton-methode voor f(x)=cos(x)−x, x0=1, stop bij |f(xk)|<1e-10", "min": 20 },
+              { "type": "spiek", "text": "Spiekblad p3: Newton-skelet in Sage (diff() voor afgeleide, while-lus, convergentiecriterium)", "min": 10 }
+            ]},
+            { "title": "☕", "time": "11:10", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "Spiekblad — LU + lineaire algebra", "time": "11:20", "dur": "30 min", "isBreak": false, "tasks": [
+              { "type": "spiek", "text": "Spiekblad p1: LU-factorisatie in Sage — matrix.LU(), forward/backward substitution", "min": 15 },
+              { "type": "spiek", "text": "Spiekblad p1: solve(A*x == b), A.eigenvalues(), A.eigenvectors_right() — met voorbeeld", "min": 15 }
+            ]},
+            { "title": "🌞 Middagpauze", "time": "11:50", "dur": "", "isBreak": true, "tasks": [] },
+            { "title": "Oud oef-examen — lezen + spiekblad", "time": "15:00", "dur": "30 min", "isBreak": false, "tasks": [
+              { "type": "lees",  "text": "Open ex1819_1_oef.pdf (niet_opgeloste_examens/) + ex1819_1_oef_opl_door_prof.pdf — lees grondig per vraag", "min": 20 },
+              { "type": "spiek", "text": "Voeg ontbrekende SageMath-functies toe aan spiekblad op basis van de oplossingen", "min": 10 }
+            ]}
+          ]
+        },
+        {
+          "weekday": "Zo", "dateDisplay": "24 mei", "isoDate": "2026-05-24",
+          "tag": "t-review", "tagText": "Spaced rep H1–H4 (dag 7–10)",
+          "sessions": [
+            { "title": "⟳ SR — H1 + H2 (dag 10)", "time": "10:00", "dur": "25 min", "isBreak": false, "tasks": [
+              { "type": "herhaal", "text": "Beantwoord 10 H1-vragen volledig uit het hoofd (timer 12 min) — dan nakijken", "min": 13 },
+              { "type": "herhaal", "text": "Beantwoord 10 H2-vragen volledig uit het hoofd (timer 12 min) — dan nakijken", "min": 12 }
+            ]},
+            { "title": "☕", "time": "10:25", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "⟳ SR — H3 + H4 (dag 9)", "time": "10:35", "dur": "25 min", "isBreak": false, "tasks": [
+              { "type": "herhaal", "text": "Beantwoord 8 H3-vragen uit het hoofd (timer 10 min) — dan nakijken", "min": 12 },
+              { "type": "herhaal", "text": "Beantwoord 8 H4-vragen uit het hoofd (timer 10 min) — dan nakijken", "min": 13 }
+            ]},
+            { "title": "☕", "time": "11:00", "dur": "10 min", "isBreak": true, "tasks": [] },
+            { "title": "NB3 — Machtiteratie implementeren", "time": "11:10", "dur": "35 min", "isBreak": false, "tasks": [
+              { "type": "code",   "text": "Schrijf ZELF: machtiteratie voor 3×3 matrix, zonder te kijken naar NB", "min": 20 },
+              { "type": "nakijk", "text": "Vergelijk met matrix.eigenvalues() in Sage + noteer afwijking", "min": 10 },
+              { "type": "spiek",  "text": "Spiekblad: machtiteratie-skelet (initialiseer, normeer, iterate, stop bij convergentie)", "min": 5 }
+            ]}
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Week 3 — Volledig intensief",
+      "subtitle": "Na CA-examen: 4 dagen 100% WR — theorie per H + alle NB zelf herschrijven",
+      "days": []
+    },
+    {
+      "label": "Week 4 — Mock + Examen",
+      "subtitle": "4 volledige mock-examens (th + SageMath) → dag voor examen → examen",
+      "days": []
+    }
+  ]
+}
