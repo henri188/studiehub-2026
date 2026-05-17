@@ -1,0 +1,20 @@
+{
+  "id": "wr",
+  "title": "WR Oefentool",
+  "accent": "var(--slate)",
+  "categories": [
+    { "value": "H1", "label": "H1: Getal­voor­stelling & fout­analyse" },
+    { "value": "H2", "label": "H2: Oplossen van stel­sels" },
+    { "value": "H3", "label": "H3: Interpo­latie" },
+    { "value": "H4", "label": "H4: Kleinste-kwadraten­methode" },
+    { "value": "H5", "label": "H5: Numerieke integratie" },
+    { "value": "H6", "label": "H6: Numerieke differentiatie" },
+    { "value": "H7", "label": "H7: Gewone differentiaal­vergelijkingen" },
+    { "value": "H8", "label": "H8: Parti­ële DV's" },
+    { "value": "H9", "label": "H9: Optimali­satie" },
+    { "value": "H12", "label": "H12: Monte-Carlo­methoden" }
+  ],
+  "questions": [],
+  "referenceCards": null,
+  "examTable": null
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oefentool — HydrarGyrum Studiehub</title>
+<meta name="robots" content="noindex, nofollow"/>
+<meta name="theme-color" content="#2F4A3A" media="(prefers-color-scheme: light)"/>
+<meta name="theme-color" content="#15161A" media="(prefers-color-scheme: dark)"/>
+<meta name="color-scheme" content="light dark"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Cpath d='M50 6 C50 6,18 52,18 78 A32 32 0 1 0 82 78 C82 52,50 6,50 6 Z' fill='%232F4A3A'/%3E%3C/svg%3E"/>
+<script>(function(){var s=null;try{s=localStorage.getItem('hg-theme');}catch(e){}if(!s)s=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',s);})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://identitytoolkit.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
+<link rel="stylesheet" href="../css/hg-tokens.css">
+<link rel="stylesheet" href="../css/quiz.css">
+<style id="accent-style">:root { --quiz-accent: var(--moss); }</style>
+<!-- Auth guard -->
+<style>
+  #hg-auth-guard { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: var(--paper, #ECEBE6); z-index: 9999; transition: opacity .35s ease; }
+  #hg-auth-guard svg { width: 36px; height: auto; color: var(--moss, #2F4A3A); opacity: .5; animation: hg-pulse 1.6s ease-in-out infinite alternate; }
+  #hg-auth-guard.hidden { opacity: 0; pointer-events: none; }
+  @keyframes hg-pulse { from { opacity: .3; transform: scale(.9); } to { opacity: .7; transform: scale(1.1); } }
+</style>
+<script type="module">
+  import { auth } from '../js/firebase-config.js';
+  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+  function showGuard() {
+    if (document.getElementById('hg-auth-guard')) return;
+    var g = document.createElement('div');
+    g.id = 'hg-auth-guard';
+    g.setAttribute('aria-hidden', 'true');
+    g.innerHTML = '<svg viewBox="0 0 100 120"><path d="M50 6 C50 6,18 52,18 78 A32 32 0 1 0 82 78 C82 52,50 6,50 6 Z" fill="currentColor"/></svg>';
+    (document.body || document.documentElement).appendChild(g);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', showGuard, { once: true });
+  else showGuard();
+  onAuthStateChanged(auth, (user) => {
+    if (!user) { window.location.replace('../login.html'); return; }
+    var g = document.getElementById('hg-auth-guard');
+    if (g) { g.classList.add('hidden'); setTimeout(function() { g.remove(); }, 400); }
+  });
+</script>
+<link rel="modulepreload" href="../js/firebase-config.js">
+<script defer src="../js/sound-system.js"></script>
+<script defer src="../js/quiz-widgets.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="topbar-brand" href="../index.html" onclick="if(window.HgSound)window.HgSound.play('navigate')">
+      <svg viewBox="0 0 100 120" aria-hidden="true">
+        <path d="M50 6 C50 6,18 52,18 78 A32 32 0 1 0 82 78 C82 52,50 6,50 6 Z" fill="currentColor"/>
+      </svg>
+      HydrarGyrum
+    </a>
+    <div class="topbar-sep"></div>
+    <span class="topbar-sub" id="page-subtitle">laden…</span>
+    <div class="topbar-right">
+      <button class="topbar-btn" id="theme-btn" type="button"><span class="dot"></span><span class="theme-label">Dark</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="container" id="quiz-root"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+  var id = (new URLSearchParams(window.location.search).get('id') || '').replace(/[^a-z0-9_-]/gi, '');
+  if (!id) {
+    document.getElementById('page-subtitle').textContent = 'Geen oefentool geselecteerd';
+    return;
+  }
+
+  var def;
+  try {
+    var resp = await fetch('../js/data/' + id + '-quiz-def.json');
+    if (!resp.ok) throw new Error(resp.status);
+    def = await resp.json();
+  } catch (e) {
+    document.getElementById('page-subtitle').textContent = 'Fout bij laden (' + id + ')';
+    return;
+  }
+
+  // Accent color
+  document.getElementById('accent-style').textContent = ':root { --quiz-accent: ' + def.accent + '; }';
+
+  // Title
+  document.title = def.title + ' — HydrarGyrum Studiehub';
+  document.getElementById('page-subtitle').textContent = def.title;
+
+  HgQuiz.createQuiz({
+    containerId:    'quiz-root',
+    questions:      def.questions      || [],
+    categories:     def.categories     || [],
+    referenceCards: def.referenceCards || null,
+    examTable:      def.examTable      || null
+  });
+});
+</script>
+<script>
+  (function() {
+    var root = document.documentElement;
+    var btn  = document.getElementById('theme-btn');
+    function updateLabel() {
+      var lbl = btn && btn.querySelector('.theme-label');
+      if (lbl) lbl.textContent = root.getAttribute('data-theme') === 'dark' ? 'Light' : 'Dark';
+    }
+    updateLabel();
+    if (btn) btn.addEventListener('click', function() {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('hg-theme', next); } catch(e) {}
+      if (window.HgSound) window.HgSound.play(next === 'dark' ? 'theme-dark' : 'theme-light');
+      updateLabel();
+    });
+  })();
+</script>
+</body>
+</html>
