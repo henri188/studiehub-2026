@@ -105,6 +105,10 @@
       var pct = total ? (current / total * 100) : 0;
       document.getElementById('progress-fill').style.width = pct + '%';
 
+      if (allQ.length === 0) {
+        area.innerHTML = '<div class="empty-state"><div class="icon">📋</div><div>Nog geen vragen beschikbaar voor dit vak.</div></div>';
+        return;
+      }
       if (total === 0) {
         area.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><div>Geen vragen gevonden voor deze categorie.</div></div>';
         return;
