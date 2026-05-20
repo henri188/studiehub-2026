@@ -28,12 +28,12 @@
 
   function parseTimeRange(str) {
     if (!str) return null;
-    // Matcht "14:30–15:15u" (en-dash) of "14:30-15:15u" (koppelteken)
-    var m = str.match(/(\d{1,2}):(\d{2})[–\-](\d{1,2}):(\d{2})/);
+    // Matcht "9–9:50u", "9:50–10:05u", "14:30–15:15u" — minuten zijn optioneel
+    var m = str.match(/(\d{1,2})(?::(\d{2}))?[–\-](\d{1,2})(?::(\d{2}))?/);
     if (!m) return null;
     return {
-      start: parseInt(m[1]) * 60 + parseInt(m[2]),
-      end:   parseInt(m[3]) * 60 + parseInt(m[4]),
+      start: parseInt(m[1]) * 60 + (m[2] ? parseInt(m[2]) : 0),
+      end:   parseInt(m[3]) * 60 + (m[4] ? parseInt(m[4]) : 0),
     };
   }
 
