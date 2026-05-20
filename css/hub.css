@@ -112,49 +112,40 @@
   border-radius: 50%;
   background: currentColor;
 }
+.topbar-btn.share {
+  background: var(--moss);
+  border-color: var(--moss);
+  color: var(--paper);
+}
+.topbar-btn.share svg { width: 13px; height: 13px; }
+.topbar-btn.share:hover {
+  background: color-mix(in oklab, var(--moss) 80%, var(--ink));
+  border-color: color-mix(in oklab, var(--moss) 80%, var(--ink));
+  color: var(--paper);
+}
 
 /* ── Main layout ── */
 .hub-main {
   max-width: 1100px;
   margin: 0 auto;
-  padding: var(--u8) var(--u5) var(--u9);
+  padding: var(--u5) var(--u5) var(--u7);
 }
 
 /* ── Hero ── */
 .hub-hero {
-  margin-bottom: var(--u7);
-}
-.hub-kicker {
-  display: flex;
-  align-items: center;
-  gap: var(--u2);
   margin-bottom: var(--u4);
 }
-.hub-kicker .pip {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--cinnabar);
-  flex-shrink: 0;
-}
 .hub-hero h1 {
-  font-size: clamp(40px, 6vw, 72px);
+  font-size: clamp(36px, 6vw, 64px);
   font-weight: 400;
   letter-spacing: -0.035em;
   line-height: 1;
-  margin-bottom: var(--u3);
 }
 .hub-hero h1 em {
   font-family: var(--font-body);
   font-style: italic;
   font-weight: 300;
   color: var(--graphite);
-}
-.hub-hero p {
-  font-family: var(--font-body);
-  font-size: 18px;
-  color: var(--graphite);
-  max-width: 44em;
 }
 
 /* ── Cards grid ── */
@@ -510,33 +501,6 @@
 .t-review { background: color-mix(in oklab, var(--moss)      15%, var(--paper)); color: var(--moss); }
 .t-rest   { background: color-mix(in oklab, var(--ink)        6%, var(--paper)); color: var(--graphite); }
 
-/* ── Social actions ── */
-.hub-social {
-  display: flex;
-  align-items: center;
-  gap: var(--u3);
-  margin-top: var(--u5);
-  padding-top: var(--u5);
-  border-top: 1px solid var(--line);
-  flex-wrap: wrap;
-}
-.hub-social-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: transparent;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--r-full);
-  padding: 8px 18px;
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--graphite);
-  transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
-  cursor: pointer;
-}
-.hub-social-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
-.hub-social-btn:hover { color: var(--ink); border-color: var(--ink); }
 
 /* ── Toast ── */
 .hg-toast {
@@ -566,9 +530,10 @@
 
 /* ── Responsive ── */
 @media (max-width: 700px) {
-  .hub-main { padding: var(--u6) var(--u3) var(--u7); }
-  .hub-hero h1 { font-size: 36px; }
+  .hub-main { padding: var(--u4) var(--u3) var(--u6); }
+  .hub-hero h1 { font-size: 32px; }
   .topbar-sub, .user-chip { display: none; }
+  .topbar-btn.share .share-label { display: none; }
   .hub-footer { flex-direction: column; gap: var(--u4); align-items: flex-start; }
   .footer-meta { text-align: left; }
   .topbar-inner { padding: 12px var(--u3); }
