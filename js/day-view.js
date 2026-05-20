@@ -61,6 +61,9 @@
     var s = _store[planId];
     if (!s) return;
     try { localStorage.setItem(s.cfg.stateKey, JSON.stringify(s.state)); } catch (e) {}
+    if (window._hgProgress && window._hgProgress.userId) {
+      window._hgProgress.save(s.cfg.firestoreKey, s.state);
+    }
   }
 
   // ── Global toggle handlers ─────────────────────────────────────────────────
@@ -241,7 +244,8 @@
       } catch (e) { return null; }
     }));
 
-    var blocks = [];
+    // Find planners that have a session scheduled for today
+    var candidates = [];
     fetched.forEach(function (item) {
       if (!item) return;
       var def = item.def, meta = item.meta;
@@ -258,18 +262,45 @@
         });
       });
       if (!found) return;
-      _store[meta.id] = { state: loadState(def.stateKey), cfg: def, day: found.day, wi: found.wi, di: found.di };
-      blocks.push({ meta: meta, def: def });
+      candidates.push({ meta: meta, def: def, found: found });
     });
 
-    if (!blocks.length) {
+    if (!candidates.length) {
       if (section) section.style.display = 'none';
       return;
     }
-    if (section) section.removeAttribute('style');
 
-    widgetEl._blocks = blocks;
-    widgetEl.innerHTML = widgetHtml(blocks);
+    async function buildAndRender() {
+      var prog = window._hgProgress;
+      var canSync = prog && prog.userId;
+      var blocks = [];
+
+      await Promise.all(candidates.map(async function (c) {
+        var meta = c.meta, def = c.def, found = c.found;
+        var state = loadState(def.stateKey);
+        if (canSync) {
+          try {
+            var cloud = await prog.load(def.firestoreKey);
+            if (cloud) {
+              state = cloud;
+              try { localStorage.setItem(def.stateKey, JSON.stringify(state)); } catch (e) {}
+            }
+          } catch (e) {}
+        }
+        _store[meta.id] = { state: state, cfg: def, day: found.day, wi: found.wi, di: found.di };
+        blocks.push({ meta: meta, def: def });
+      }));
+
+      if (section) section.removeAttribute('style');
+      widgetEl._blocks = blocks;
+      widgetEl.innerHTML = widgetHtml(blocks);
+    }
+
+    if (window._hgProgress && window._hgProgress.onReady) {
+      window._hgProgress.onReady(function () { buildAndRender(); });
+    } else {
+      buildAndRender();
+    }
   }
 
   if (document.readyState === 'loading') {

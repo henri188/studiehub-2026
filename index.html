@@ -35,6 +35,15 @@
       document.documentElement.setAttribute('data-theme', s);
     })();
   </script>
+  <!-- _hgProgress stub: queues onReady callbacks until hub.js fills in the real Firestore impl -->
+  <script>
+    window._hgProgress = {
+      userId: null, _pending: [],
+      load: function() { return Promise.resolve(null); },
+      save: function() { return Promise.resolve(false); },
+      onReady: function(cb) { this._pending.push(cb); }
+    };
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin/>

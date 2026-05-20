@@ -2,6 +2,12 @@
 // Handles auth guard, user display, countdowns, theme.
 
 import { AuthService } from './auth.js';
+import { db } from './firebase-config.js';
+import {
+  doc,
+  getDoc,
+  setDoc,
+} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
 // ── Auth guard ────────────────────────────────────────────────────────────────
 const guard = document.getElementById('auth-guard');
@@ -27,6 +33,27 @@ function initHub(user) {
   setPill('wr-pill', '2026-06-17', 'wo 17 jun');
   setPill('wd-pill', '2026-06-23', 'di 23 jun');
   setPill('la-pill', '2026-06-23', 'di 23 jun');
+
+  // Upgrade _hgProgress stub to real Firestore impl so day-view.js can sync
+  const pending = window._hgProgress?._pending?.slice() ?? [];
+  window._hgProgress = {
+    userId: user.uid,
+    _pending: [],
+    async load(key) {
+      try {
+        const snap = await getDoc(doc(db, 'users', user.uid, 'progress', key));
+        return snap.exists() ? (snap.data().state ?? null) : null;
+      } catch { return null; }
+    },
+    async save(key, state) {
+      try {
+        await setDoc(doc(db, 'users', user.uid, 'progress', key), { state }, { merge: true });
+        return true;
+      } catch { return false; }
+    },
+    onReady(cb) { cb(user.uid); },
+  };
+  pending.forEach((cb) => cb(user.uid));
 }
 
 // ── Countdown pills ───────────────────────────────────────────────────────────
