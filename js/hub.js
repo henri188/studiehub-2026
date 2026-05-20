@@ -22,8 +22,11 @@ function initHub(user) {
   if (emailEl) {
     emailEl.textContent = user.displayName || user.email || '';
   }
+  setPill('mm-pill', '2026-06-04', 'do 4 jun');
   setPill('ca-pill', '2026-06-08', 'ma 8 jun');
   setPill('wr-pill', '2026-06-17', 'wo 17 jun');
+  setPill('wd-pill', '2026-06-23', 'di 23 jun');
+  setPill('la-pill', '2026-06-23', 'di 23 jun');
 }
 
 // ── Countdown pills ───────────────────────────────────────────────────────────

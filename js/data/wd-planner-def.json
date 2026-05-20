@@ -1,0 +1,482 @@
+{
+  "id": "wd",
+  "title": "WD Studieplanner",
+  "subtitle": "WD — mondeling online (18 jun → 23 jun)",
+  "description": "Master-gesync planner Webdevelopment: namiddag-secundair 18-20 jun + final mondeling-prep 22 jun, examen 23 jun 08:30.",
+  "accent": "var(--cinnabar)",
+  "stateKey": "wd_planner_v2",
+  "firestoreKey": "wd",
+  "examDate": "2026-06-23",
+  "renderTask": "kanban",
+  "typeMap": {
+    "lees": {
+      "label": "LEES",
+      "bk": "tb-lees",
+      "tk": "tk-lees"
+    },
+    "schrijf": {
+      "label": "SCHRIJF",
+      "bk": "tb-schrijf",
+      "tk": "tk-schrijf"
+    },
+    "herhaal": {
+      "label": "HERHAAL",
+      "bk": "tb-herhaal",
+      "tk": "tk-herhaal"
+    },
+    "mock": {
+      "label": "MOCK",
+      "bk": "tb-mock",
+      "tk": "tk-mock"
+    },
+    "nakijk": {
+      "label": "NAKIJK",
+      "bk": "tb-nakijk",
+      "tk": "tk-nakijk"
+    },
+    "spiek": {
+      "label": "SPIEKBL.",
+      "bk": "tb-spiek",
+      "tk": "tk-spiek"
+    }
+  },
+  "weekIndex": {
+    "mode": "boundaries",
+    "dates": [
+      "2026-06-18",
+      "2026-06-22",
+      "2026-06-23",
+      "2026-06-24"
+    ],
+    "default": 1
+  },
+  "scienceStrip": [
+    {
+      "strong": "🗣️ Mondeling = praten oefenen",
+      "text": "Concepten kunnen uitleggen luidop, geen exacte syntax memoriseren"
+    },
+    {
+      "strong": "🌞 14–16:30u: WD slot",
+      "text": "Secundair na LA ochtend (zie la-planner)"
+    },
+    {
+      "strong": "🎤 Rubber duck",
+      "text": "Leg elk concept luidop uit alsof je het aan een collega vertelt"
+    },
+    {
+      "strong": "🌐 Bron",
+      "text": "rubenverborgh.github.io/WebFundamentals"
+    }
+  ],
+  "examNote": "<b>📝 Examen WD</b> — Di 23 jun 08:30 (online). Ruben Verborgh / Ruben Taelman. Focus op concepten + verbinden, niet code-syntax.",
+  "weeks": [
+    {
+      "label": "Sprint WD (18 → 20 jun)",
+      "subtitle": "Namiddagen — LA ochtend",
+      "days": [
+        {
+          "weekday": "Do",
+          "dateDisplay": "18 jun",
+          "isoDate": "2026-06-18",
+          "tag": "t-q1",
+          "tagText": "Architecture + REST",
+          "sessions": [
+            {
+              "title": "📅 LA ochtend — zie la-planner",
+              "time": "9:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "WD — Web architecture + REST intro",
+              "time": "14:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees op WebFundamentals: Web architecture sectie",
+                  "min": 30
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Schrijf de 6 REST constraints op zonder bron + voorbeelden",
+                  "min": 20
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Wat is hypermedia? Geef een eigen voorbeeld in woorden",
+                  "min": 20
+                },
+                {
+                  "type": "herhaal",
+                  "text": "🗣️ Leg luidop uit: client-server vs P2P vs gedistribueerd",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "15:30",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "REST diepen — Richardson Maturity Model",
+              "time": "15:45",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Richardson Maturity Model level 0-3",
+                  "min": 20
+                },
+                {
+                  "type": "herhaal",
+                  "text": "🗣️ Luidop: leg level 0→3 uit met voorbeeld API call",
+                  "min": 25
+                },
+                {
+                  "type": "spiek",
+                  "text": "Start spiekblad WD: kernconcepten + 1-zin samenvatting per topic",
+                  "min": 15
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Vr",
+          "dateDisplay": "19 jun",
+          "isoDate": "2026-06-19",
+          "tag": "t-q2",
+          "tagText": "HTTP + Hypermedia",
+          "sessions": [
+            {
+              "title": "📅 LA ochtend — zie la-planner",
+              "time": "9:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "WD — HTTP details + verbs + caching",
+              "time": "14:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "WebFundamentals: HTTP module",
+                  "min": 30
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Schrijf alle HTTP methods + idempotentie + veiligheid op",
+                  "min": 20
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Wat doet HTTP caching? (Cache-Control, ETag) — eigen woorden",
+                  "min": 20
+                },
+                {
+                  "type": "herhaal",
+                  "text": "🗣️ Luidop: leg HTTP request/response cyclus uit van 0 (DNS → TCP → HTTP)",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "15:30",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "Hypermedia + Linked Data",
+              "time": "15:45",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Hypermedia controls + HATEOAS + Linked Data basics",
+                  "min": 25
+                },
+                {
+                  "type": "herhaal",
+                  "text": "🗣️ Luidop: waarom is Linked Data belangrijk voor decentralisatie?",
+                  "min": 20
+                },
+                {
+                  "type": "spiek",
+                  "text": "Spiekblad WD update — HTTP + Hypermedia + Linked Data",
+                  "min": 15
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Za",
+          "dateDisplay": "20 jun",
+          "isoDate": "2026-06-20",
+          "tag": "t-q3",
+          "tagText": "Mondeling practice",
+          "sessions": [
+            {
+              "title": "📅 LA ochtend — zie la-planner",
+              "time": "9:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "WD — Verborgh's research onderwerpen",
+              "time": "14:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees over Solid project + decentralisatie",
+                  "min": 25
+                },
+                {
+                  "type": "lees",
+                  "text": "Lees over Comunica + SPARQL query engines (Taelman)",
+                  "min": 25
+                },
+                {
+                  "type": "herhaal",
+                  "text": "🗣️ Luidop: waarom decentraliseren? Wat lost Solid op?",
+                  "min": 20
+                },
+                {
+                  "type": "spiek",
+                  "text": "Spiekblad — research onderwerpen",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "15:30",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "Mondeling practice 1 — examenvragen simuleren",
+              "time": "15:45",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "mock",
+                  "text": "Stel 5 eigen examenvragen op (typische Verborgh-stijl) + beantwoord luidop",
+                  "min": 30
+                },
+                {
+                  "type": "herhaal",
+                  "text": "Neem jezelf op met telefoon — luister terug, identificeer 'eh's' en stille momenten",
+                  "min": 20
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Noteer 3 zwakke punten voor finale prep 22 jun",
+                  "min": 10
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Buffer + finale (21 → 22 jun)",
+      "subtitle": "Zo buffer (LA mock), Ma WD finale + LA spiek",
+      "days": [
+        {
+          "weekday": "Zo",
+          "dateDisplay": "21 jun",
+          "isoDate": "2026-06-21",
+          "tag": "t-rest",
+          "tagText": "BUFFER (LA mock)",
+          "sessions": [
+            {
+              "title": "⚪ LA bufferdag — geen WD vandaag",
+              "time": "vrij",
+              "dur": "",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "herhaal",
+                  "text": "OPTIONEEL: 30 min WD spiekblad doorblader als je het wil",
+                  "min": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Ma",
+          "dateDisplay": "22 jun",
+          "isoDate": "2026-06-22",
+          "tag": "t-review",
+          "tagText": "WD Final mondeling prep",
+          "sessions": [
+            {
+              "title": "WD — Volledig overzicht + zwakke punten",
+              "time": "9:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Doorblader alle spiekbladen WD in volgorde",
+                  "min": 25
+                },
+                {
+                  "type": "herhaal",
+                  "text": "Top-3 zwakke punten van mondeling practice 1 — luidop uitleggen",
+                  "min": 35
+                },
+                {
+                  "type": "spiek",
+                  "text": "Verfijn spiekblad: 1 A4 met top-10 sleutelconcepten + verbindingen",
+                  "min": 30
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10:30",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "Mondeling generale repetitie",
+              "time": "10:45",
+              "dur": "105 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "mock",
+                  "text": "Generale repetitie: stel 6 vragen, beantwoord elk luidop in 3-5 min",
+                  "min": 45
+                },
+                {
+                  "type": "herhaal",
+                  "text": "Neem op + luister terug — finaliseer cadans en toon",
+                  "min": 30
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Setup mondeling-omgeving: rustige plek, goede camera/mic, water binnen handbereik",
+                  "min": 15
+                },
+                {
+                  "type": "spiek",
+                  "text": "Spiekblad zichtbaar maar niet zichtbaar — print/scherm strategie",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "🍽️ Middagpauze",
+              "time": "12:30",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "📅 LA namiddag — zie la-planner",
+              "time": "14:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "🛌 Vroeg slapen — opstaan 06:30 op 23 jun",
+              "time": "21:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Examen",
+      "days": [
+        {
+          "weekday": "Di",
+          "dateDisplay": "23 jun",
+          "isoDate": "2026-06-23",
+          "tag": "t-exam",
+          "tagText": "WD MONDELING",
+          "sessions": [
+            {
+              "title": "🌅 06:30 — opstaan + ontbijt + ochtend-routine",
+              "time": "06:30",
+              "dur": "120 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Spiekblad doorblader 1x",
+                  "min": 15
+                },
+                {
+                  "type": "herhaal",
+                  "text": "🗣️ Stem opwarmen: 5 min luidop praten over een eenvoudig onderwerp",
+                  "min": 10
+                },
+                {
+                  "type": "spiek",
+                  "text": "Mondeling setup check: camera, mic, internet, water",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "🎯 WD MONDELING — 08:30 (online)",
+              "time": "08:30",
+              "dur": "30-60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "mock",
+                  "text": "Diepe ademhaling. Praat duidelijk. Verbind concepten. Succes!",
+                  "min": 0
+                }
+              ]
+            },
+            {
+              "title": "🍃 Klaar — decompressie + LA voorbereiding",
+              "time": "~09:30",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "📅 LA examen 13:00 — zie la-planner",
+              "time": "13:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

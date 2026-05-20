@@ -1,0 +1,584 @@
+{
+  "id": "la",
+  "title": "LA Studieplanner",
+  "subtitle": "LA — open-boek strategie (17 jun → 23 jun)",
+  "description": "Master-gesync planner Lineaire Algebra & Meetkunde: open vragen, open boek. Focus op organiseren + spiekbladen, niet memorisatie.",
+  "accent": "var(--moss)",
+  "stateKey": "la_planner_v2",
+  "firestoreKey": "la",
+  "examDate": "2026-06-23",
+  "renderTask": "kanban",
+  "typeMap": {
+    "lees": {
+      "label": "LEES",
+      "bk": "tb-lees",
+      "tk": "tk-lees"
+    },
+    "schrijf": {
+      "label": "SCHRIJF",
+      "bk": "tb-schrijf",
+      "tk": "tk-schrijf"
+    },
+    "code": {
+      "label": "CODE",
+      "bk": "tb-code",
+      "tk": "tk-code"
+    },
+    "herhaal": {
+      "label": "HERHAAL",
+      "bk": "tb-herhaal",
+      "tk": "tk-herhaal"
+    },
+    "mock": {
+      "label": "MOCK",
+      "bk": "tb-mock",
+      "tk": "tk-mock"
+    },
+    "nakijk": {
+      "label": "NAKIJK",
+      "bk": "tb-nakijk",
+      "tk": "tk-nakijk"
+    },
+    "spiek": {
+      "label": "SPIEKBL.",
+      "bk": "tb-spiek",
+      "tk": "tk-spiek"
+    }
+  },
+  "weekIndex": {
+    "mode": "boundaries",
+    "dates": [
+      "2026-06-17",
+      "2026-06-21",
+      "2026-06-23",
+      "2026-06-24"
+    ],
+    "default": 1
+  },
+  "scienceStrip": [
+    {
+      "strong": "📚 Open boek + open vragen",
+      "text": "Doel: snel kunnen opzoeken, niet uit het hoofd leren. Tom De Medts."
+    },
+    {
+      "strong": "🌅 9–12:30u: LA piek",
+      "text": "Hoofdstukken organiseren + oefeningen"
+    },
+    {
+      "strong": "🌐 14–16:30u: WD review",
+      "text": "Mondeling practice — zie wd-planner"
+    },
+    {
+      "strong": "🔖 Spiekblad-strategie",
+      "text": "Per HS: index met definities, stellingen, voorbeelden — snel doorbladerbaar"
+    }
+  ],
+  "examNote": "<b>📝 Examen LA</b> — Di 23 jun 13:00–17:00, schriftelijk open vragen, open boek. Tom De Medts. Maak je boek tabified, snel-vindbaar.",
+  "weeks": [
+    {
+      "label": "Sprint LA (17 → 20 jun)",
+      "subtitle": "Na WR examen — eerste sweep HS1-HS6",
+      "days": [
+        {
+          "weekday": "Wo",
+          "dateDisplay": "17 jun",
+          "isoDate": "2026-06-17",
+          "tag": "t-th",
+          "tagText": "LA intro (na WR examen)",
+          "sessions": [
+            {
+              "title": "🍃 WR examen 08:30-13:30 + rust",
+              "time": "tot 15:30",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "LA — Open-boek strategie opzetten",
+              "time": "16:00",
+              "dur": "120 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees 'Leerstof 25-26' + 'Opmerkingen bij het boek 25-26' (officieel)",
+                  "min": 30
+                },
+                {
+                  "type": "spiek",
+                  "text": "Maak een index/inhoudsopgave van het cursusboek met paginanummers van belangrijkste stellingen",
+                  "min": 45
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Plak post-its in cursusboek bij elk HS-begin (snel-tabbing)",
+                  "min": 15
+                },
+                {
+                  "type": "lees",
+                  "text": "Snel doorblader HS1 — eerste contact",
+                  "min": 30
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Do",
+          "dateDisplay": "18 jun",
+          "isoDate": "2026-06-18",
+          "tag": "t-q1",
+          "tagText": "HS1 + HS2",
+          "sessions": [
+            {
+              "title": "HS1 — organiseren + oefeningen",
+              "time": "9:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees HS1 grondig met cursus + samenvatting",
+                  "min": 25
+                },
+                {
+                  "type": "spiek",
+                  "text": "Maak spiekblad HS1: definities + stellingen + paginareferenties",
+                  "min": 20
+                },
+                {
+                  "type": "code",
+                  "text": "Doe 2 oefeningen HS1 — met boek erbij om strategie te testen",
+                  "min": 30
+                },
+                {
+                  "type": "nakijk",
+                  "text": "Vergelijk met oplossingen",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10:30",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "HS2 — organiseren + oefeningen",
+              "time": "10:45",
+              "dur": "105 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees HS2 grondig",
+                  "min": 25
+                },
+                {
+                  "type": "spiek",
+                  "text": "Spiekblad HS2 (definities + stellingen + pagina refs)",
+                  "min": 20
+                },
+                {
+                  "type": "code",
+                  "text": "Doe 3 oefeningen HS2 — test je open-boek workflow",
+                  "min": 45
+                },
+                {
+                  "type": "nakijk",
+                  "text": "Vergelijk + noteer wat je sneller moet kunnen opzoeken",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "🍽️ Middagpauze",
+              "time": "12:30",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "📅 WD namiddag — zie wd-planner",
+              "time": "14:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            }
+          ]
+        },
+        {
+          "weekday": "Vr",
+          "dateDisplay": "19 jun",
+          "isoDate": "2026-06-19",
+          "tag": "t-q2",
+          "tagText": "HS3 + HS4",
+          "sessions": [
+            {
+              "title": "HS3 — organiseren + oefeningen",
+              "time": "9:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees HS3 grondig",
+                  "min": 25
+                },
+                {
+                  "type": "spiek",
+                  "text": "Spiekblad HS3 + pagina refs",
+                  "min": 20
+                },
+                {
+                  "type": "code",
+                  "text": "3 oefeningen HS3 — getimed (max 8 min/oefening)",
+                  "min": 30
+                },
+                {
+                  "type": "nakijk",
+                  "text": "Vergelijk + foutenanalyse",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10:30",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "HS4 — organiseren + oefeningen",
+              "time": "10:45",
+              "dur": "105 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees HS4",
+                  "min": 25
+                },
+                {
+                  "type": "spiek",
+                  "text": "Spiekblad HS4",
+                  "min": 20
+                },
+                {
+                  "type": "code",
+                  "text": "3 oefeningen HS4",
+                  "min": 45
+                },
+                {
+                  "type": "herhaal",
+                  "text": "✍️ Spaced rep dag 1: HS1+HS2 spiekblaadjes review",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "🍽️ Middagpauze",
+              "time": "12:30",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "📅 WD namiddag — zie wd-planner",
+              "time": "14:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            }
+          ]
+        },
+        {
+          "weekday": "Za",
+          "dateDisplay": "20 jun",
+          "isoDate": "2026-06-20",
+          "tag": "t-q3",
+          "tagText": "HS5 + HS6",
+          "sessions": [
+            {
+              "title": "HS5 — organiseren + oefeningen",
+              "time": "9:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees HS5",
+                  "min": 25
+                },
+                {
+                  "type": "spiek",
+                  "text": "Spiekblad HS5",
+                  "min": 20
+                },
+                {
+                  "type": "code",
+                  "text": "3 oefeningen HS5",
+                  "min": 30
+                },
+                {
+                  "type": "nakijk",
+                  "text": "Vergelijk",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10:30",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "HS6 — afronden",
+              "time": "10:45",
+              "dur": "105 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees HS6",
+                  "min": 25
+                },
+                {
+                  "type": "spiek",
+                  "text": "Spiekblad HS6 + master-index van alle HS-spiekbladen samen",
+                  "min": 30
+                },
+                {
+                  "type": "code",
+                  "text": "2 oefeningen HS6",
+                  "min": 35
+                },
+                {
+                  "type": "herhaal",
+                  "text": "Spaced rep HS3+HS4 dag 1 — kort",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "🍽️ Middagpauze",
+              "time": "12:30",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "📅 WD namiddag — zie wd-planner",
+              "time": "14:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Buffer + finale (21 → 22 jun)",
+      "subtitle": "Zo mock examen, ma spiekblad-finale",
+      "days": [
+        {
+          "weekday": "Zo",
+          "dateDisplay": "21 jun",
+          "isoDate": "2026-06-21",
+          "tag": "t-mock",
+          "tagText": "BUFFER + LA mock",
+          "sessions": [
+            {
+              "title": "🏁 LA Mock examen (open boek getimed)",
+              "time": "9:00",
+              "dur": "180 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "mock",
+                  "text": "Maak een oud examen LA (24-25), open boek, 3u getimed — test je workflow",
+                  "min": 180
+                }
+              ]
+            },
+            {
+              "title": "🍽️ Middagpauze",
+              "time": "12:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "Nakijken + workflow finetuning",
+              "time": "13:30",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "nakijk",
+                  "text": "Vergelijk met oplossingen",
+                  "min": 30
+                },
+                {
+                  "type": "spiek",
+                  "text": "Welke pagina refs moeten beter? Update index",
+                  "min": 30
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Identificeer 2 zwakste HS voor morgen",
+                  "min": 30
+                }
+              ]
+            },
+            {
+              "title": "🛌 Rest van de dag vrij — herstel",
+              "time": "15:00+",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            }
+          ]
+        },
+        {
+          "weekday": "Ma",
+          "dateDisplay": "22 jun",
+          "isoDate": "2026-06-22",
+          "tag": "t-review",
+          "tagText": "Spiekbladen finaliseren",
+          "sessions": [
+            {
+              "title": "🍃 WD ochtend final prep — zie wd-planner",
+              "time": "9:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "🍽️ Middagpauze",
+              "time": "12:30",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "LA Spiekbladen + open-boek organiseren",
+              "time": "14:00",
+              "dur": "150 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "spiek",
+                  "text": "Finaliseer master-index met alle pagina referenties",
+                  "min": 45
+                },
+                {
+                  "type": "spiek",
+                  "text": "Plaats fysieke post-its / tabs in cursusboek",
+                  "min": 30
+                },
+                {
+                  "type": "herhaal",
+                  "text": "Doorblader alle HS-spiekbladen (HS1-HS6) — verifieer dat je elk concept binnen 15s kan vinden",
+                  "min": 45
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Materiaal klaarleggen: cursusboek, samenvatting, spiekbladen, pen, ID",
+                  "min": 15
+                },
+                {
+                  "type": "lees",
+                  "text": "Korte mentale repetitie — visualiseer rustig examen",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "🛌 Vrij + vroeg slapen",
+              "time": "16:30+",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Dubbel examen",
+      "days": [
+        {
+          "weekday": "Di",
+          "dateDisplay": "23 jun",
+          "isoDate": "2026-06-23",
+          "tag": "t-exam",
+          "tagText": "WD + LA EXAMEN",
+          "sessions": [
+            {
+              "title": "🎯 WD mondeling 08:30 — zie wd-planner",
+              "time": "08:30",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "🍃 Tussen-pauze: decompressie + lichte LA spiekblad review",
+              "time": "10:00",
+              "dur": "150 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Doorblader master-index nog 1x — geen nieuwe stof",
+                  "min": 20
+                },
+                {
+                  "type": "spiek",
+                  "text": "Materiaal final check",
+                  "min": 10
+                },
+                {
+                  "type": "herhaal",
+                  "text": "Wandel + eet rustig + ademhaling",
+                  "min": 60
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Vertrek naar examen",
+                  "min": 60
+                }
+              ]
+            },
+            {
+              "title": "🎯 EXAMEN LA — 13:00–17:00 (4u, open boek)",
+              "time": "13:00",
+              "dur": "4 uur",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "mock",
+                  "text": "Open boek + open vragen. Lees vraag, zoek in boek, structureer antwoord. Succes!",
+                  "min": 0
+                }
+              ]
+            },
+            {
+              "title": "🎉 KLAAR — vier het!",
+              "time": "17:00+",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
