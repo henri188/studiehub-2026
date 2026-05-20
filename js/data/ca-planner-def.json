@@ -1,464 +1,1028 @@
 {
   "id": "ca",
   "title": "CA Studieplanner",
-  "subtitle": "CA Studieplanner",
-  "description": "Studieplanner voor het examen Computerarchitectuur — 4 weken voorbereiding met dagelijkse taken en timers.",
+  "subtitle": "CA — namiddag-secundair (14:30–16:30) + sprint na MM examen",
+  "description": "Master-gesync planner Computerarchitectuur: namiddagen 14:30–16:30 in fase 1, dan all-day sprint 5-7 jun, examen 8 jun.",
   "accent": "var(--moss)",
-  "stateKey": "ca_planner_v1",
+  "stateKey": "ca_planner_v2",
   "firestoreKey": "ca",
   "examDate": "2026-06-08",
   "renderTask": "simple",
   "typeMap": null,
   "weekIndex": {
-    "mode": "linear",
-    "startDate": "2026-05-14"
+    "mode": "boundaries",
+    "dates": [
+      "2026-05-20",
+      "2026-05-25",
+      "2026-06-01",
+      "2026-06-04",
+      "2026-06-08",
+      "2026-06-09"
+    ],
+    "default": 3
   },
   "scienceStrip": [
-    { "strong": "🌅 9–11u: Piekconcentratie",       "text": "Nieuwe moeilijke stof, harde oefeningen, analytisch werk" },
-    { "strong": "☀️ 11–13u: Nog hoog",               "text": "Oefeningen maken, actieve verwerking" },
-    { "strong": "😴 13–15u: Post-lunch dip",          "text": "Alleen lichte herhaling of lezen" },
-    { "strong": "📝 15–17u: Tweede piek",             "text": "Oefeningen, actief werken, vorige stof herhalen" },
-    { "strong": "🌙 Na 20u: Geen nieuw materiaal",    "text": "Enkel flashcards of lichte herhaling" },
-    { "strong": "📆 Spaced repetition",              "text": "Dag 0 → dag 1 → dag 3 → dag 7 → dag 14" }
+    {
+      "strong": "🌞 14:30–16:30u: CA review",
+      "text": "Secundair vak — 2u na MM ochtend, sport-vriendelijk"
+    },
+    {
+      "strong": "📆 Spaced repetition",
+      "text": "Elke dag een klein stukje > grote blokken"
+    },
+    {
+      "strong": "🏃 Na 4 jun: CA sprint",
+      "text": "Vol vermogen 5-6 jun, lichte 7 jun, examen 8 jun"
+    },
+    {
+      "strong": "🌙 Geen nieuwe stof na 17u",
+      "text": "Avond = vrije tijd of MM flashcards"
+    }
   ],
-  "examNote": null,
+  "examNote": "<b>📝 Examen CA</b> — Ma 8 jun 08:30–12:30, schriftelijk. Onthoud: 6 typische vragen Q1–Q6. Op 7 jun max 2u lichte review.",
   "weeks": [
     {
-      "label": "Week 1 — Fundamenten",
-      "subtitle": "Q1 + Q2 + Q3 leren, eerste aanraking",
+      "label": "Week 1 — Fundamenten (Q1–Q4 intro)",
+      "subtitle": "Wo 20 → Za 23 mei · CA secundair, MM is hoofdvak",
       "days": [
         {
-          "weekday": "Vr", "dateDisplay": "15 mei", "isoDate": "2026-05-15",
-          "tag": "t-q1", "tagText": "Q1",
+          "weekday": "Wo",
+          "dateDisplay": "20 mei",
+          "isoDate": "2026-05-20",
+          "tag": "t-q1",
+          "tagText": "Q1",
           "sessions": [
-            { "title": "Q1: Getallenstelsels — Theorie", "time": "9–10u", "dur": "45 min", "isBreak": false, "tasks": [
-              { "text": "Lees STUDIEHULP: sectie Q1 volledig door", "min": 10 },
-              { "text": "Zet de formule voor 2-complement op een blaadje (flip + 1, snel trucje)", "min": 5 },
-              { "text": "Zet de Gray code omzettingsregels op een blaadje", "min": 5 },
-              { "text": "Zet de IEEE 754 tabel (formaten + bias) op een blaadje", "min": 10 },
-              { "text": "Doe Q1 van examen 2022 volledig met de hand", "min": 15 }
-            ]},
-            { "title": "☕ Pauze", "time": "10–10:15u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Q1: Vlottende komma — Oefeningen", "time": "10:15–11u", "dur": "45 min", "isBreak": false, "tasks": [
-              { "text": "Doe Q1 van examen 2021 (gray code + FP1|3|4 + BCD)", "min": 15 },
-              { "text": "Doe Q1 van examen 2023 (octaal + bfloat16 hex + packed 10-comp)", "min": 15 },
-              { "text": "Controleer je antwoorden via de oefentool of oplossingen", "min": 10 },
-              { "text": "Schrijf op wat je fout had en waarom", "min": 5 }
-            ]}
+            {
+              "title": "Q1: Getallenstelsels — Theorie + oefening",
+              "time": "14:30–15:15u",
+              "dur": "45 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees STUDIEHULP Q1 sectie volledig",
+                  "min": 15
+                },
+                {
+                  "text": "Zet 2-complement formule (flip + 1) op spiekblad",
+                  "min": 5
+                },
+                {
+                  "text": "Zet Gray code omzettingsregels op spiekblad",
+                  "min": 5
+                },
+                {
+                  "text": "Zet IEEE 754 tabel (formaten + bias) op spiekblad",
+                  "min": 10
+                },
+                {
+                  "text": "Maak Q1 van examen 2022 met de hand",
+                  "min": 10
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "15:15–15:30u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "Q1: Vlottende komma oefeningen",
+              "time": "15:30–16:30u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Doe Q1 van examen 2021 (gray + FP)",
+                  "min": 20
+                },
+                {
+                  "text": "Doe Q1 van examen 2023 (octaal + bfloat16 + packed 10-comp)",
+                  "min": 20
+                },
+                {
+                  "text": "Controleer met oplossingen, noteer fouten",
+                  "min": 20
+                }
+              ]
+            }
           ]
         },
         {
-          "weekday": "Za", "dateDisplay": "16 mei", "isoDate": "2026-05-16",
-          "tag": "t-q2", "tagText": "Q2",
+          "weekday": "Do",
+          "dateDisplay": "21 mei",
+          "isoDate": "2026-05-21",
+          "tag": "t-q2",
+          "tagText": "Q2",
           "sessions": [
-            { "title": "Q2: Assembly — Basis & registers", "time": "9–9:45u", "dur": "40 min", "isBreak": false, "tasks": [
-              { "text": "Lees STUDIEHULP: sectie Q2 (registers, instructies, oproepconventie)", "min": 15 },
-              { "text": "Schrijf de 6 argumentregisters en returnregister uit het hoofd op", "min": 5 },
-              { "text": "Lees de assemblercode van examen 2025 (bc) zonder de C-code — begrijp wat elke instructie doet", "min": 20 }
-            ]},
-            { "title": "☕ Pauze", "time": "9:45–10u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Q2: Functiewaarde traceren", "time": "10–11u", "dur": "60 min", "isBreak": false, "tasks": [
-              { "text": "Traceer bc(3,1) volledig met pen en papier (schrijf alle oproepen op)", "min": 15 },
-              { "text": "Traceer product(3,5) van examen 2023", "min": 15 },
-              { "text": "Traceer isPalindroom('rotator') van examen 2021 (hint: 'rotator' is een palindroom)", "min": 20 },
-              { "text": "Controleer je antwoorden", "min": 10 }
-            ]}
+            {
+              "title": "Q2: Assembly basis & registers",
+              "time": "14:30–15:15u",
+              "dur": "45 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees STUDIEHULP Q2 (registers, oproepconventie)",
+                  "min": 15
+                },
+                {
+                  "text": "Schrijf 6 argumentregisters + returnregister uit het hoofd",
+                  "min": 5
+                },
+                {
+                  "text": "Lees assemblercode van examen 2025 (bc) zonder C-code",
+                  "min": 25
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "15:15–15:30u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "Q2: Functiewaarde traceren",
+              "time": "15:30–16:30u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Traceer bc(3,1) volledig met pen en papier",
+                  "min": 20
+                },
+                {
+                  "text": "Traceer product(3,5) van examen 2023",
+                  "min": 20
+                },
+                {
+                  "text": "Controleer antwoorden",
+                  "min": 20
+                }
+              ]
+            }
           ]
         },
         {
-          "weekday": "Zo", "dateDisplay": "17 mei", "isoDate": "2026-05-17",
-          "tag": "t-q2", "tagText": "Q2 CVG",
+          "weekday": "Vr",
+          "dateDisplay": "22 mei",
+          "isoDate": "2026-05-22",
+          "tag": "t-q3",
+          "tagText": "Q3",
           "sessions": [
-            { "title": "Q2: Controleverloopgraaf tekenen", "time": "10–11u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Lees STUDIEHULP: stappenplan voor CVG (basisblokken identificeren)", "min": 5 },
-              { "text": "Teken de CVG van de bc-assemblercode (examen 2025) op papier", "min": 20 },
-              { "text": "Teken de CVG van product-assemblercode (examen 2023)", "min": 20 },
-              { "text": "Vergelijk met de oplossingen / check logica", "min": 10 }
-            ]},
-            { "title": "☕ Pauze", "time": "11–11:15u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Q2: Stapel tekenen", "time": "11:15–12u", "dur": "40 min", "isBreak": false, "tasks": [
-              { "text": "Lees over de stapelstructuur bij functieoproepen (STUDIEHULP)", "min": 5 },
-              { "text": "Teken de stapel voor bc(3,1) op het moment van maximale diepte", "min": 20 },
-              { "text": "Teken de stapel voor product(3,5) op maximale diepte", "min": 15 }
-            ]},
-            { "title": "☕ Middagpauze", "time": "12–15u", "dur": "", "isBreak": true, "tasks": [] },
-            { "title": "Q1 herhaling ⟳", "time": "15–15:30u", "dur": "30 min", "isBreak": false, "tasks": [
-              { "text": "Doe Q1 van examen 2024 (FP4 alle waarden + 2-comp + gray) ZONDER te spiekeren", "min": 20 },
-              { "text": "Controleer en bespreek fouten", "min": 10 }
-            ]}
+            {
+              "title": "Q3: Booleaanse algebra + K-map theorie",
+              "time": "14:30–15:15u",
+              "dur": "45 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees STUDIEHULP Q3 (waarheidstabel, K-map, SOP)",
+                  "min": 15
+                },
+                {
+                  "text": "Teken K-map layout voor 4 vars uit het hoofd",
+                  "min": 5
+                },
+                {
+                  "text": "Begrijp Gray-code volgorde K-map (00,01,11,10)",
+                  "min": 5
+                },
+                {
+                  "text": "Doe waarheidstabel voor A⊕B⊕C (examen 2024)",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "15:15–15:30u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "Q3: K-map oefening + Q1 spaced rep",
+              "time": "15:30–16:30u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Maak Q3 K-map oefening van 2 oude examens",
+                  "min": 30
+                },
+                {
+                  "text": "✍️ Spaced rep dag 2: Q1 oefening uit het hoofd",
+                  "min": 20
+                },
+                {
+                  "text": "Schrijf SOP-vereenvoudiging stappenplan op",
+                  "min": 10
+                }
+              ]
+            }
           ]
         },
         {
-          "weekday": "Ma", "dateDisplay": "18 mei", "isoDate": "2026-05-18",
-          "tag": "t-q3", "tagText": "Q3",
+          "weekday": "Za",
+          "dateDisplay": "23 mei",
+          "isoDate": "2026-05-23",
+          "tag": "t-q4",
+          "tagText": "Q4 Pipelining",
           "sessions": [
-            { "title": "Q3: Booleaanse algebra — Theorie", "time": "9–9:45u", "dur": "40 min", "isBreak": false, "tasks": [
-              { "text": "Lees STUDIEHULP: sectie Q3 (waarheidstabel, Karnaugh, SOP)", "min": 15 },
-              { "text": "Teken de Karnaugh-kaart layout voor 4 variabelen op papier (uit het hoofd)", "min": 5 },
-              { "text": "Snap de Gray-code volgorde van de K-map kolommen/rijen (00, 01, 11, 10)", "min": 5 },
-              { "text": "Doe de waarheidstabel voor A⊕B⊕C (examen 2024) volledig", "min": 15 }
-            ]},
-            { "title": "☕ Pauze", "time": "9:45–10u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Q3: Karnaugh oefening", "time": "10–11u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Teken de Karnaugh-kaart voor A⊕B⊕C en bepaal de SOP", "min": 15 },
-              { "text": "Lees de multiplexer-vraag van examen 2021 en stel de waarheidstabel op", "min": 15 },
-              { "text": "Schrijf E als som van mintermen en vereenvoudig via K-map", "min": 15 },
-              { "text": "Teken de schakeling met and/or/not poorten", "min": 10 }
-            ]}
-          ]
-        },
-        {
-          "weekday": "Di", "dateDisplay": "19 mei", "isoDate": "2026-05-19",
-          "tag": "t-q3", "tagText": "Q3 NAND",
-          "sessions": [
-            { "title": "Q3: NAND + CMOS implementaties", "time": "9–9:45u", "dur": "40 min", "isBreak": false, "tasks": [
-              { "text": "Lees STUDIEHULP: NAND-only implementatie (de Morgan techniek)", "min": 10 },
-              { "text": "Zet de multiplexer SOP van gisteren om naar NAND-only", "min": 15 },
-              { "text": "Lees over CMOS in de STUDIEHULP (pull-up/pull-down netwerk)", "min": 15 }
-            ]},
-            { "title": "☕ Pauze", "time": "9:45–10u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Q3: Carry lookahead poortvertragingen", "time": "10–11u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Lees de carry lookahead sectie in de STUDIEHULP (p_i, g_i, c_{i+1})", "min": 10 },
-              { "text": "Bereken handmatig de poortvertragingen voor p0, g0, c1, c2, s0, s1", "min": 20 },
-              { "text": "Doe de carry-save opteller vraag van examen 2023 (3 getallen → 2)", "min": 25 }
-            ]},
-            { "title": "☕ Middagpauze", "time": "11–15u", "dur": "", "isBreak": true, "tasks": [] },
-            { "title": "Q2 herhaling ⟳", "time": "15–15:30u", "dur": "30 min", "isBreak": false, "tasks": [
-              { "text": "Traceer fun(27) van examen 2024 (switch met sprongtabel) — enkel de oproepen", "min": 20 },
-              { "text": "Noteer wat verwarrend was", "min": 10 }
-            ]}
-          ]
-        },
-        {
-          "weekday": "Wo", "dateDisplay": "20 mei", "isoDate": "2026-05-20",
-          "tag": "t-review", "tagText": "Review",
-          "sessions": [
-            { "title": "Week 1 — Herhaling & zwakke punten", "time": "9–10u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Maak een lijstje van alle dingen die nog niet vlot gaan (Q1, Q2, Q3)", "min": 10 },
-              { "text": "Oefen het zwakste punt 30 minuten (bv. CVG tekenen of K-map)", "min": 30 },
-              { "text": "Doe Q1+Q3 van examen 2025 (25 min — tijdsbewust!)", "min": 15 }
-            ]},
-            { "title": "☕ Pauze", "time": "10–10:15u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Q1 herhaling ⟳ (spaced)", "time": "10:15–11u", "dur": "40 min", "isBreak": false, "tasks": [
-              { "text": "Doe Q1 van examen 2019 en 2018 met de hand", "min": 25 },
-              { "text": "Focus: IEEE 754 → decimaal richtingen goed zitten?", "min": 15 }
-            ]}
+            {
+              "title": "Q4: Delayslots + VLIW theorie",
+              "time": "14:30–15:15u",
+              "dur": "45 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees STUDIEHULP Q4 (delayslots, VLIW)",
+                  "min": 15
+                },
+                {
+                  "text": "Begrijp WAAROM delayslots bestaan",
+                  "min": 10
+                },
+                {
+                  "text": "Schrijf VLIW scheduling regels op spiekblad",
+                  "min": 10
+                },
+                {
+                  "text": "Doe Q4 van examen 2022 (delayslots) eerste 2 vragen",
+                  "min": 10
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "15:15–15:30u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "Q4: VLIW scheduling oefening + Q2 spaced",
+              "time": "15:30–16:30u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Maak VLIW scheduling van examen 2023",
+                  "min": 30
+                },
+                {
+                  "text": "✍️ Spaced rep dag 2: Q2 functietracering kort",
+                  "min": 15
+                },
+                {
+                  "text": "Controleer antwoorden",
+                  "min": 15
+                }
+              ]
+            }
           ]
         }
       ]
     },
     {
-      "label": "Week 2 — Q4, Q5 & Q6",
-      "subtitle": "Pijplijn, caches, actuele trends + spaced repetition week 1",
+      "label": "Week 2 — Q5, Q6 + Examenpraktijk",
+      "subtitle": "Ma 25 → Za 30 mei (Zo 24 + 31 = buffer)",
       "days": [
         {
-          "weekday": "Wo", "dateDisplay": "20 mei", "isoDate": "2026-05-20",
-          "tag": "t-q4", "tagText": "Q4",
+          "weekday": "Ma",
+          "dateDisplay": "25 mei",
+          "isoDate": "2026-05-25",
+          "tag": "t-q5",
+          "tagText": "Q5 Cache",
           "sessions": [
-            { "title": "Q4: Delayslots — Theorie & begrip", "time": "9–9:45u", "dur": "40 min", "isBreak": false, "tasks": [
-              { "text": "Lees STUDIEHULP: delayslots sectie (definitie, waarom ze bestaan)", "min": 10 },
-              { "text": "Lees de delayslot-vraag van examen 2023 (product assemblercode)", "min": 10 },
-              { "text": "Probeer zelf de herordening te maken VOOR je de oplossing bekijkt", "min": 20 }
-            ]},
-            { "title": "☕ Pauze", "time": "9:45–10u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Q4: VLIW Scheduling", "time": "10–11u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Lees STUDIEHULP: VLIW regels (DT/ALU/CT kolommen)", "min": 10 },
-              { "text": "Doe de VLIW-tabel van examen 2021 (checkPrimeNumber functie)", "min": 25 },
-              { "text": "Doe de VLIW-tabel van examen 2022 (F/M functies)", "min": 20 }
-            ]}
+            {
+              "title": "Q5: Caches — theorie + adresanalyse",
+              "time": "14:30–15:15u",
+              "dur": "45 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees STUDIEHULP Q5 (cache, mapping)",
+                  "min": 15
+                },
+                {
+                  "text": "Schrijf direct/set-associatief/full-associatief stappenplan op",
+                  "min": 10
+                },
+                {
+                  "text": "Begrijp tag/index/offset uit adres halen",
+                  "min": 10
+                },
+                {
+                  "text": "Doe Q5 van examen 2022 (cache, treffer bepalen) eerste deel",
+                  "min": 10
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "15:15–15:30u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "Q5: AMAT + Q3 spaced rep",
+              "time": "15:30–16:30u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Bereken AMAT voor 2-niveau cache (examen voorbeeld)",
+                  "min": 20
+                },
+                {
+                  "text": "Doe Q5 van examen 2023",
+                  "min": 20
+                },
+                {
+                  "text": "✍️ Spaced rep dag 3: Q3 K-map kort",
+                  "min": 20
+                }
+              ]
+            }
           ]
         },
         {
-          "weekday": "Vr", "dateDisplay": "22 mei", "isoDate": "2026-05-22",
-          "tag": "t-q4", "tagText": "Q4 Voorspellers",
+          "weekday": "Di",
+          "dateDisplay": "26 mei",
+          "isoDate": "2026-05-26",
+          "tag": "t-q6",
+          "tagText": "Q6 Virtueel",
           "sessions": [
-            { "title": "Q4: Sprongvoorspellers — 1-bit & 2-bit", "time": "9–10u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Lees STUDIEHULP: 1-bit en 2-bit voorspeller (staten, transities)", "min": 10 },
-              { "text": "Doe de sprongvoorspellervraag van examen 2024 volledig (1-bit + 2-bit tabel invullen)", "min": 30 },
-              { "text": "Bereken nauwkeurigheid: hoeveel correct voorspeld / totaal?", "min": 15 }
-            ]},
-            { "title": "☕ Pauze", "time": "10–10:15u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Q4: Globale voorspeller (gshare)", "time": "10:15–11u", "dur": "40 min", "isBreak": false, "tasks": [
-              { "text": "Lees over globale voorspeller in STUDIEHULP (geschiedenisregister + XOR)", "min": 10 },
-              { "text": "Doe de globale voorspellertabel van examen 2024 (geschiedenis bijhouden + index berekenen)", "min": 30 }
-            ]},
-            { "title": "☕ Middagpauze", "time": "11–15u", "dur": "", "isBreak": true, "tasks": [] },
-            { "title": "Q1+Q3 herhaling ⟳ (spaced dag 7)", "time": "15–15:30u", "dur": "30 min", "isBreak": false, "tasks": [
-              { "text": "Doe 2 willekeurige Q1 vragen uit de oefentool zonder hints", "min": 15 },
-              { "text": "Doe een Karnaugh-vraag (Q3) uit de oefentool", "min": 15 }
-            ]}
+            {
+              "title": "Q6: Virtueel geheugen + actuele trends",
+              "time": "14:30–15:15u",
+              "dur": "45 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees STUDIEHULP Q6 (paging, TLB)",
+                  "min": 15
+                },
+                {
+                  "text": "Schrijf TLB + page table stappenplan op",
+                  "min": 10
+                },
+                {
+                  "text": "Lees over actuele trends (2025-stof)",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "15:15–15:30u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "Q6 oefening + Q4 spaced rep",
+              "time": "15:30–16:30u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Doe Q6 van examen 2024 + 2025",
+                  "min": 30
+                },
+                {
+                  "text": "✍️ Spaced rep dag 3: Q4 delayslots kort",
+                  "min": 20
+                },
+                {
+                  "text": "Update spiekblad Q6",
+                  "min": 10
+                }
+              ]
+            }
           ]
         },
         {
-          "weekday": "Za", "dateDisplay": "23 mei", "isoDate": "2026-05-23",
-          "tag": "t-q5", "tagText": "Q5",
+          "weekday": "Wo",
+          "dateDisplay": "27 mei",
+          "isoDate": "2026-05-27",
+          "tag": "t-q2",
+          "tagText": "Q2 CVG/Stapel",
           "sessions": [
-            { "title": "Q5: Caches — Theorie & adresanalyse", "time": "9–10u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Lees STUDIEHULP: sectie Q5 volledig (adresanalyse, soorten missers, AMAT)", "min": 15 },
-              { "text": "Oefen adresanalyse: gegeven 2WSA 32KiB blokgrootte 64B → hoeveel T/I/O bits bij 32-bit adres?", "min": 10 },
-              { "text": "Oefen adresanalyse: gegeven 4WSA 256KiB blokgrootte 32B → T/I/O bits bij 32-bit adres?", "min": 10 },
-              { "text": "Doe de adresbitsvraag van examen 2022 (13-bit adres, 2WSA, 8 bytes/blok)", "min": 10 },
-              { "text": "Doe de adresbitsvraag van examen 2024 (16-bit adres, 4WSA, 4 bytes/blok)", "min": 10 }
-            ]},
-            { "title": "☕ Pauze", "time": "10–10:15u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Q5: Treffer/misser bepalen", "time": "10:15–11:15u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Doe de treffer/misser tabel van examen 2022 (4 adressen: 0AEE, 1D74, 155A, 1C87)", "min": 25 },
-              { "text": "Doe de treffer/misser tabel van examen 2024 (mov eax [0AEC], mov bx [1D42], ...)", "min": 20 },
-              { "text": "Bereken de hitrate voor het bereik 1080–109F", "min": 10 }
-            ]}
+            {
+              "title": "Q2: Controleverloopgraaf (CVG)",
+              "time": "14:30–15:15u",
+              "dur": "45 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees STUDIEHULP CVG stappenplan",
+                  "min": 10
+                },
+                {
+                  "text": "Teken CVG van bc-code (examen 2025)",
+                  "min": 20
+                },
+                {
+                  "text": "Teken CVG van product-code (examen 2023)",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "15:15–15:30u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "Q2: Stapel + Q5 spaced",
+              "time": "15:30–16:30u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Teken stapel voor bc(3,1) op maximale diepte",
+                  "min": 20
+                },
+                {
+                  "text": "Teken stapel voor product(3,5)",
+                  "min": 15
+                },
+                {
+                  "text": "✍️ Spaced rep: Q5 cache oefening uit het hoofd",
+                  "min": 25
+                }
+              ]
+            }
           ]
         },
         {
-          "weekday": "Zo", "dateDisplay": "24 mei", "isoDate": "2026-05-24",
-          "tag": "t-q5", "tagText": "Q5 Missers",
+          "weekday": "Do",
+          "dateDisplay": "28 mei",
+          "isoDate": "2026-05-28",
+          "tag": "t-review",
+          "tagText": "Review Q1-Q3",
           "sessions": [
-            { "title": "Q5: Soorten missers & AMAT", "time": "10–11u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Doe de lus-cachevraag van examen 2021 (DM + 2WSA + 4WSA + volledig associatief)", "min": 35 },
-              { "text": "Identificeer voor elk: koude / capaciteits / conflictmissers", "min": 10 },
-              { "text": "Tel hits, misses en write-backs", "min": 10 }
-            ]},
-            { "title": "☕ Pauze", "time": "11–11:15u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Q5: AMAT + 2-niveau cache", "time": "11:15–12u", "dur": "40 min", "isBreak": false, "tasks": [
-              { "text": "Doe de AMAT-oefening uit de oefentool", "min": 10 },
-              { "text": "Doe Q5 van examen 2023: L1+L2 missers + AMAT voor lus A en B", "min": 30 }
-            ]},
-            { "title": "☕ Middagpauze", "time": "12–15u", "dur": "", "isBreak": true, "tasks": [] },
-            { "title": "Q4 herhaling ⟳", "time": "15–15:30u", "dur": "30 min", "isBreak": false, "tasks": [
-              { "text": "Doe de delayslots van examen 2021 opnieuw (zonder te kijken naar vorige poging)", "min": 30 }
-            ]}
+            {
+              "title": "Review Q1+Q2+Q3 — spaced rep dag 7",
+              "time": "14:30–15:15u",
+              "dur": "45 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Q1: hex→bfloat16 oefening uit het hoofd",
+                  "min": 15
+                },
+                {
+                  "text": "Q2: argumentregisters + 1 mini-trace",
+                  "min": 15
+                },
+                {
+                  "text": "Q3: K-map oefening (4 vars)",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "15:15–15:30u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "Q1-Q3 zwakke punten gerichte oefening",
+              "time": "15:30–16:30u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Identificeer wat nog steeds onzeker is",
+                  "min": 10
+                },
+                {
+                  "text": "Doe 2 oefeningen op zwakste punt",
+                  "min": 35
+                },
+                {
+                  "text": "Update spiekblaadjes",
+                  "min": 15
+                }
+              ]
+            }
           ]
         },
         {
-          "weekday": "Ma", "dateDisplay": "25 mei", "isoDate": "2026-05-25",
-          "tag": "t-q6", "tagText": "Q6",
+          "weekday": "Vr",
+          "dateDisplay": "29 mei",
+          "isoDate": "2026-05-29",
+          "tag": "t-mock",
+          "tagText": "Mock 1",
           "sessions": [
-            { "title": "Q6: Actuele trends bestuderen", "time": "9–9:45u", "dur": "40 min", "isBreak": false, "tasks": [
-              { "text": "Lees de Q6-tabel in STUDIEHULP (alle begrippen 2021-2025)", "min": 10 },
-              { "text": "Maak voor elk begrip een korte eigen definitie (1-2 zinnen) op papier", "min": 20 },
-              { "text": "Doe alle Q6-vragen in de oefentool", "min": 10 }
-            ]},
-            { "title": "☕ Pauze", "time": "9:45–10u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Q2 herhaling ⟳ (spaced dag 7-9)", "time": "10–11u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Teken de CVG van fun(27) van examen 2024 (switch met sprongtabel) volledig", "min": 25 },
-              { "text": "Teken de stapel voor fun(27) op maximale diepte", "min": 20 },
-              { "text": "Controleer: zijn alle labels geïdentificeerd als blokgrenzen?", "min": 10 }
-            ]}
+            {
+              "title": "Mock 1: gefilterd op Q1-Q3 (examen 2021)",
+              "time": "14:30–16:00u",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Maak alleen Q1-Q3 vragen van examen 2021, getimed",
+                  "min": 75
+                },
+                {
+                  "text": "Snel nakijken oplossing",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "16:00–16:15u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "Reflectie + zwakke-lijst update",
+              "time": "16:15–16:30u",
+              "dur": "15 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Wat ging fout? Update spiekblad",
+                  "min": 15
+                }
+              ]
+            }
           ]
         },
         {
-          "weekday": "Di", "dateDisplay": "26 mei", "isoDate": "2026-05-26",
-          "tag": "t-exam", "tagText": "Examen",
+          "weekday": "Za",
+          "dateDisplay": "30 mei",
+          "isoDate": "2026-05-30",
+          "tag": "t-review",
+          "tagText": "Review Q4-Q6",
           "sessions": [
-            { "title": "🏁 Eerste volledig examen (GETIMED): 2021", "time": "9–12u", "dur": "3 uur", "isBreak": false, "tasks": [
-              { "text": "Zet een timer op 3 uur. Open examenca2021.pdf. Werk ALLES op papier.", "min": 180 },
-              { "text": "Na de timer: noteer per vraag hoe lang je bezig was", "min": 5 }
-            ]},
-            { "title": "☕ Lange pauze", "time": "12–15u", "dur": "", "isBreak": true, "tasks": [] },
-            { "title": "Examen 2021 nakijken", "time": "15–16u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Kijk Q1 na — noteer foutieve omzettingen", "min": 10 },
-              { "text": "Kijk Q2 na — was de functiewaarde correct? CVG? Stapel?", "min": 15 },
-              { "text": "Kijk Q3+Q4+Q5 na — noteer per vraag je zwakste punt", "min": 20 },
-              { "text": "Maak een lijst van 'te herhalen' topics", "min": 10 }
-            ]}
+            {
+              "title": "Review Q4+Q5+Q6 — spaced rep",
+              "time": "14:30–15:15u",
+              "dur": "45 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Q4 sprongvoorspellers (1-bit + 2-bit) snel",
+                  "min": 15
+                },
+                {
+                  "text": "Q5 AMAT oefening uit het hoofd",
+                  "min": 15
+                },
+                {
+                  "text": "Q6 paging stappenplan recall",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "15:15–15:30u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "Q4 Voorspellers (gshare) + microcode intro",
+              "time": "15:30–16:30u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Doe globale voorspeller (gshare) oefening",
+                  "min": 25
+                },
+                {
+                  "text": "Lees microcode sectie (nieuw in 2025)",
+                  "min": 20
+                },
+                {
+                  "text": "Update spiekblad Q4",
+                  "min": 15
+                }
+              ]
+            }
           ]
         }
       ]
     },
     {
-      "label": "Week 3 — Examenpraktijk",
-      "subtitle": "Volledige examens getimed + gerichte herhaling",
+      "label": "Week 3 — Mocks finale (Ma 1 → Wo 3 jun)",
+      "subtitle": "Volledige examens onder tijdsdruk",
       "days": [
         {
-          "weekday": "Wo", "dateDisplay": "27 mei", "isoDate": "2026-05-27",
-          "tag": "t-review", "tagText": "Review",
+          "weekday": "Ma",
+          "dateDisplay": "1 jun",
+          "isoDate": "2026-06-01",
+          "tag": "t-mock",
+          "tagText": "Mock 2",
           "sessions": [
-            { "title": "Zwakke punten van examen 2021 aanpakken", "time": "9–10u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Kies het zwakste punt van gisteren — oefen dat gedurende 45 min", "min": 45 },
-              { "text": "Doe een gelijksoortige oefening daarna om te bevestigen", "min": 10 }
-            ]},
-            { "title": "☕ Pauze", "time": "10–10:15u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Q5 herhaling ⟳ + cacheparameters afleiden", "time": "10:15–11u", "dur": "40 min", "isBreak": false, "tasks": [
-              { "text": "Doe Q5 van examen 2025: leid blokgrootte, associativiteit, #sets af uit de adresstroom", "min": 30 },
-              { "text": "Controleer: klopt elke stap van je redenering?", "min": 10 }
-            ]}
+            {
+              "title": "Mock 2: examen 2022 volledig (gefilterd 2u)",
+              "time": "14:30–16:30u",
+              "dur": "120 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Maak examen 2022, getimed 2u (geen pauze)",
+                  "min": 105
+                },
+                {
+                  "text": "Stop op tijd, noteer hoever je bent",
+                  "min": 5
+                },
+                {
+                  "text": "Nakijken — fouten per Q noteren",
+                  "min": 10
+                }
+              ]
+            }
           ]
         },
         {
-          "weekday": "Do", "dateDisplay": "28 mei", "isoDate": "2026-05-28",
-          "tag": "t-exam", "tagText": "Examen",
+          "weekday": "Di",
+          "dateDisplay": "2 jun",
+          "isoDate": "2026-06-02",
+          "tag": "t-review",
+          "tagText": "Zwakke plekken",
           "sessions": [
-            { "title": "🏁 Volledig examen (GETIMED): 2022", "time": "9–12u", "dur": "3 uur", "isBreak": false, "tasks": [
-              { "text": "Timer 3u. Open examenca2022.pdf. Alles op papier, geen hulpmiddelen.", "min": 180 }
-            ]},
-            { "title": "☕ Lange pauze", "time": "12–15u", "dur": "", "isBreak": true, "tasks": [] },
-            { "title": "Examen 2022 nakijken", "time": "15–16u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Nakijken en noteren per vraag: correct / gedeeltelijk / verkeerd", "min": 30 },
-              { "text": "Focus: was de Karnaugh XOR-van-producten duidelijk? Was VLIW correct?", "min": 15 },
-              { "text": "Update je 'zwakke punten' lijst", "min": 10 }
-            ]}
+            {
+              "title": "Zwakke punten gericht oefenen",
+              "time": "14:30–15:15u",
+              "dur": "45 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Maak 2 oefeningen op de zwakste Q van mock 2",
+                  "min": 30
+                },
+                {
+                  "text": "Doe theorie-recall van zwakste topic",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "15:15–15:30u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "Q4 microcode + Q6 trends — laatste sweep",
+              "time": "15:30–16:30u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees microcode + 1 oefening",
+                  "min": 30
+                },
+                {
+                  "text": "Q6 actuele trends overview",
+                  "min": 20
+                },
+                {
+                  "text": "Spiekblaadjes consolideren",
+                  "min": 10
+                }
+              ]
+            }
           ]
         },
         {
-          "weekday": "Vr", "dateDisplay": "29 mei", "isoDate": "2026-05-29",
-          "tag": "t-review", "tagText": "Review",
+          "weekday": "Wo",
+          "dateDisplay": "3 jun",
+          "isoDate": "2026-06-03",
+          "tag": "t-mock",
+          "tagText": "Mock 3",
           "sessions": [
-            { "title": "Gerichte herhaling Q3: Karnaugh + XOR-methode", "time": "9–10u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Doe de 2x2 vermenigvuldiger Karnaugh van examen 2022 opnieuw", "min": 20 },
-              { "text": "Probeer XOR-van-producten toe te passen voor c3 en c2", "min": 20 },
-              { "text": "Teken de meest eenvoudige schakeling", "min": 15 }
-            ]},
-            { "title": "☕ Pauze", "time": "10–10:15u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Spaced repetition alle topics ⟳", "time": "10:15–11u", "dur": "40 min", "isBreak": false, "tasks": [
-              { "text": "Q1: doe 2 willekeurige conversies zonder te kijken", "min": 10 },
-              { "text": "Q2: traceer een functie naar keuze (F(3) of product(3,5))", "min": 15 },
-              { "text": "Q6: leg mondeling 5 begrippen uit (PUE, green AI, hyperscaler, AMAT, Dennard)", "min": 15 }
-            ]}
-          ]
-        },
-        {
-          "weekday": "Za", "dateDisplay": "30 mei", "isoDate": "2026-05-30",
-          "tag": "t-exam", "tagText": "Examen",
-          "sessions": [
-            { "title": "🏁 Volledig examen (GETIMED): 2023", "time": "9–12u", "dur": "3 uur", "isBreak": false, "tasks": [
-              { "text": "Timer 3u. Open examenca2023.pdf. Alles op papier.", "min": 180 }
-            ]},
-            { "title": "☕ Lange pauze", "time": "12–15u", "dur": "", "isBreak": true, "tasks": [] },
-            { "title": "Examen 2023 nakijken", "time": "15–16u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Nakijken met focus op carry-save opteller (Q3) en L1/L2 AMAT (Q5)", "min": 35 },
-              { "text": "Noteer: welke vraag kostte het meeste tijd?", "min": 10 },
-              { "text": "Pas je tijdsstrategie aan voor de volgende examens", "min": 10 }
-            ]}
-          ]
-        },
-        {
-          "weekday": "Zo", "dateDisplay": "31 mei", "isoDate": "2026-05-31",
-          "tag": "t-review", "tagText": "Rust + herhaling",
-          "sessions": [
-            { "title": "Lichte herhaling — geen nieuwe stof", "time": "10–10:30u", "dur": "30 min", "isBreak": false, "tasks": [
-              { "text": "Oefentool: doe 5 willekeurige vragen (gemengd)", "min": 20 },
-              { "text": "Schrijf 3 dingen op die je nog niet zeker bent", "min": 10 }
-            ]},
-            { "title": "☕ Rust", "time": "rest", "dur": "", "isBreak": true, "tasks": [] }
-          ]
-        },
-        {
-          "weekday": "Ma", "dateDisplay": "1 juni", "isoDate": "2026-06-01",
-          "tag": "t-q4", "tagText": "Q4 Microcode",
-          "sessions": [
-            { "title": "Q4: Microcodering (nieuw in 2025)", "time": "9–10u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Lees over microcodering in de cursusslides (ca4 of ca5)", "min": 15 },
-              { "text": "Bekijk de microcodeblad-structuur van examen 2025", "min": 10 },
-              { "text": "Implementeer 'call <offset>' in microcode (doel: PC + offset, push return addr)", "min": 20 },
-              { "text": "Implementeer 'ret' in microcode (doel: pop return addr naar PC)", "min": 10 }
-            ]},
-            { "title": "☕ Pauze", "time": "10–10:15u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Q5 herhaling ⟳ (spaced dag 14)", "time": "10:15–11u", "dur": "40 min", "isBreak": false, "tasks": [
-              { "text": "Doe de complete cache-analyse van examen 2021 opnieuw (4 caches)", "min": 30 },
-              { "text": "Vergelijk met eerste poging: wat is verbeterd?", "min": 10 }
-            ]}
+            {
+              "title": "Mock 3: examen 2023 (gefilterd 2u)",
+              "time": "14:30–16:30u",
+              "dur": "120 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Maak examen 2023, getimed 2u",
+                  "min": 105
+                },
+                {
+                  "text": "Nakijken + foutenanalyse",
+                  "min": 15
+                }
+              ]
+            }
           ]
         }
       ]
     },
     {
-      "label": "Week 4 — Consolidatie",
-      "subtitle": "Examens 2024-2025, timing finaliseren, rust",
+      "label": "Sprint na MM (Do 4 → Zo 7 jun)",
+      "subtitle": "All-in op CA — geen ander vak",
       "days": [
         {
-          "weekday": "Di", "dateDisplay": "2 juni", "isoDate": "2026-06-02",
-          "tag": "t-exam", "tagText": "Examen",
+          "weekday": "Do",
+          "dateDisplay": "4 jun",
+          "isoDate": "2026-06-04",
+          "tag": "t-review",
+          "tagText": "MM examen + CA lichte review",
           "sessions": [
-            { "title": "🏁 Volledig examen (GETIMED): 2024", "time": "9–12u", "dur": "3 uur", "isBreak": false, "tasks": [
-              { "text": "Timer 3u. Open examenca2024.pdf. Alles op papier.", "min": 180 }
-            ]},
-            { "title": "☕ Lange pauze", "time": "12–15u", "dur": "", "isBreak": true, "tasks": [] },
-            { "title": "Examen 2024 nakijken", "time": "15–16u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Nakijken met focus op globale sprongvoorspeller (Q4) en CMOS (Q3)", "min": 35 },
-              { "text": "Bereken je 'score': hoeveel punten zou je hebben gehaald (op 20)?", "min": 10 },
-              { "text": "Noteer resterende zwakke punten", "min": 10 }
-            ]}
+            {
+              "title": "🍃 MM examen 08:30-12:30 — rust namiddag",
+              "time": "08:30-15:30u",
+              "dur": "",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "CA lichte review (lichte stof)",
+              "time": "16:00–18:00u",
+              "dur": "120 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Doorblader alle spiekblaadjes Q1-Q6",
+                  "min": 30
+                },
+                {
+                  "text": "Quick-fire flashcards CA",
+                  "min": 30
+                },
+                {
+                  "text": "Geen oefeningen vandaag — rust voor brein",
+                  "min": 0
+                },
+                {
+                  "text": "Identificeer 2 zwakste Q voor morgen",
+                  "min": 30
+                },
+                {
+                  "text": "Materiaal klaarleggen voor sprint",
+                  "min": 30
+                }
+              ]
+            }
           ]
         },
         {
-          "weekday": "Wo", "dateDisplay": "3 juni", "isoDate": "2026-06-03",
-          "tag": "t-review", "tagText": "Review",
+          "weekday": "Vr",
+          "dateDisplay": "5 jun",
+          "isoDate": "2026-06-05",
+          "tag": "t-q1",
+          "tagText": "All-day Q1-Q6",
           "sessions": [
-            { "title": "Gerichte herhaling — resterende zwakke punten", "time": "9–10u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Kies je 2 zwakste punten en oefen die elk 25 minuten", "min": 50 },
-              { "text": "Snel zelftest: doe een mini-variant van elke vraag", "min": 5 }
-            ]},
-            { "title": "☕ Pauze", "time": "10–10:15u", "dur": "15 min", "isBreak": true, "tasks": [] },
-            { "title": "Tijdsmanagement oefenen", "time": "10:15–11u", "dur": "40 min", "isBreak": false, "tasks": [
-              { "text": "Doe Q1+Q2 van examen 2019 op tijd: maximaal 30 minuten voor beide samen", "min": 30 },
-              { "text": "Was dat haalbaar? Wat vertraagde je?", "min": 10 }
-            ]}
+            {
+              "title": "Q1-Q3 sweep (alle oude examens snel)",
+              "time": "9–10:30u",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Q1 van examen 2022-2025 snel doorlopen",
+                  "min": 30
+                },
+                {
+                  "text": "Q2 van examen 2021-2024 functiewaarde + CVG",
+                  "min": 30
+                },
+                {
+                  "text": "Q3 K-map van examen 2023-2025",
+                  "min": 30
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10:30–10:45u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "Q4-Q6 sweep",
+              "time": "10:45–12:30u",
+              "dur": "105 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Q4 sprongvoorspellers + VLIW alle examens",
+                  "min": 35
+                },
+                {
+                  "text": "Q5 cache + AMAT van 2022-2025",
+                  "min": 35
+                },
+                {
+                  "text": "Q6 virtueel geheugen + trends",
+                  "min": 35
+                }
+              ]
+            },
+            {
+              "title": "🍽️ Middagpauze",
+              "time": "12:30–14:00u",
+              "dur": "",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "Zwakke plekken intensief",
+              "time": "14:00–16:00u",
+              "dur": "120 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Top-3 zwakste Q's — per Q 2 oefeningen",
+                  "min": 90
+                },
+                {
+                  "text": "Nakijken + spiekblad update",
+                  "min": 30
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "16:00–16:30u",
+              "dur": "30 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "Spiekblaadjes consolideren",
+              "time": "16:30–17:30u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Schrijf 1 grote samenvatting Q1-Q6 (1 A4)",
+                  "min": 45
+                },
+                {
+                  "text": "Quick-fire alles uit het hoofd",
+                  "min": 15
+                }
+              ]
+            }
           ]
         },
         {
-          "weekday": "Do", "dateDisplay": "4 juni", "isoDate": "2026-06-04",
-          "tag": "t-exam", "tagText": "Examen",
+          "weekday": "Za",
+          "dateDisplay": "6 jun",
+          "isoDate": "2026-06-06",
+          "tag": "t-mock",
+          "tagText": "Mock 4 + Mock 5",
           "sessions": [
-            { "title": "🏁 Volledig examen (GETIMED): 2025", "time": "9–12u", "dur": "3 uur", "isBreak": false, "tasks": [
-              { "text": "Timer 3u. Open examenca2025.pdf. Dit is het meest recente examen — gebruik het als finale test.", "min": 180 }
-            ]},
-            { "title": "☕ Lange pauze", "time": "12–15u", "dur": "", "isBreak": true, "tasks": [] },
-            { "title": "Examen 2025 nakijken + eindscore", "time": "15–16u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Nakijken volledig", "min": 30 },
-              { "text": "Bereken score op 20 — streef je target?", "min": 5 },
-              { "text": "Maak een definitieve lijst: wat neem je mee als spieker? (mag bij open boek)", "min": 20 }
-            ]}
+            {
+              "title": "🏁 Mock 4: examen 2024 volledig",
+              "time": "9–12u",
+              "dur": "3u",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Maak examen 2024 volledig, 3u getimed",
+                  "min": 180
+                }
+              ]
+            },
+            {
+              "title": "🍽️ Middagpauze + nakijken",
+              "time": "12–14u",
+              "dur": "",
+              "isBreak": true,
+              "tasks": [
+                {
+                  "text": "Nakijken examen 2024, fouten per Q noteren",
+                  "min": 60
+                }
+              ]
+            },
+            {
+              "title": "🏁 Mock 5: examen 2025 volledig",
+              "time": "14:30–17:30u",
+              "dur": "3u",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Maak examen 2025, getimed 3u",
+                  "min": 180
+                }
+              ]
+            },
+            {
+              "title": "Eindscore + debriefing",
+              "time": "17:30–18:00u",
+              "dur": "30 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Nakijken + finale fouten-lijst",
+                  "min": 20
+                },
+                {
+                  "text": "Vergelijk mock 4 + 5: trend?",
+                  "min": 10
+                }
+              ]
+            }
           ]
         },
         {
-          "weekday": "Vr", "dateDisplay": "5 juni", "isoDate": "2026-06-05",
-          "tag": "t-review", "tagText": "Organiseren",
+          "weekday": "Zo",
+          "dateDisplay": "7 jun",
+          "isoDate": "2026-06-07",
+          "tag": "t-rest",
+          "tagText": "Buffer + lichte prep",
           "sessions": [
-            { "title": "Open boek materiaal organiseren", "time": "9–10u", "dur": "55 min", "isBreak": false, "tasks": [
-              { "text": "Druk STUDIEHULP_CA.md af of open hem makkelijk op tablet/laptop", "min": 5 },
-              { "text": "Maak een persoonlijk 'spiekblad' met formules die je steeds vergeet", "min": 30 },
-              { "text": "Sorteer je materiaal: slides, examens, notities — weet wat waar staat", "min": 20 }
-            ]},
-            { "title": "☕ Pauze + lichte herhaling", "time": "10–10:45u", "dur": "45 min", "isBreak": false, "tasks": [
-              { "text": "Oefentool: doe 10 vragen (gemengd) — ga niet verder dan dit vandaag", "min": 30 },
-              { "text": "Stop na 45 minuten — rust is nu ook studeren", "min": 0 }
-            ]}
+            {
+              "title": "Lichte herhaling — max 2u, geen nieuwe stof",
+              "time": "10–12u",
+              "dur": "120 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Doorblader 1-A4 samenvatting",
+                  "min": 20
+                },
+                {
+                  "text": "Quick-fire flashcards CA",
+                  "min": 20
+                },
+                {
+                  "text": "Visualiseer een rustig examen",
+                  "min": 10
+                },
+                {
+                  "text": "Materiaal klaarleggen (ID, pen, water, eventueel spiekblad als toegestaan)",
+                  "min": 30
+                },
+                {
+                  "text": "Slaap-protocol: vroeg eten, geen schermen na 21u",
+                  "min": 20
+                },
+                {
+                  "text": "Mentale rust",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "🛌 Vrije middag + vroeg slapen",
+              "time": "vanaf 12u",
+              "dur": "",
+              "isBreak": true,
+              "tasks": []
+            }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "label": "Examen",
+      "days": [
         {
-          "weekday": "Za", "dateDisplay": "6 juni", "isoDate": "2026-06-06",
-          "tag": "t-review", "tagText": "Lichte herhaling",
+          "weekday": "Ma",
+          "dateDisplay": "8 jun",
+          "isoDate": "2026-06-08",
+          "tag": "t-exam",
+          "tagText": "EXAMEN",
           "sessions": [
-            { "title": "Alleen lichte herhaling — geen nieuw materiaal", "time": "9–9:30u", "dur": "30 min", "isBreak": false, "tasks": [
-              { "text": "Lees je persoonlijk spiekblad door", "min": 10 },
-              { "text": "Doe 3 Q1-omzettingen in je hoofd", "min": 10 },
-              { "text": "Reviseer de IEEE 754 formule één keer", "min": 10 }
-            ]},
-            { "title": "🛌 Rust — goede nacht is cruciaal voor geheugenconsolidatie", "time": "rest", "dur": "", "isBreak": true, "tasks": [] }
-          ]
-        },
-        {
-          "weekday": "Zo", "dateDisplay": "7 juni", "isoDate": "2026-06-07",
-          "tag": "t-review", "tagText": "Lichte prep",
-          "sessions": [
-            { "title": "Minimale opfrissing — max 30 min", "time": "9–9:30u", "dur": "30 min", "isBreak": false, "tasks": [
-              { "text": "Blader door je spiekblad — lees enkel, maak niets", "min": 15 },
-              { "text": "Denk na over tijdsstrategie morgen: ~28 min per vraag, begin bij Q1 of Q6", "min": 10 },
-              { "text": "Zorg dat je materiaal klaarstaat voor het examen", "min": 5 }
-            ]},
-            { "title": "🛌 Rust — geheugen consolideert 's nachts", "time": "rest", "dur": "", "isBreak": true, "tasks": [] }
-          ]
-        },
-        {
-          "weekday": "Ma", "dateDisplay": "8 juni", "isoDate": "2026-06-08",
-          "tag": "t-exam", "tagText": "EXAMEN",
-          "sessions": [
-            { "title": "🎯 EXAMEN COMPUTERARCHITECTUUR — 08:30–12:30", "time": "08:30", "dur": "4 uur", "isBreak": false, "tasks": [
-              { "text": "Lees eerst alle vragen door (3 min)", "min": 3 },
-              { "text": "Begin met de makkelijkste (Q1 of Q6)", "min": 5 },
-              { "text": "~28 minuten per vraag — houd de tijd bij", "min": 0 },
-              { "text": "Controleer je werk in de laatste 10 minuten", "min": 10 },
-              { "text": "Veel succes! 🍀", "min": 0 }
-            ]}
+            {
+              "title": "🎯 EXAMEN COMPUTERARCHITECTUUR — 08:30–12:30",
+              "time": "08:30",
+              "dur": "4 uur",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Diepe ademhaling. 6 vragen, één per keer. Succes!",
+                  "min": 0
+                }
+              ]
+            },
+            {
+              "title": "🍃 Lunch + rust — daarna WR intro 16-18u",
+              "time": "13u+",
+              "dur": "",
+              "isBreak": true,
+              "tasks": []
+            }
           ]
         }
       ]
