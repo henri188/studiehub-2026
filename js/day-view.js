@@ -20,6 +20,43 @@
     try { return JSON.parse(localStorage.getItem(key)) || {}; } catch (e) { return {}; }
   }
 
+  // ── Tijdherkenning ────────────────────────────────────────────────────────
+  function nowMinutes() {
+    var n = new Date();
+    return n.getHours() * 60 + n.getMinutes();
+  }
+
+  function parseTimeRange(str) {
+    if (!str) return null;
+    // Matcht "14:30–15:15u" (en-dash) of "14:30-15:15u" (koppelteken)
+    var m = str.match(/(\d{1,2}):(\d{2})[–\-](\d{1,2}):(\d{2})/);
+    if (!m) return null;
+    return {
+      start: parseInt(m[1]) * 60 + parseInt(m[2]),
+      end:   parseInt(m[3]) * 60 + parseInt(m[4]),
+    };
+  }
+
+  function sessionStatus(timeStr) {
+    var r = parseTimeRange(timeStr);
+    var now = nowMinutes();
+    if (!r) return 'none';
+    if (now >= r.start && now < r.end) return 'now';
+    if (now < r.start) return 'upcoming';
+    return 'past';
+  }
+
+  function findCurrentSessIdx(sessions) {
+    // Zoek eerste actieve sessie; als geen, eerste toekomstige
+    var firstUpcoming = -1;
+    for (var i = 0; i < sessions.length; i++) {
+      var s = sessions[i].time ? sessionStatus(sessions[i].time) : 'none';
+      if (s === 'now') return i;
+      if (s === 'upcoming' && firstUpcoming === -1) firstUpcoming = i;
+    }
+    return firstUpcoming; // -1 als alles voorbij
+  }
+
   function persist(planId) {
     var s = _store[planId];
     if (!s) return;
@@ -95,6 +132,7 @@
       + '</div>'
       + '</div>';
 
+    var autoOpenIdx = findCurrentSessIdx(day.sessions);
     day.sessions.forEach(function (sess, si) {
       if (sess.isBreak && !sess.tasks.length) {
         var t = (sess.time && sess.time !== 'rest') ? sess.time + ' — ' : '';
@@ -103,9 +141,15 @@
       }
 
       var sessId = 'sess_' + wi + '_' + di + '_' + si;
-      var isOpen = (state['open_' + sessId] !== undefined)
-        ? state['open_' + sessId]
-        : (si === 0);
+      var status = sess.time ? sessionStatus(sess.time) : 'none';
+      var isNow  = status === 'now';
+
+      var isOpen;
+      if (state['open_' + sessId] !== undefined) {
+        isOpen = state['open_' + sessId];
+      } else {
+        isOpen = (autoOpenIdx === -1 ? si === 0 : si === autoOpenIdx);
+      }
 
       var sessDone = 0;
       sess.tasks.forEach(function (_, ti) {
@@ -113,9 +157,10 @@
       });
       var complete = sess.tasks.length > 0 && sessDone === sess.tasks.length;
 
-      html += '<div class="session">'
+      html += '<div class="session' + (isNow ? ' session-now' : '') + '">'
         + '<div class="session-header" onclick="dvToggleSession(\'' + planId + '\',\'' + sessId + '\',this)">'
         + (sess.time ? '<span class="time-badge">' + sess.time + '</span>' : '')
+        + (isNow ? '<span class="session-now-badge">nu</span>' : '')
         + '<span class="session-title"' + (complete ? ' data-complete="true"' : '') + '>'
         + (complete ? '&#10003; ' : '') + sess.title + '</span>'
         + (sess.dur ? '<span class="session-dur">' + sess.dur + '</span>' : '')
