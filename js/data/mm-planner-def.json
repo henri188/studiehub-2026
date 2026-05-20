@@ -1,0 +1,1091 @@
+{
+  "id": "mm",
+  "title": "Multimedia Studieplanner",
+  "subtitle": "MM — primaire ochtendslots (9:00–12:45) + examen",
+  "description": "Master-gesync planner Multimedia: 13 ochtendslots (20 mei → 3 jun) + examen 4 jun. CA loopt parallel in namiddag — zie ca-planner. Zondag = buffer (geen MM).",
+  "accent": "var(--cinnabar)",
+  "stateKey": "mm_planner_v2",
+  "firestoreKey": "mm",
+  "examDate": "2026-06-04",
+  "renderTask": "simple",
+  "typeMap": null,
+  "weekIndex": {
+    "mode": "boundaries",
+    "dates": [
+      "2026-05-20",
+      "2026-05-25",
+      "2026-06-01",
+      "2026-06-04",
+      "2026-06-05"
+    ],
+    "default": 2
+  },
+  "scienceStrip": [
+    {
+      "strong": "🌅 9–12:45u: MM piekslot",
+      "text": "Nieuwe stof / harde oefeningen — hoofdvak van de fase"
+    },
+    {
+      "strong": "🍽️ 13–14:30u: middagpauze",
+      "text": "Wandeling, eten, géén stof"
+    },
+    {
+      "strong": "📐 14:30–16:30u: CA review",
+      "text": "Secundair vak in tweede piek — zie ca-planner"
+    },
+    {
+      "strong": "📆 Spaced repetition",
+      "text": "H1-H4 reviewed dag 29 mei · H5-H7 dag 30 mei"
+    },
+    {
+      "strong": "🌙 Geen MM na 17u",
+      "text": "Avond = vrij of lichte CA flashcards"
+    }
+  ],
+  "examNote": "<b>📝 Examen MM</b> — Do 4 jun 08:30–12:30, schriftelijk, gesloten boek. Op 3 jun max 2u lichte herhaling, dan vroeg slapen.",
+  "weeks": [
+    {
+      "label": "Week 1 — Eerste doorloop H1–H5",
+      "subtitle": "Wo 20 mei → Za 23 mei · ochtend MM, namiddag CA",
+      "days": [
+        {
+          "weekday": "Wo",
+          "dateDisplay": "20 mei",
+          "isoDate": "2026-05-20",
+          "tag": "t-q1",
+          "tagText": "H1+H2",
+          "sessions": [
+            {
+              "title": "📖 H1: Intro & basisconcepten compressie",
+              "time": "9–9:50u",
+              "dur": "50 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees H1 syllabus volledig",
+                  "min": 25
+                },
+                {
+                  "text": "Schrijf 3 kernconcepten op een blaadje (definities)",
+                  "min": 10
+                },
+                {
+                  "text": "Map H1 op de cursusstructuur (begrip waar H1 hoort)",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Korte pauze",
+              "time": "9:50–10:05u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "📖 H2 deel 1: Rasterafbeeldingen, 1-bit & 8-bit grijs",
+              "time": "10:05–11u",
+              "dur": "55 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees H2 t/m 8-bit grijs",
+                  "min": 25
+                },
+                {
+                  "text": "Bereken handmatig: hoeveel bytes neemt een 1024×768 8-bit grijs beeld in?",
+                  "min": 10
+                },
+                {
+                  "text": "Schrijf het verschil tussen rasterafbeelding en vectorafbeelding op",
+                  "min": 5
+                },
+                {
+                  "text": "Quick recall: noem 3 bestandsformaten en hun encoding",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "11–11:15u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "📖 H2 deel 2: 8-bit kleur, dithering, 24-bit, S3TC",
+              "time": "11:15–12:30u",
+              "dur": "75 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees rest H2 (dithering t/m S3TC)",
+                  "min": 30
+                },
+                {
+                  "text": "Teken een 4×4 dithering voorbeeld zelf uit",
+                  "min": 15
+                },
+                {
+                  "text": "Begrijp S3TC compressieratio en wanneer het gebruikt wordt",
+                  "min": 15
+                },
+                {
+                  "text": "Maak 1 flashcard per dithering-techniek",
+                  "min": 15
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Do",
+          "dateDisplay": "21 mei",
+          "isoDate": "2026-05-21",
+          "tag": "t-q1",
+          "tagText": "H3 Kleur",
+          "sessions": [
+            {
+              "title": "📖 H3 deel 1: Licht, kleurwaarneming, color matching",
+              "time": "9–10u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees H3 t/m color matching",
+                  "min": 30
+                },
+                {
+                  "text": "Begrijp waarom we 3 cone-types hebben",
+                  "min": 10
+                },
+                {
+                  "text": "Schrijf de color matching functies op (curves L, M, S)",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10–10:15u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "📖 H3 deel 2: CIE, chromaticiteitsdiagram, gamut",
+              "time": "10:15–11:15u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees CIE-sectie",
+                  "min": 25
+                },
+                {
+                  "text": "Teken zelf het CIE chromaticiteitsdiagram met sRGB + Adobe RGB gamut",
+                  "min": 20
+                },
+                {
+                  "text": "Wat is het verschil tussen CIE XYZ en CIE xy?",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "11:15–11:30u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "📖 H3 deel 3: Gamma, witpunt, YUV, chroma subsampling",
+              "time": "11:30–12:30u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees gamma + YUV + chroma subsampling",
+                  "min": 30
+                },
+                {
+                  "text": "Bereken: bandbreedte besparing van 4:2:0 vs 4:4:4",
+                  "min": 15
+                },
+                {
+                  "text": "Schrijf de YUV ↔ RGB conversie formule op een spiekblaadje",
+                  "min": 15
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Vr",
+          "dateDisplay": "22 mei",
+          "isoDate": "2026-05-22",
+          "tag": "t-q2",
+          "tagText": "H4 Video",
+          "sessions": [
+            {
+              "title": "📖 H4 deel 1: Analoge video",
+              "time": "9–10u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees H4 t/m analoge video",
+                  "min": 30
+                },
+                {
+                  "text": "PAL/NTSC/SECAM: schema met 3 belangrijkste verschillen",
+                  "min": 15
+                },
+                {
+                  "text": "Begrijp interlaced vs progressive scan",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10–10:15u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "📖 H4 deel 2: Digitale video & 3D video",
+              "time": "10:15–11:15u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees digitale + 3D video",
+                  "min": 30
+                },
+                {
+                  "text": "Bereken bandbreedte voor uncompressed HD video (1920×1080×24bit×60fps)",
+                  "min": 15
+                },
+                {
+                  "text": "Schrijf 3 3D-video technieken op",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "11:15–11:30u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "📖 H4 deel 3: Video-interfaces + ✍️ herhaling H3",
+              "time": "11:30–12:30u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees video-interfaces (HDMI, DisplayPort, SDI)",
+                  "min": 20
+                },
+                {
+                  "text": "✍️ Spaced rep dag 1: H3 sleutelconcepten zonder bron oproepen",
+                  "min": 25
+                },
+                {
+                  "text": "Maak 1 oefening uit oud examen over kleur/video",
+                  "min": 15
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Za",
+          "dateDisplay": "23 mei",
+          "isoDate": "2026-05-23",
+          "tag": "t-q2",
+          "tagText": "H5 Audio",
+          "sessions": [
+            {
+              "title": "📖 H5 deel 1: Digitalisering van audio, sampling",
+              "time": "9–10u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees H5 t/m sampling theorem",
+                  "min": 25
+                },
+                {
+                  "text": "Schrijf Nyquist theorem uit + 1 voorbeeld",
+                  "min": 15
+                },
+                {
+                  "text": "Wat is aliasing? Teken een voorbeeld",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10–10:15u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "📖 H5 deel 2: Quantisatie, μ-law, A-law, PCM",
+              "time": "10:15–11:15u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees quantisatie sectie",
+                  "min": 25
+                },
+                {
+                  "text": "Bereken SNR voor n-bit lineaire quantisatie",
+                  "min": 15
+                },
+                {
+                  "text": "Verschil μ-law vs A-law: kort uitleggen",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "11:15–11:30u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "📖 H5 deel 3: Predictive coding + ChapterA Psychoacoustics",
+              "time": "11:30–12:45u",
+              "dur": "75 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees DM, DPCM",
+                  "min": 20
+                },
+                {
+                  "text": "Lees ChapterA: Psychoacoustics & MPEG audio",
+                  "min": 30
+                },
+                {
+                  "text": "Schrijf de 3 lagen van MPEG-1 audio op + kort onderscheid",
+                  "min": 25
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Zo",
+          "dateDisplay": "24 mei",
+          "isoDate": "2026-05-24",
+          "tag": "t-rest",
+          "tagText": "BUFFER Week 1",
+          "sessions": [
+            {
+              "title": "⚪ BUFFER — inhalen of vrij",
+              "time": "vrij",
+              "dur": "",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "OPTIONEEL: inhalen wat blijft hangen uit week 1 (max 2u)",
+                  "min": 0
+                },
+                {
+                  "text": "OPTIONEEL: spiekblaadjes verfraaien voor H1-H5",
+                  "min": 0
+                }
+              ]
+            },
+            {
+              "title": "🛌 Vrije dag — herstel + sport + sociaal",
+              "time": "rest",
+              "dur": "",
+              "isBreak": true,
+              "tasks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Week 2 — H6, H7 JPEG + Proefexamens",
+      "subtitle": "Ma 25 mei → Za 30 mei (Zo 24 = buffer, Zo 31 = buffer)",
+      "days": [
+        {
+          "weekday": "Ma",
+          "dateDisplay": "25 mei",
+          "isoDate": "2026-05-25",
+          "tag": "t-q3",
+          "tagText": "H6 Compressie",
+          "sessions": [
+            {
+              "title": "📖 H6 deel 1: Entropie, RLC, Huffman",
+              "time": "9–10u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees H6 t/m Huffman",
+                  "min": 25
+                },
+                {
+                  "text": "Maak Huffman boom voor: a=0.5, b=0.25, c=0.125, d=0.125",
+                  "min": 20
+                },
+                {
+                  "text": "Bereken entropie van die verdeling en gemiddelde codelengte",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10–10:15u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "📖 H6 deel 2: Extended + Adaptive Huffman",
+              "time": "10:15–11:15u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees extended/adaptive Huffman",
+                  "min": 25
+                },
+                {
+                  "text": "Wanneer is adaptive Huffman beter? Schrijf 2 redenen op",
+                  "min": 15
+                },
+                {
+                  "text": "✍️ Spaced rep dag 1: H4 video begrippen recall",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "11:15–11:30u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "📖 H6 deel 3+4: LZW, Arithmetic, Lossless JPEG",
+              "time": "11:30–12:45u",
+              "dur": "75 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees LZW + arithmetic coding",
+                  "min": 30
+                },
+                {
+                  "text": "Codeer 'ABABABA' met LZW (handmatig)",
+                  "min": 20
+                },
+                {
+                  "text": "Lees Lossless JPEG + JPEG-LS",
+                  "min": 25
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Di",
+          "dateDisplay": "26 mei",
+          "isoDate": "2026-05-26",
+          "tag": "t-q3",
+          "tagText": "H7 JPEG",
+          "sessions": [
+            {
+              "title": "📖 H7 deel 1: RD-theorie, DCT",
+              "time": "9–10:05u",
+              "dur": "65 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees H7 t/m DCT",
+                  "min": 30
+                },
+                {
+                  "text": "Begrijp wat DCT doet op intuïtief niveau (energie compactie)",
+                  "min": 15
+                },
+                {
+                  "text": "Schrijf DCT formule op spiekblad",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10:05–10:20u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "📖 H7 deel 2: JPEG encoder pipeline",
+              "time": "10:20–11:25u",
+              "dur": "65 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees JPEG encoder volledig (DCT → quant → zigzag → entropy)",
+                  "min": 25
+                },
+                {
+                  "text": "Teken JPEG pipeline op één A4 blad",
+                  "min": 15
+                },
+                {
+                  "text": "Bereken voor een 8×8 blok: DC + AC waarden na quantisatie (voorbeeld syllabus)",
+                  "min": 25
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "11:25–11:40u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "📖 H7 deel 3: JPEG modi + JPEG2000 + ✍️ recall H6",
+              "time": "11:40–12:45u",
+              "dur": "65 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees JPEG progressive, hierarchical + JPEG2000 wavelets",
+                  "min": 25
+                },
+                {
+                  "text": "✍️ Spaced rep dag 1: H6 Huffman + LZW oefeningen",
+                  "min": 25
+                },
+                {
+                  "text": "Schrijf JPEG2000 vs JPEG verschillen op spiekblad",
+                  "min": 15
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Wo",
+          "dateDisplay": "27 mei",
+          "isoDate": "2026-05-27",
+          "tag": "t-mock",
+          "tagText": "Proefexamen 1",
+          "sessions": [
+            {
+              "title": "🧪 Proefexamen MM 2021 Exam 5 (volledig, met timer)",
+              "time": "9–10:30u",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Maak het examen volledig, gesimuleerde omstandigheden",
+                  "min": 90
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10:30–10:45u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "📖 Nakijken + gerichte herhaling",
+              "time": "10:45–12:30u",
+              "dur": "105 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Nakijken oplossing — schrijf bij elke fout WAAROM op",
+                  "min": 40
+                },
+                {
+                  "text": "Maak fouten-lijst (= studieprioriteit voor 28-30 mei)",
+                  "min": 15
+                },
+                {
+                  "text": "Gerichte herhaling 1 zwak hoofdstuk",
+                  "min": 30
+                },
+                {
+                  "text": "Update flashcards met fout-gerelateerde concepten",
+                  "min": 20
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Do",
+          "dateDisplay": "28 mei",
+          "isoDate": "2026-05-28",
+          "tag": "t-mock",
+          "tagText": "Proefexamen 2",
+          "sessions": [
+            {
+              "title": "🧪 Proefexamen MM 2021 Exam 4 (volledig, met timer)",
+              "time": "9–10:30u",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Volledig examen onder examenomstandigheden",
+                  "min": 90
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10:30–10:45u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "📖 Nakijken + review zwakke punten",
+              "time": "10:45–12:30u",
+              "dur": "105 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Nakijken + foutenanalyse",
+                  "min": 40
+                },
+                {
+                  "text": "Vergelijk fouten met examen 1 — patroon?",
+                  "min": 15
+                },
+                {
+                  "text": "Diepgaand herhalen top-2 zwak topics",
+                  "min": 40
+                },
+                {
+                  "text": "Spiekblaadjes updaten",
+                  "min": 10
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Vr",
+          "dateDisplay": "29 mei",
+          "isoDate": "2026-05-29",
+          "tag": "t-review",
+          "tagText": "Herhaling H1–H4",
+          "sessions": [
+            {
+              "title": "✍️ Spaced rep H1+H2 (raster, kleur)",
+              "time": "9–10u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Doe flashcards H1+H2 zonder bron",
+                  "min": 20
+                },
+                {
+                  "text": "Schrijf 3 examenvragen die je verwacht (zelf opstellen)",
+                  "min": 20
+                },
+                {
+                  "text": "Beantwoord die vragen uit het hoofd",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10–10:15u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "✍️ Spaced rep H3+H4 (kleur, video)",
+              "time": "10:15–11:30u",
+              "dur": "75 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Flashcards H3+H4",
+                  "min": 20
+                },
+                {
+                  "text": "Maak 2 H3 + 2 H4 oefeningen uit oud examen",
+                  "min": 35
+                },
+                {
+                  "text": "Nakijken + lacunes noteren",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "11:30–11:45u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "🧪 Proefexamen MM 2021 Exam 8 — gericht H1-H4",
+              "time": "11:45–12:45u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Maak alleen de H1-H4 vragen van examen 8",
+                  "min": 45
+                },
+                {
+                  "text": "Snel nakijken",
+                  "min": 15
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Za",
+          "dateDisplay": "30 mei",
+          "isoDate": "2026-05-30",
+          "tag": "t-review",
+          "tagText": "Herhaling H5–H7",
+          "sessions": [
+            {
+              "title": "✍️ Spaced rep H5+ChapterA (audio)",
+              "time": "9–10u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Flashcards H5 + psychoacoustics",
+                  "min": 20
+                },
+                {
+                  "text": "Bereken: nieuwe bitrate-oefening voor MP3",
+                  "min": 20
+                },
+                {
+                  "text": "Korte mondelinge uitleg van MPEG audio aan jezelf (luidop)",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10–10:15u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "✍️ Spaced rep H6+H7 (compressie, JPEG)",
+              "time": "10:15–11:30u",
+              "dur": "75 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Doe Huffman + LZW oefening uit het hoofd",
+                  "min": 25
+                },
+                {
+                  "text": "JPEG: doorloop pipeline luidop op 1 voorbeeldblok",
+                  "min": 25
+                },
+                {
+                  "text": "Maak 2 H7 oefeningen uit oud examen",
+                  "min": 25
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "11:30–11:45u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "🧪 Proefexamen MM 2021 Exam 12 — gericht H5-H7",
+              "time": "11:45–12:45u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Maak de H5-H7 vragen van examen 12",
+                  "min": 45
+                },
+                {
+                  "text": "Snel nakijken",
+                  "min": 15
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Zo",
+          "dateDisplay": "31 mei",
+          "isoDate": "2026-05-31",
+          "tag": "t-rest",
+          "tagText": "BUFFER Week 2",
+          "sessions": [
+            {
+              "title": "⚪ BUFFER — inhalen of vrij",
+              "time": "vrij",
+              "dur": "",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "OPTIONEEL: inhalen MM-stof die nog niet zit (max 2u)",
+                  "min": 0
+                },
+                {
+                  "text": "OPTIONEEL: review zwakke punten van mock 1+2",
+                  "min": 0
+                }
+              ]
+            },
+            {
+              "title": "🛌 Vrije dag — laatste rust vóór finale-week",
+              "time": "rest",
+              "dur": "",
+              "isBreak": true,
+              "tasks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Week 3 — Finale (Ma 1 → Wo 3 jun)",
+      "subtitle": "Geen nieuwe stof. Consolidatie + lichte herhaling.",
+      "days": [
+        {
+          "weekday": "Ma",
+          "dateDisplay": "1 jun",
+          "isoDate": "2026-06-01",
+          "tag": "t-review",
+          "tagText": "Final review",
+          "sessions": [
+            {
+              "title": "✍️ Final review alle hoofdstukken (overview)",
+              "time": "9–10:30u",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Snel doorlopen samenvatting H1→H7 (geen detail)",
+                  "min": 30
+                },
+                {
+                  "text": "Per hoofdstuk: 1 kernconcept en 1 typisch examenvraag opschrijven",
+                  "min": 30
+                },
+                {
+                  "text": "Identificeer top-3 zwakke topics voor 2 jun",
+                  "min": 15
+                },
+                {
+                  "text": "Pauze plannen ter herstel",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10:30–10:45u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "🧪 Mini-mock: 4 willekeurige examenvragen",
+              "time": "10:45–12:30u",
+              "dur": "105 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Kies 4 vragen uit verschillende examens (random)",
+                  "min": 10
+                },
+                {
+                  "text": "Maak ze met timer (90 min)",
+                  "min": 60
+                },
+                {
+                  "text": "Nakijken + bijwerken zwakke-lijst",
+                  "min": 35
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Di",
+          "dateDisplay": "2 jun",
+          "isoDate": "2026-06-02",
+          "tag": "t-review",
+          "tagText": "Samenvatting",
+          "sessions": [
+            {
+              "title": "📖 Samenvatting alle H + flashcards",
+              "time": "9–10u",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Schrijf 1-pagina samenvatting voor MM (alleen kerntermen)",
+                  "min": 30
+                },
+                {
+                  "text": "Quick-fire flashcards review (alles)",
+                  "min": 20
+                },
+                {
+                  "text": "Markeer 5 sleutel-formules op spiekblad",
+                  "min": 10
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10–10:15u",
+              "dur": "15 min",
+              "isBreak": true,
+              "tasks": []
+            },
+            {
+              "title": "✍️ Zwakke punten gerichte oefening",
+              "time": "10:15–11:30u",
+              "dur": "75 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Top-3 zwakke topics — per topic 1 oefening",
+                  "min": 45
+                },
+                {
+                  "text": "Nakijken",
+                  "min": 15
+                },
+                {
+                  "text": "Korte mondelinge uitleg luidop (rubber duck methode)",
+                  "min": 15
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Wo",
+          "dateDisplay": "3 jun",
+          "isoDate": "2026-06-03",
+          "tag": "t-rest",
+          "tagText": "Final prep",
+          "sessions": [
+            {
+              "title": "🧘 Lichte herhaling max 2u — GEEN nieuwe stof",
+              "time": "9–10:30u",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Lees rustig 1-pagina samenvatting",
+                  "min": 20
+                },
+                {
+                  "text": "Doorblader spiekblaadjes (geen aantekeningen meer)",
+                  "min": 20
+                },
+                {
+                  "text": "Mentale rust + visualiseer een rustig examen",
+                  "min": 20
+                },
+                {
+                  "text": "Materiaal voor morgen klaarleggen (ID, schrijfgerei, water)",
+                  "min": 15
+                },
+                {
+                  "text": "Slaap-protocol: vroeg eten, geen schermen na 21u",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "🛌 Rust — vroeg slapen",
+              "time": "vanaf 21u",
+              "dur": "",
+              "isBreak": true,
+              "tasks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Examen",
+      "days": [
+        {
+          "weekday": "Do",
+          "dateDisplay": "4 jun",
+          "isoDate": "2026-06-04",
+          "tag": "t-exam",
+          "tagText": "EXAMEN",
+          "sessions": [
+            {
+              "title": "🎯 EXAMEN MULTIMEDIA — 08:30–12:30",
+              "time": "08:30",
+              "dur": "4 uur",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "text": "Diepe ademhaling. Je hebt dit voorbereid. Succes!",
+                  "min": 0
+                }
+              ]
+            },
+            {
+              "title": "🍃 Lunch + rust — daarna lichte CA review",
+              "time": "13–18u",
+              "dur": "",
+              "isBreak": true,
+              "tasks": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -8,7 +8,7 @@ var caWeeks = [
     subtitle: "Q1 + Q2 + Q3 leren, eerste aanraking",
     days: [
       {
-        label: "Do", date: "15 mei", tag: "t-q1", tagText: "Q1",
+        label: "Vr", date: "15 mei", tag: "t-q1", tagText: "Q1",
         today: isToday('2026-05-15'),
         sessions: [
           { title: "Q1: Getallenstelsels — Theorie", time: "9–10u", dur: "45 min", tasks: [
@@ -28,7 +28,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Vr", date: "16 mei", tag: "t-q2", tagText: "Q2",
+        label: "Za", date: "16 mei", tag: "t-q2", tagText: "Q2",
         today: isToday('2026-05-16'),
         sessions: [
           { title: "Q2: Assembly — Basis & registers", time: "9–9:45u", dur: "40 min", tasks: [
@@ -46,7 +46,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Za", date: "17 mei", tag: "t-q2", tagText: "Q2 CVG",
+        label: "Zo", date: "17 mei", tag: "t-q2", tagText: "Q2 CVG",
         today: isToday('2026-05-17'),
         sessions: [
           { title: "Q2: Controleverloopgraaf tekenen", time: "10–11u", dur: "55 min", tasks: [
@@ -69,7 +69,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Zo", date: "18 mei", tag: "t-q3", tagText: "Q3",
+        label: "Ma", date: "18 mei", tag: "t-q3", tagText: "Q3",
         today: isToday('2026-05-18'),
         sessions: [
           { title: "Q3: Booleaanse algebra — Theorie", time: "9–9:45u", dur: "40 min", tasks: [
@@ -88,7 +88,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Ma", date: "19 mei", tag: "t-q3", tagText: "Q3 NAND",
+        label: "Di", date: "19 mei", tag: "t-q3", tagText: "Q3 NAND",
         today: isToday('2026-05-19'),
         sessions: [
           { title: "Q3: NAND + CMOS implementaties", time: "9–9:45u", dur: "40 min", tasks: [
@@ -110,7 +110,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Di", date: "20 mei", tag: "t-review", tagText: "Review",
+        label: "Wo", date: "20 mei", tag: "t-review", tagText: "Review",
         today: isToday('2026-05-20'),
         sessions: [
           { title: "Week 1 — Herhaling & zwakke punten", time: "9–10u", dur: "55 min", tasks: [
@@ -151,7 +151,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Do", date: "22 mei", tag: "t-q4", tagText: "Q4 Voorspellers",
+        label: "Vr", date: "22 mei", tag: "t-q4", tagText: "Q4 Voorspellers",
         today: isToday('2026-05-22'),
         sessions: [
           { title: "Q4: Sprongvoorspellers — 1-bit & 2-bit", time: "9–10u", dur: "55 min", tasks: [
@@ -172,7 +172,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Vr", date: "23 mei", tag: "t-q5", tagText: "Q5",
+        label: "Za", date: "23 mei", tag: "t-q5", tagText: "Q5",
         today: isToday('2026-05-23'),
         sessions: [
           { title: "Q5: Caches — Theorie & adresanalyse", time: "9–10u", dur: "55 min", tasks: [
@@ -191,7 +191,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Za", date: "24 mei", tag: "t-q5", tagText: "Q5 Missers",
+        label: "Zo", date: "24 mei", tag: "t-q5", tagText: "Q5 Missers",
         today: isToday('2026-05-24'),
         sessions: [
           { title: "Q5: Soorten missers & AMAT", time: "10–11u", dur: "55 min", tasks: [
@@ -211,7 +211,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Zo", date: "25 mei", tag: "t-q6", tagText: "Q6",
+        label: "Ma", date: "25 mei", tag: "t-q6", tagText: "Q6",
         today: isToday('2026-05-25'),
         sessions: [
           { title: "Q6: Actuele trends bestuderen", time: "9–9:45u", dur: "40 min", tasks: [
@@ -228,7 +228,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Ma", date: "26 mei", tag: "t-exam", tagText: "Examen",
+        label: "Di", date: "26 mei", tag: "t-exam", tagText: "Examen",
         today: isToday('2026-05-26'),
         sessions: [
           { title: "🏁 Eerste volledig examen (GETIMED): 2021", time: "9–12u", dur: "3 uur", tasks: [
@@ -253,7 +253,7 @@ var caWeeks = [
     subtitle: "Volledige examens getimed + gerichte herhaling",
     days: [
       {
-        label: "Di", date: "27 mei", tag: "t-review", tagText: "Review",
+        label: "Wo", date: "27 mei", tag: "t-review", tagText: "Review",
         today: isToday('2026-05-27'),
         sessions: [
           { title: "Zwakke punten van examen 2021 aanpakken", time: "9–10u", dur: "55 min", tasks: [
@@ -268,7 +268,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Wo", date: "28 mei", tag: "t-exam", tagText: "Examen",
+        label: "Do", date: "28 mei", tag: "t-exam", tagText: "Examen",
         today: isToday('2026-05-28'),
         sessions: [
           { title: "🏁 Volledig examen (GETIMED): 2022", time: "9–12u", dur: "3 uur", tasks: [
@@ -283,7 +283,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Do", date: "29 mei", tag: "t-review", tagText: "Review",
+        label: "Vr", date: "29 mei", tag: "t-review", tagText: "Review",
         today: isToday('2026-05-29'),
         sessions: [
           { title: "Gerichte herhaling Q3: Karnaugh + XOR-methode", time: "9–10u", dur: "55 min", tasks: [
@@ -300,7 +300,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Vr", date: "30 mei", tag: "t-exam", tagText: "Examen",
+        label: "Za", date: "30 mei", tag: "t-exam", tagText: "Examen",
         today: isToday('2026-05-30'),
         sessions: [
           { title: "🏁 Volledig examen (GETIMED): 2023", time: "9–12u", dur: "3 uur", tasks: [
@@ -315,7 +315,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Za", date: "31 mei", tag: "t-review", tagText: "Rust + herhaling",
+        label: "Zo", date: "31 mei", tag: "t-review", tagText: "Rust + herhaling",
         today: isToday('2026-05-31'),
         sessions: [
           { title: "Lichte herhaling — geen nieuwe stof", time: "10–10:30u", dur: "30 min", tasks: [
@@ -326,7 +326,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Zo", date: "1 juni", tag: "t-q4", tagText: "Q4 Microcode",
+        label: "Ma", date: "1 juni", tag: "t-q4", tagText: "Q4 Microcode",
         today: isToday('2026-06-01'),
         sessions: [
           { title: "Q4: Microcodering (nieuw in 2025)", time: "9–10u", dur: "55 min", tasks: [
@@ -351,7 +351,7 @@ var caWeeks = [
     subtitle: "Examens 2024-2025, timing finaliseren, rust",
     days: [
       {
-        label: "Ma", date: "2 juni", tag: "t-exam", tagText: "Examen",
+        label: "Di", date: "2 juni", tag: "t-exam", tagText: "Examen",
         today: isToday('2026-06-02'),
         sessions: [
           { title: "🏁 Volledig examen (GETIMED): 2024", time: "9–12u", dur: "3 uur", tasks: [
@@ -366,7 +366,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Di", date: "3 juni", tag: "t-review", tagText: "Review",
+        label: "Wo", date: "3 juni", tag: "t-review", tagText: "Review",
         today: isToday('2026-06-03'),
         sessions: [
           { title: "Gerichte herhaling — resterende zwakke punten", time: "9–10u", dur: "55 min", tasks: [
@@ -381,7 +381,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Wo", date: "4 juni", tag: "t-exam", tagText: "Examen",
+        label: "Do", date: "4 juni", tag: "t-exam", tagText: "Examen",
         today: isToday('2026-06-04'),
         sessions: [
           { title: "🏁 Volledig examen (GETIMED): 2025", time: "9–12u", dur: "3 uur", tasks: [
@@ -396,7 +396,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Do", date: "5 juni", tag: "t-review", tagText: "Organiseren",
+        label: "Vr", date: "5 juni", tag: "t-review", tagText: "Organiseren",
         today: isToday('2026-06-05'),
         sessions: [
           { title: "Open boek materiaal organiseren", time: "9–10u", dur: "55 min", tasks: [
@@ -411,7 +411,7 @@ var caWeeks = [
         ]
       },
       {
-        label: "Vr", date: "6 juni", tag: "t-review", tagText: "Lichte herhaling",
+        label: "Za", date: "6 juni", tag: "t-review", tagText: "Lichte herhaling",
         today: isToday('2026-06-06'),
         sessions: [
           { title: "Alleen lichte herhaling — geen nieuw materiaal", time: "9–9:30u", dur: "30 min", tasks: [

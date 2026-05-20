@@ -3,8 +3,30 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>HydrarGyrum — Studiehub</title>
-  <!-- Apply saved theme before first paint -->
+  <title>HydrarGyrum Studiehub — Examens juni 2026</title>
+  <meta name="description" content="Persoonlijke studiehub voor de examens Computerarchitectuur en Wetenschappelijk Rekenen (juni 2026). Planners, oefentool en countdown."/>
+  <meta name="author" content="Henri Goudezeune"/>
+  <meta name="theme-color" content="#2F4A3A" media="(prefers-color-scheme: light)"/>
+  <meta name="theme-color" content="#15161A" media="(prefers-color-scheme: dark)"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://hydrargyrum.be/"/>
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:locale" content="nl_NL"/>
+  <meta property="og:site_name" content="HydrarGyrum Studiehub"/>
+  <meta property="og:title" content="HydrarGyrum Studiehub — Examens juni 2026"/>
+  <meta property="og:description" content="Studieplanners en oefentool voor CA en WR — blokperiode 2026."/>
+  <meta property="og:url" content="https://hydrargyrum.be/"/>
+  <meta name="twitter:card" content="summary"/>
+  <meta name="twitter:title" content="HydrarGyrum Studiehub"/>
+  <meta name="twitter:description" content="Studieplanners en oefentool voor de examens van juni 2026."/>
+
+  <!-- Inline SVG favicon (Hg droplet) — no extra request -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Cpath d='M50 6 C50 6,18 52,18 78 A32 32 0 1 0 82 78 C82 52,50 6,50 6 Z' fill='%232F4A3A'/%3E%3C/svg%3E"/>
+
+  <!-- Theme + DNS preconnect — earliest possible -->
   <script>
     (function(){
       var s = null;
@@ -13,10 +35,38 @@
       document.documentElement.setAttribute('data-theme', s);
     })();
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="css/hg-tokens.css">
-  <link rel="stylesheet" href="css/hub.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin/>
+  <link rel="dns-prefetch" href="https://firestore.googleapis.com"/>
+  <link rel="dns-prefetch" href="https://identitytoolkit.googleapis.com"/>
+
+  <!-- Fonts: direct <link> (parallel) instead of @import (serial) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'"/>
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap"/></noscript>
+
+  <link rel="stylesheet" href="css/hg-tokens.css"/>
+  <link rel="stylesheet" href="css/hub.css"/>
+
+  <!-- Preload critical JS so it starts fetching while CSS parses -->
+  <link rel="modulepreload" href="js/hub.js"/>
+  <link rel="modulepreload" href="js/auth.js"/>
+  <link rel="modulepreload" href="js/firebase-config.js"/>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "HydrarGyrum Studiehub",
+    "description": "Studieplanners en oefentool voor de examens Computerarchitectuur en Wetenschappelijk Rekenen — juni 2026.",
+    "url": "https://hydrargyrum.be/",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "nl-NL",
+    "author": { "@type": "Person", "name": "Henri Goudezeune" }
+  }
+  </script>
 </head>
 <body>
 
@@ -59,14 +109,47 @@
         <span class="mono">Blokperiode 2026</span>
       </div>
       <h1>Examens <em>juni 2026</em></h1>
-      <p>Twee examens, vier weken werk. Kies een planner of open de oefentool.</p>
+      <p>Vijf examens, zes weken werk. Kies een planner of open de oefentool.</p>
+    </section>
+
+    <!-- Day view -->
+    <section class="day-view-section" id="day-view-section" style="display:none">
+      <div class="day-view-header">
+        <div class="hub-kicker">
+          <span class="pip"></span>
+          <span class="mono" id="dv-date">Vandaag</span>
+        </div>
+        <h2 class="day-view-title">Dagplanning</h2>
+      </div>
+      <div id="day-view-widget"></div>
     </section>
 
     <!-- Cards -->
     <div class="hub-grid">
 
+      <!-- Multimedia -->
+      <a href="pages/planner.html?id=mm" class="hub-card card-wr">
+        <div class="card-top">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="15" height="10" rx="2"/>
+              <path d="M17 9l5-2v10l-5-2"/>
+            </svg>
+          </div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div>
+          <div class="card-label">Studieplanner</div>
+          <div class="card-title">Multimedia</div>
+        </div>
+        <div class="card-meta">H1–H7 + ChA — compressie, audio, video, kleur — gesloten boek</div>
+        <div class="countdown-pill" id="mm-pill">
+          <span class="countdown-dot"></span>laden…
+        </div>
+      </a>
+
       <!-- Computerarchitectuur -->
-      <a href="pages/ca-planner.html" class="hub-card card-ca">
+      <a href="pages/planner.html?id=ca" class="hub-card card-ca">
         <div class="card-top">
           <div class="card-icon">
             <!-- Circuit / processor icon -->
@@ -88,7 +171,7 @@
       </a>
 
       <!-- Wetenschappelijk Rekenen -->
-      <a href="pages/wr-planner.html" class="hub-card card-wr">
+      <a href="pages/planner.html?id=wr" class="hub-card card-wr">
         <div class="card-top">
           <div class="card-icon">
             <!-- Wave / sigma icon -->
@@ -108,8 +191,50 @@
         </div>
       </a>
 
-      <!-- Oefentool -->
-      <a href="pages/ca-oefentool.html" class="hub-card card-tool">
+      <!-- Webdevelopment -->
+      <a href="pages/planner.html?id=wd" class="hub-card card-wr">
+        <div class="card-top">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>
+            </svg>
+          </div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div>
+          <div class="card-label">Studieplanner</div>
+          <div class="card-title">Web&shy;development</div>
+        </div>
+        <div class="card-meta">REST, HTTP, Hypermedia, Linked Data — mondeling online</div>
+        <div class="countdown-pill" id="wd-pill">
+          <span class="countdown-dot"></span>laden…
+        </div>
+      </a>
+
+      <!-- Lineaire Algebra -->
+      <a href="pages/planner.html?id=la" class="hub-card card-ca">
+        <div class="card-top">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+            </svg>
+          </div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div>
+          <div class="card-label">Studieplanner</div>
+          <div class="card-title">Lineaire Algebra &amp; Meetkunde</div>
+        </div>
+        <div class="card-meta">HS1–HS6 — open boek, open vragen — schriftelijk</div>
+        <div class="countdown-pill" id="la-pill">
+          <span class="countdown-dot"></span>laden…
+        </div>
+      </a>
+
+      <!-- CA Oefentool -->
+      <a href="pages/quiz.html?id=ca" class="hub-card card-tool">
         <div class="card-top">
           <div class="card-icon">
             <!-- Play / spark icon -->
@@ -129,6 +254,26 @@
         </div>
       </a>
 
+      <!-- WR Oefentool -->
+      <a href="pages/quiz.html?id=wr" class="hub-card card-wr">
+        <div class="card-top">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div>
+          <div class="card-label">Oefentool</div>
+          <div class="card-title">WR Oefentool</div>
+        </div>
+        <div class="card-meta">Interactieve oefeningen per hoofdstuk — H1–H9 + H12 — getimed en willekeurig</div>
+        <div class="countdown-pill">
+          <span class="countdown-dot"></span>Open oefentool →
+        </div>
+      </a>
+
     </div><!-- /hub-grid -->
 
     <!-- Footer -->
@@ -142,6 +287,8 @@
 
   </main>
 
+  <script src="js/sound-system.js" defer></script>
+  <script src="js/day-view.js" defer></script>
   <script type="module" src="js/hub.js"></script>
 </body>
 </html>

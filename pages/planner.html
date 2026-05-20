@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CA Studieplanner — HydrarGyrum Studiehub</title>
-<meta name="description" content="Studieplanner voor het examen Computerarchitectuur — 4 weken voorbereiding met dagelijkse taken en timers."/>
+<title>Studieplanner — HydrarGyrum Studiehub</title>
 <meta name="robots" content="noindex, nofollow"/>
 <meta name="theme-color" content="#2F4A3A" media="(prefers-color-scheme: light)"/>
 <meta name="theme-color" content="#15161A" media="(prefers-color-scheme: dark)"/>
@@ -19,8 +18,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 <link rel="stylesheet" href="../css/hg-tokens.css">
 <link rel="stylesheet" href="../css/planner.css">
-<style>:root { --pl-accent: var(--moss); }</style>
-<!-- HydrarGyrum: stub zodat niet-module scripts onReady() kunnen aanroepen vóór module laadt -->
+<style id="accent-style">:root { --pl-accent: var(--moss); }</style>
 <script>
   window._hgProgress = {
     userId: null, _pending: [],
@@ -34,7 +32,6 @@
 <script type="module" src="../js/progress.js"></script>
 <script defer src="../js/sound-system.js"></script>
 <script defer src="../js/planner-widgets.js"></script>
-<script defer src="../js/data/ca-weeks.js"></script>
 </head>
 <body>
 
@@ -47,7 +44,7 @@
       HydrarGyrum
     </a>
     <div class="topbar-sep"></div>
-    <span class="topbar-sub">CA Studieplanner</span>
+    <span class="topbar-sub" id="page-subtitle">laden…</span>
     <div class="topbar-right">
       <div class="exam-countdown" id="countdown">laden…</div>
       <div class="planner-cross" id="planner-cross"></div>
@@ -62,38 +59,89 @@
 </header>
 
 <div class="container">
-
-  <div class="science-strip">
-    <div class="sci-pill"><strong>🌅 9–11u: Piekconcentratie</strong>Nieuwe moeilijke stof, harde oefeningen, analytisch werk</div>
-    <div class="sci-pill"><strong>☀️ 11–13u: Nog hoog</strong>Oefeningen maken, actieve verwerking</div>
-    <div class="sci-pill"><strong>😴 13–15u: Post-lunch dip</strong>Alleen lichte herhaling of lezen</div>
-    <div class="sci-pill"><strong>📝 15–17u: Tweede piek</strong>Oefeningen, actief werken, vorige stof herhalen</div>
-    <div class="sci-pill"><strong>🌙 Na 20u: Geen nieuw materiaal</strong>Enkel flashcards of lichte herhaling</div>
-    <div class="sci-pill"><strong>📆 Spaced repetition</strong>Dag 0 → dag 1 → dag 3 → dag 7 → dag 14</div>
-  </div>
-
+  <div id="science-strip-slot"></div>
+  <div id="exam-note-slot"></div>
   <div class="week-tabs" id="week-tabs"></div>
   <div id="planner-weeks"></div>
-
 </div>
 
 <script>
-// Wacht tot defer-scripts (planner-widgets.js + ca-weeks.js) klaar zijn.
-document.addEventListener('DOMContentLoaded', function() {
-  var EXAM_DATE  = new Date('2026-06-08');
-  var START_DATE = new Date('2026-05-14');
-  var STATE_KEY = 'ca_planner_v1';
+document.addEventListener('DOMContentLoaded', async function() {
+  var id = (new URLSearchParams(window.location.search).get('id') || '').replace(/[^a-z0-9_-]/gi, '');
+  if (!id) {
+    document.getElementById('page-subtitle').textContent = 'Geen planner geselecteerd';
+    return;
+  }
+
+  var def;
+  try {
+    var resp = await fetch('../js/data/' + id + '-planner-def.json');
+    if (!resp.ok) throw new Error(resp.status);
+    def = await resp.json();
+  } catch (e) {
+    document.getElementById('page-subtitle').textContent = 'Fout bij laden (' + id + ')';
+    return;
+  }
+
+  // Accent color
+  document.getElementById('accent-style').textContent = ':root { --pl-accent: ' + def.accent + '; }';
+
+  // Title
+  document.title = def.title + ' — HydrarGyrum Studiehub';
+  document.getElementById('page-subtitle').textContent = def.title;
+
+  // Science strip
+  if (def.scienceStrip && def.scienceStrip.length) {
+    document.getElementById('science-strip-slot').innerHTML = '<div class="science-strip">'
+      + def.scienceStrip.map(function(p) {
+          return '<div class="sci-pill"><strong>' + p.strong + '</strong>' + p.text + '</div>';
+        }).join('')
+      + '</div>';
+  }
+
+  // Exam note
+  if (def.examNote) {
+    document.getElementById('exam-note-slot').innerHTML = '<div class="exam-note">' + def.examNote + '</div>';
+  }
+
+  // Normalize day fields + inject today flag
+  def.weeks.forEach(function(w) {
+    w.days.forEach(function(d) {
+      if (!d.label) d.label = d.weekday   || '';
+      if (!d.date)  d.date  = d.dateDisplay || '';
+      if (d.isoDate) d.today = HgPlanner.isToday(d.isoDate);
+    });
+  });
+
+  // Build getWeekIndex from JSON config
+  function buildWeekIndex(cfg) {
+    if (!cfg) return function() { return 0; };
+    if (cfg.mode === 'linear') {
+      var start = new Date(cfg.startDate);
+      return function() {
+        var diff = Math.floor((Date.now() - start.getTime()) / 86400000);
+        return Math.max(0, Math.floor(diff / 7));
+      };
+    }
+    var dates  = cfg.dates  || [];
+    var defIdx = typeof cfg.default === 'number' ? cfg.default : 0;
+    return function() {
+      var today = new Date().toISOString().slice(0, 10);
+      for (var i = 0; i < dates.length - 1; i++) {
+        if (today >= dates[i] && today < dates[i + 1]) return i;
+      }
+      return defIdx;
+    };
+  }
 
   HgPlanner.createPlanner({
-    stateKey:     STATE_KEY,
-    firestoreKey: 'ca',
-    examDate:     EXAM_DATE,
-    weeks:        caWeeks,
-    renderTask:   'simple',
-    getWeekIndex: function() {
-      var today = new Date();
-      return Math.min(3, Math.max(0, Math.floor((today - START_DATE) / (7*24*60*60*1000))));
-    }
+    stateKey:     def.stateKey,
+    firestoreKey: def.firestoreKey,
+    examDate:     new Date(def.examDate),
+    weeks:        def.weeks,
+    renderTask:   def.renderTask || 'simple',
+    typeMap:      def.typeMap   || null,
+    getWeekIndex: buildWeekIndex(def.weekIndex)
   });
 });
 </script>

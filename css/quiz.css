@@ -1,0 +1,90 @@
+/* ── HydrarGyrum Quiz Tool — shared structural styles ──────────────────────── */
+/* Set --quiz-accent in a page-level <style> to override the accent color.     */
+:root { --quiz-accent: var(--moss); }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-display); font-size: 15px; background: var(--paper); color: var(--ink); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+/* ── Topbar ── */
+.topbar { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); background: color-mix(in oklab, var(--paper) 82%, transparent); border-bottom: 1px solid var(--line); }
+.topbar-inner { max-width: 900px; margin: 0 auto; padding: 12px var(--u4); display: flex; align-items: center; gap: var(--u2); flex-wrap: wrap; }
+.topbar-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 14px; font-weight: 500; letter-spacing: -0.015em; color: var(--ink); text-decoration: none; }
+.topbar-brand svg { width: 13px; height: auto; color: var(--quiz-accent); flex-shrink: 0; }
+.topbar-sep { width: 1px; height: 16px; background: var(--line-strong); flex-shrink: 0; }
+.topbar-sub { font-family: var(--font-body); font-style: italic; font-weight: 300; font-size: 14px; color: var(--graphite); }
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: var(--u2); }
+.topbar-btn { background: transparent; border: 1px solid var(--line-strong); border-radius: var(--r-full); padding: 5px 12px; font-family: var(--font-display); font-size: 12px; color: var(--graphite); display: flex; align-items: center; gap: 6px; transition: color var(--t-fast), border-color var(--t-fast); cursor: pointer; white-space: nowrap; }
+.topbar-btn:hover { color: var(--ink); border-color: var(--ink); }
+.topbar-btn .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+/* ── Container ── */
+.container { max-width: 900px; margin: 0 auto; padding: var(--u4) var(--u4); }
+
+/* ── Tabs ── */
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--u4); }
+.tab { padding: 8px 16px; border-radius: var(--r-m); border: 1px solid var(--line-strong); background: var(--bone); color: var(--graphite); cursor: pointer; font-family: var(--font-display); font-size: 13px; font-weight: 500; letter-spacing: -0.01em; transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast); }
+.tab:hover { border-color: var(--quiz-accent); color: var(--ink); }
+.tab.active { background: var(--quiz-accent); border-color: var(--quiz-accent); color: var(--paper); }
+
+/* ── Score bar ── */
+.score-bar { display: flex; gap: 10px; margin-bottom: var(--u3); align-items: center; flex-wrap: wrap; }
+.score-pill { padding: 5px 12px; border-radius: var(--r-full); font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; }
+.score-correct { background: color-mix(in oklab, var(--moss) 12%, var(--paper)); color: var(--moss); border: 1px solid color-mix(in oklab, var(--moss) 25%, transparent); }
+.score-wrong   { background: color-mix(in oklab, var(--cinnabar) 12%, var(--paper)); color: var(--cinnabar); border: 1px solid color-mix(in oklab, var(--cinnabar) 25%, transparent); }
+.score-total   { background: var(--bone); color: var(--graphite); border: 1px solid var(--line); }
+.score-bar .hg-select { margin-left: auto; }
+
+/* ── Progress bar ── */
+.progress { height: 3px; background: var(--line); border-radius: var(--r-full); margin-bottom: var(--u3); }
+.progress-fill { height: 100%; background: var(--quiz-accent); border-radius: var(--r-full); transition: width 0.4s var(--ease-mercury); }
+
+/* ── Question card ── */
+.card { background: var(--bone); border: 1px solid var(--line); border-radius: var(--r-l); padding: var(--u4); margin-bottom: var(--u2); }
+.card-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: var(--u2); }
+.q-badge { background: var(--quiz-accent); color: var(--paper); font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 10px; border-radius: var(--r-full); white-space: nowrap; }
+.q-year { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); margin-left: auto; white-space: nowrap; letter-spacing: 0.04em; }
+.q-text { font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: var(--ink); flex: 1; }
+
+/* ── Hint & answer ── */
+.hint { background: color-mix(in oklab, #C9963A 8%, var(--paper)); border-left: 3px solid #C9963A; border-radius: 0 var(--r-m) var(--r-m) 0; padding: 12px 16px; margin: 12px 0; font-size: 13px; color: var(--graphite); display: none; line-height: 1.5; }
+.hint.show { display: block; }
+.answer-box { background: color-mix(in oklab, var(--quiz-accent) 6%, var(--paper)); border: 1px solid color-mix(in oklab, var(--quiz-accent) 25%, transparent); border-radius: var(--r-m); padding: 16px; margin: 12px 0; font-family: var(--font-mono); font-size: 13px; display: none; line-height: 1.6; }
+.answer-box.show { display: block; }
+.answer-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--quiz-accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+
+/* ── Buttons ── */
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: var(--u2); }
+.btn { padding: 8px 16px; border-radius: var(--r-m); border: 1px solid var(--line-strong); cursor: pointer; font-family: var(--font-display); font-size: 13px; font-weight: 500; letter-spacing: -0.01em; transition: opacity var(--t-fast), border-color var(--t-fast); background: var(--bone); color: var(--ink); }
+.btn:hover { opacity: 0.8; }
+.btn-hint    { border-color: #C9963A; color: #C9963A; background: color-mix(in oklab, #C9963A 8%, var(--paper)); }
+.btn-answer  { border-color: var(--quiz-accent); color: var(--quiz-accent); background: color-mix(in oklab, var(--quiz-accent) 8%, var(--paper)); }
+.btn-next    { border: none; background: var(--quiz-accent); color: var(--paper); margin-left: auto; }
+.btn-next:hover { opacity: 0.85; }
+.btn-correct { border-color: var(--moss);     color: var(--moss);     background: color-mix(in oklab, var(--moss)     8%, var(--paper)); }
+.btn-wrong   { border-color: var(--cinnabar); color: var(--cinnabar); background: color-mix(in oklab, var(--cinnabar) 8%, var(--paper)); }
+
+/* ── Section title ── */
+.section-title { font-family: var(--font-display); font-size: 17px; font-weight: 500; letter-spacing: -0.015em; color: var(--ink); margin-bottom: var(--u2); padding-bottom: var(--u2); border-bottom: 1px solid var(--line); }
+
+/* ── Quick reference ── */
+.quick-ref { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--u2); }
+.ref-card { background: var(--bone); border: 1px solid var(--line); border-radius: var(--r-l); padding: var(--u3); }
+.ref-title { font-family: var(--font-display); font-size: 13px; font-weight: 600; letter-spacing: -0.01em; color: var(--quiz-accent); margin-bottom: 10px; }
+.ref-body { font-family: var(--font-mono); font-size: 12px; line-height: 1.7; color: var(--graphite); }
+.ref-body b { color: var(--ink); font-family: var(--font-display); font-size: 13px; font-weight: 500; }
+
+/* ── Empty state ── */
+.empty-state { text-align: center; padding: 60px 20px; color: var(--graphite); font-family: var(--font-body); font-style: italic; }
+.empty-state .icon { font-size: 3rem; margin-bottom: 16px; }
+
+/* ── Code & pre ── */
+code { font-family: var(--font-mono); background: color-mix(in oklab, var(--ink) 7%, var(--paper)); padding: 1px 6px; border-radius: var(--r-s); font-size: 0.85em; color: var(--quiz-accent); }
+pre  { font-family: var(--font-mono); background: var(--bone); border: 1px solid var(--line); border-radius: var(--r-m); padding: 14px; overflow-x: auto; font-size: 13px; line-height: 1.6; color: var(--ink); margin: 10px 0; }
+
+/* ── Exam structure table ── */
+.exam-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.exam-table th, .exam-table td { padding: 10px 14px; text-align: left; border: 1px solid var(--line); vertical-align: top; line-height: 1.5; }
+.exam-table thead tr { background: var(--bone); }
+.exam-table thead th { color: var(--quiz-accent); font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border-color: var(--line-strong); }
+.exam-table tbody tr:nth-child(even) { background: var(--bone); }
+.exam-table td.q-row { color: var(--quiz-accent); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.04em; white-space: nowrap; }

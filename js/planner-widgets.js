@@ -49,8 +49,7 @@
     return wi + '_' + di + '_' + si + '_' + ti;
   }
 
-  // ── Streak tracking ────────────────────────────────────────────────────────
-  // Global streak (over alle planners heen)
+  // ── Streak tracking (globaal over alle planners) ───────────────────────────
   var STREAK_KEY = 'hg_streak';
 
   function getStreakData() {
@@ -74,6 +73,180 @@
     var count = updateStreakData(doneTasks > 0);
     var el = document.getElementById('streak-n');
     if (el) el.textContent = count > 0 ? count + 'd' : '–';
+  }
+
+  // ── Timer utilities ────────────────────────────────────────────────────────
+  function parseDurationMinutes(dur) {
+    if (!dur) return 0;
+    var m = String(dur).match(/(\d+(?:[\.,]\d+)?)\s*(uur|u|min)/i);
+    if (!m) return 0;
+    var val = parseFloat(m[1].replace(',', '.'));
+    if (m[2].toLowerCase().indexOf('u') === 0) return Math.round(val * 60);
+    return Math.round(val);
+  }
+
+  function sumTaskMinutes(sess) {
+    var total = 0;
+    (sess.tasks || []).forEach(function(task) { total += (task.min || 0); });
+    return total;
+  }
+
+  function plannedMinutes(sess) {
+    var taskMin = sumTaskMinutes(sess);
+    if (taskMin > 0) return taskMin;
+    return parseDurationMinutes(sess.dur);
+  }
+
+  function formatClock(sec, targetSec) {
+    if (!targetSec) return '--:--';
+    var s = Math.max(0, Math.floor(sec));
+    var m = Math.floor(s / 60);
+    var r = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(r).padStart(2, '0');
+  }
+
+  function ensureTimers(state) {
+    if (!state._timers) state._timers = {};
+    return state._timers;
+  }
+
+  function getTimerState(state, sessId) {
+    var timers = ensureTimers(state);
+    if (!timers[sessId]) timers[sessId] = { trackedSec: 0, running: false, startedAt: 0, targetSec: 0 };
+    return timers[sessId];
+  }
+
+  function getTrackedSeconds(timer, now) {
+    if (!timer.running || !timer.startedAt) return timer.trackedSec || 0;
+    return (timer.trackedSec || 0) + Math.max(0, Math.floor((now - timer.startedAt) / 1000));
+  }
+
+  function getTargetSeconds(timer, plannedMin) {
+    return timer.targetSec || (plannedMin ? plannedMin * 60 : 0);
+  }
+
+  function timerHtml(sessId, timer, plannedMin, now) {
+    var targetSec = getTargetSeconds(timer, plannedMin);
+    var trackedSec = getTrackedSeconds(timer, now);
+    var remainingSec = Math.max(0, targetSec - trackedSec);
+    var isDone = targetSec > 0 && remainingSec === 0;
+    return '<div class="session-timer' + (timer.running ? ' running' : '') + (isDone ? ' done' : '') + '"'
+      + ' data-sess="' + sessId + '" data-planned="' + plannedMin + '">'
+      + '<button class="timer-btn timer-btn-main" onclick="toggleTimer(\'' + sessId + '\',event)">' + (timer.running ? '⏸' : '▶') + '</button>'
+      + '<span class="timer-remaining">' + formatClock(remainingSec, targetSec) + '</span>'
+      + '<span class="timer-progress">' + Math.round(trackedSec / 60) + '/' + Math.round(targetSec / 60) + 'm</span>'
+      + '<div class="timer-quick">'
+      + '<button class="timer-chip" onclick="setTimerMinutes(\'' + sessId + '\',5,event)">5m</button>'
+      + '<button class="timer-chip" onclick="setTimerMinutes(\'' + sessId + '\',10,event)">10m</button>'
+      + '<button class="timer-chip" onclick="setTimerMinutes(\'' + sessId + '\',15,event)">15m</button>'
+      + '</div>'
+      + '<button class="timer-btn timer-reset" onclick="resetTimer(\'' + sessId + '\',event)">↺</button>'
+      + '</div>';
+  }
+
+  function daySummaryHtml(day, trackedMin, plannedMin, remainingMin, pctDay, dayLeftMin) {
+    return '<div class="day-summary" data-day-key="' + day.date + '" data-day-planned="' + plannedMin + '">'
+      + '<div class="day-stat"><span class="day-stat-n" data-day-worked>' + trackedMin + 'm</span><span class="day-stat-l">gewerkt</span></div>'
+      + '<div class="day-stat"><span class="day-stat-n" data-day-planned>' + plannedMin + 'm</span><span class="day-stat-l">gepland</span></div>'
+      + '<div class="day-stat"><span class="day-stat-n" data-day-remaining>' + remainingMin + 'm</span><span class="day-stat-l">nog nodig</span></div>'
+      + '<div class="day-bar"><div class="day-bar-fill" data-day-fill style="width:' + pctDay + '%"></div></div>'
+      + (dayLeftMin !== null ? '<div class="day-stat day-stat-right"><span class="day-stat-n" data-day-left>' + dayLeftMin + 'm</span><span class="day-stat-l">dag rest</span></div>' : '')
+      + '</div>';
+  }
+
+  function snd(name) { if (window.HgSound) window.HgSound.play(name); }
+
+  function updateTimerDom(cfg, state) {
+    var now = Date.now();
+    document.querySelectorAll('.session-timer').forEach(function(el) {
+      var sessId = el.getAttribute('data-sess');
+      var plannedMin = parseInt(el.getAttribute('data-planned') || '0', 10);
+      var timer = getTimerState(state, sessId);
+      var targetSec = getTargetSeconds(timer, plannedMin);
+      var trackedSec = getTrackedSeconds(timer, now);
+      var remainingSec = Math.max(0, targetSec - trackedSec);
+      var isDone = targetSec > 0 && remainingSec === 0;
+      el.classList.toggle('running', timer.running);
+      el.classList.toggle('done', isDone);
+      var btn = el.querySelector('.timer-btn-main');
+      if (btn) btn.textContent = timer.running ? '⏸' : '▶';
+      var rem = el.querySelector('.timer-remaining');
+      if (rem) rem.textContent = formatClock(remainingSec, targetSec);
+      var prog = el.querySelector('.timer-progress');
+      if (prog) prog.textContent = Math.round(trackedSec / 60) + '/' + Math.round(targetSec / 60) + 'm';
+    });
+  }
+
+  function collectDailyTotals(cfg, state, now) {
+    var totals = { byDate: {}, todayKey: null };
+    cfg.weeks.forEach(function(week, wi) {
+      week.days.forEach(function(day, di) {
+        var dayPlannedMin = 0;
+        var dayTrackedSec = 0;
+        day.sessions.forEach(function(sess, si) {
+          if (sess.isBreak && !sess.tasks.length) return;
+          var plannedMin = plannedMinutes(sess);
+          dayPlannedMin += plannedMin;
+          var sessId = 'sess_' + wi + '_' + di + '_' + si;
+          var timer = getTimerState(state, sessId);
+          dayTrackedSec += getTrackedSeconds(timer, now);
+        });
+        totals.byDate[day.date] = {
+          plannedMin: dayPlannedMin,
+          trackedMin: Math.round(dayTrackedSec / 60)
+        };
+        if (day.today) totals.todayKey = day.date;
+      });
+    });
+    return totals;
+  }
+
+  function updateDaySummaries(cfg, state) {
+    var now = Date.now();
+    var totals = collectDailyTotals(cfg, state, now);
+    Object.keys(totals.byDate).forEach(function(key) {
+      var el = document.querySelector('.day-summary[data-day-key="' + key + '"]');
+      if (!el) return;
+      var t = totals.byDate[key];
+      var remainingMin = Math.max(0, t.plannedMin - t.trackedMin);
+      var pctDay = t.plannedMin ? Math.min(100, Math.round(t.trackedMin / t.plannedMin * 100)) : 0;
+      var worked = el.querySelector('[data-day-worked]');
+      var planned = el.querySelector('[data-day-planned]');
+      var remaining = el.querySelector('[data-day-remaining]');
+      var fill = el.querySelector('[data-day-fill]');
+      if (worked) worked.textContent = t.trackedMin + 'm';
+      if (planned) planned.textContent = t.plannedMin + 'm';
+      if (remaining) remaining.textContent = remainingMin + 'm';
+      if (fill) fill.style.width = pctDay + '%';
+      if (key === totals.todayKey) {
+        var leftEl = el.querySelector('[data-day-left]');
+        if (leftEl) {
+          var end = new Date();
+          end.setHours(23, 59, 59, 999);
+          var dayLeftMin = Math.max(0, Math.round((end.getTime() - now) / 60000));
+          leftEl.textContent = dayLeftMin + 'm';
+        }
+      }
+    });
+    try { localStorage.setItem('hg_planner_totals_' + cfg.firestoreKey, JSON.stringify(totals.byDate)); } catch (e) {}
+    updateCrossPlanner(cfg, totals);
+  }
+
+  function updateCrossPlanner(cfg, totals) {
+    var el = document.getElementById('planner-cross');
+    if (!el) return;
+    if (!totals.todayKey) { el.textContent = ''; return; }
+    var otherKey = cfg.firestoreKey === 'ca' ? 'wr' : 'ca';
+    var otherTotals = {};
+    try { otherTotals = JSON.parse(localStorage.getItem('hg_planner_totals_' + otherKey) || '{}'); } catch (e) {}
+    var self = totals.byDate[totals.todayKey];
+    var other = otherTotals[totals.todayKey];
+    if (!self && !other) { el.textContent = ''; return; }
+    var selfLabel = cfg.firestoreKey.toUpperCase();
+    var otherLabel = otherKey.toUpperCase();
+    var selfTxt = self ? (self.trackedMin + '/' + self.plannedMin + 'm') : '—';
+    var otherTxt = other ? (other.trackedMin + '/' + other.plannedMin + 'm') : '—';
+    el.textContent = 'Vandaag: ' + selfLabel + ' ' + selfTxt + ' • ' + otherLabel + ' ' + otherTxt;
   }
 
   // ── HTML builders ─────────────────────────────────────────────────────────
@@ -109,6 +282,9 @@
     var typeMap  = cfg.typeMap || {};
     var totalTasks = 0, doneTasks = 0;
     var nowH = new Date().getHours() + new Date().getMinutes() / 60;
+    var now = Date.now();
+    var dayTotals = {};
+    var todayKey = null;
 
     weeks.forEach(function(week, wi) {
       var container = document.getElementById('week-' + wi);
@@ -137,17 +313,32 @@
         + '</div><div class="day-grid">';
 
       week.days.forEach(function(day, di) {
-        // Per-dag voortgang
-        var dayTotal = 0, dayDone = 0;
+        // Timer-gebaseerde dag-totalen
+        var sessPlanned = [];
+        var dayPlannedMin = 0;
+        var dayTrackedSec = 0;
         day.sessions.forEach(function(sess, si) {
-          sess.tasks.forEach(function(_, ti) {
-            dayTotal++;
-            if (state[tid(wi, di, si, ti)]) dayDone++;
-          });
+          if (sess.isBreak && !sess.tasks.length) return;
+          var pm = plannedMinutes(sess);
+          sessPlanned[si] = pm;
+          dayPlannedMin += pm;
+          var sessId = 'sess_' + wi + '_' + di + '_' + si;
+          var timer = getTimerState(state, sessId);
+          dayTrackedSec += getTrackedSeconds(timer, now);
         });
-        var dayPct = dayTotal ? Math.round(dayDone / dayTotal * 100) : 0;
+        var trackedMin = Math.round(dayTrackedSec / 60);
+        var remainingMin = Math.max(0, dayPlannedMin - trackedMin);
+        var pctDay = dayPlannedMin ? Math.min(100, Math.round(trackedMin / dayPlannedMin * 100)) : 0;
+        var dayLeftMin = null;
+        if (day.today) {
+          var end = new Date();
+          end.setHours(23, 59, 59, 999);
+          dayLeftMin = Math.max(0, Math.round((end.getTime() - now) / 60000));
+          todayKey = day.date;
+        }
+        dayTotals[day.date] = { plannedMin: dayPlannedMin, trackedMin: trackedMin };
 
-        // Actieve sessie: laatste sessie waarvan de tijd ≤ nu (alleen vandaag)
+        // Actieve sessie: laatste sessie met tijd ≤ nu (alleen vandaag, geen breaks)
         var activeSessionIdx = -1;
         if (day.today) {
           day.sessions.forEach(function(sess, si) {
@@ -164,7 +355,7 @@
           + ' <span style="color:var(--graphite);font-weight:400">' + day.date + '</span></div>'
           + '<span class="day-tag ' + day.tag + '">' + day.tagText + '</span>'
           + '</div>'
-          + '<div class="day-progress"><div class="day-progress-fill" style="width:' + dayPct + '%"></div></div>';
+          + daySummaryHtml(day, trackedMin, dayPlannedMin, remainingMin, pctDay, dayLeftMin);
 
         day.sessions.forEach(function(sess, si) {
           if (sess.isBreak && !sess.tasks.length) {
@@ -179,6 +370,8 @@
           var sessDone = 0;
           sess.tasks.forEach(function(_, ti) { if (state[tid(wi, di, si, ti)]) sessDone++; });
           var complete = sess.tasks.length > 0 && sessDone === sess.tasks.length;
+          var timer = getTimerState(state, sessId);
+          var pm = sessPlanned[si] || plannedMinutes(sess);
           var isActiveNow = si === activeSessionIdx;
 
           html += '<div class="session' + (isActiveNow ? ' session-active-now' : '') + '">'
@@ -188,7 +381,8 @@
             + (complete ? '&#10003; ' : '') + sess.title + '</span>'
             + (sess.dur ? '<span class="session-dur">' + sess.dur + '</span>' : '')
             + (sess.tasks.length ? '<span class="chevron' + (isOpen ? ' open' : '') + '">&#9658;</span>' : '')
-            + '</div>';
+            + '</div>'
+            + (sess.isBreak ? '' : timerHtml(sessId, timer, pm, now));
 
           if (sess.tasks.length) {
             var cls = isKanban ? 'tasks-kanban' : 'tasks';
@@ -220,6 +414,9 @@
     if (tEl) tEl.textContent = totalTasks;
     if (fEl) fEl.style.width = overallPct + '%';
 
+    try { localStorage.setItem('hg_planner_totals_' + cfg.firestoreKey, JSON.stringify(dayTotals)); } catch (e) {}
+    updateCrossPlanner(cfg, { byDate: dayTotals, todayKey: todayKey });
+
     return doneTasks;
   }
 
@@ -227,8 +424,10 @@
   function createPlanner(cfg) {
     var state = {};
     var syncTimer;
+    var tickId;
+    var lastTickSave = 0;
 
-    // Science strip: collapsible (standaard ingevouwen om drukte te reduceren)
+    // Science strip: collapsible (standaard ingevouwen)
     var strip = document.querySelector('.science-strip');
     if (strip) {
       var stripKey = 'hg_strip_open';
@@ -290,21 +489,67 @@
       }, 1500);
     }
 
+    function renderAndSync() {
+      var doneTasks = renderAll(cfg, state);
+      renderStreakBadge(doneTasks);
+      updateTimerDom(cfg, state);
+      updateDaySummaries(cfg, state);
+    }
+
+    function startTimerLoop() {
+      if (tickId) return;
+      tickId = setInterval(function() {
+        var now = Date.now();
+        var anyRunning = false;
+        Object.keys(ensureTimers(state)).forEach(function(key) {
+          if (state._timers[key].running) anyRunning = true;
+        });
+        if (!anyRunning) return;
+
+        updateTimerDom(cfg, state);
+        updateDaySummaries(cfg, state);
+
+        if (now - lastTickSave > 30000) {
+          lastTickSave = now;
+          saveState();
+        }
+
+        Object.keys(ensureTimers(state)).forEach(function(key) {
+          var timer = state._timers[key];
+          if (!timer.running) return;
+          var plannedMin = 0;
+          var el = document.querySelector('.session-timer[data-sess="' + key + '"]');
+          if (el) plannedMin = parseInt(el.getAttribute('data-planned') || '0', 10);
+          var targetSec = getTargetSeconds(timer, plannedMin);
+          var trackedSec = getTrackedSeconds(timer, now);
+          if (targetSec > 0 && trackedSec >= targetSec) {
+            timer.trackedSec = targetSec;
+            timer.running = false;
+            timer.startedAt = 0;
+            saveState();
+            snd('timer-done');
+            updateTimerDom(cfg, state);
+            updateDaySummaries(cfg, state);
+          }
+        });
+      }, 1000);
+    }
+
     global.toggleTask = function(taskId, e) {
       if (e) e.stopPropagation();
       var wasDone = !!state[taskId];
       state[taskId] = !wasDone;
+      snd(state[taskId] ? 'task-check' : 'task-uncheck');
       saveState();
-      var doneTasks = renderAll(cfg, state);
-      renderStreakBadge(doneTasks);
-      // Micro-animatie op het check-icoontje (alleen bij aanvinken, niet uitvinken)
+      renderAndSync();
+      // Micro-animatie bij aanvinken (dopamine pop)
       if (!wasDone) {
         var taskEl = document.querySelector('[data-task-id="' + taskId + '"]');
         if (taskEl) {
           var check = taskEl.querySelector('.task-check');
           if (check) {
             check.classList.remove('pop');
-            void check.offsetWidth; // reflow forceren
+            void check.offsetWidth;
             check.classList.add('pop');
           }
         }
@@ -321,6 +566,53 @@
       if (ch) ch.classList.toggle('open', state[key]);
     };
 
+    global.toggleTimer = function(sessId, e) {
+      if (e) e.stopPropagation();
+      var timer = getTimerState(state, sessId);
+      if (timer.running) {
+        timer.trackedSec = getTrackedSeconds(timer, Date.now());
+        timer.running = false;
+        timer.startedAt = 0;
+        snd('timer-stop');
+      } else {
+        if (!timer.targetSec) {
+          var el = document.querySelector('.session-timer[data-sess="' + sessId + '"]');
+          var plannedMin = el ? parseInt(el.getAttribute('data-planned') || '0', 10) : 0;
+          timer.targetSec = plannedMin ? plannedMin * 60 : 5 * 60;
+        }
+        timer.running = true;
+        timer.startedAt = Date.now();
+        snd('timer-start');
+        startTimerLoop();
+      }
+      saveState();
+      updateTimerDom(cfg, state);
+      updateDaySummaries(cfg, state);
+    };
+
+    global.resetTimer = function(sessId, e) {
+      if (e) e.stopPropagation();
+      var timer = getTimerState(state, sessId);
+      timer.trackedSec = 0;
+      timer.running = false;
+      timer.startedAt = 0;
+      saveState();
+      updateTimerDom(cfg, state);
+      updateDaySummaries(cfg, state);
+    };
+
+    global.setTimerMinutes = function(sessId, min, e) {
+      if (e) e.stopPropagation();
+      var timer = getTimerState(state, sessId);
+      timer.targetSec = Math.max(0, min) * 60;
+      timer.trackedSec = 0;
+      timer.running = false;
+      timer.startedAt = 0;
+      saveState();
+      updateTimerDom(cfg, state);
+      updateDaySummaries(cfg, state);
+    };
+
     global.showWeek = showWeek;
 
     updateCountdown(cfg.examDate);
@@ -335,8 +627,8 @@
         try { state = JSON.parse(localStorage.getItem(cfg.stateKey)) || {}; } catch(e) { state = {}; }
         setSyncStatus('offline');
       }
-      var doneTasks = renderAll(cfg, state);
-      renderStreakBadge(doneTasks);
+      renderAndSync();
+      startTimerLoop();
       if (typeof cfg.getWeekIndex === 'function') showWeek(cfg.getWeekIndex());
     });
   }

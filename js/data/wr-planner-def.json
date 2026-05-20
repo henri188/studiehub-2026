@@ -1,0 +1,906 @@
+{
+  "id": "wr",
+  "title": "WR Studieplanner",
+  "subtitle": "WR — sprint na CA examen (8 jun → 17 jun)",
+  "description": "Master-gesync planner Wetenschappelijk Rekenen: intro op 8 jun avond, intensieve sprint 9-16 jun, examen 17 jun (5u!).",
+  "accent": "var(--cinnabar)",
+  "stateKey": "wr_planner_v2",
+  "firestoreKey": "wr",
+  "examDate": "2026-06-17",
+  "renderTask": "kanban",
+  "typeMap": {
+    "lees": {
+      "label": "LEES",
+      "bk": "tb-lees",
+      "tk": "tk-lees"
+    },
+    "schrijf": {
+      "label": "SCHRIJF",
+      "bk": "tb-schrijf",
+      "tk": "tk-schrijf"
+    },
+    "code": {
+      "label": "CODE",
+      "bk": "tb-code",
+      "tk": "tk-code"
+    },
+    "herhaal": {
+      "label": "HERHAAL",
+      "bk": "tb-herhaal",
+      "tk": "tk-herhaal"
+    },
+    "mock": {
+      "label": "MOCK",
+      "bk": "tb-mock",
+      "tk": "tk-mock"
+    },
+    "nakijk": {
+      "label": "NAKIJK",
+      "bk": "tb-nakijk",
+      "tk": "tk-nakijk"
+    },
+    "spiek": {
+      "label": "SPIEKBL.",
+      "bk": "tb-spiek",
+      "tk": "tk-spiek"
+    }
+  },
+  "weekIndex": {
+    "mode": "boundaries",
+    "dates": [
+      "2026-06-08",
+      "2026-06-14",
+      "2026-06-17",
+      "2026-06-18"
+    ],
+    "default": 1
+  },
+  "scienceStrip": [
+    {
+      "strong": "🌅 9–13u: WR piek",
+      "text": "Nieuwe theorie + harde oefeningen — hoofdvak in deze fase"
+    },
+    {
+      "strong": "🍽️ 13–14:30u: middagpauze",
+      "text": "Eet, wandel, geen stof"
+    },
+    {
+      "strong": "📝 15–17u: oef nakijken",
+      "text": "Actieve verwerking ochtendstof"
+    },
+    {
+      "strong": "📆 Spaced rep",
+      "text": "H1-H4 reviewed dag 12 jun · H5-H8 dag 15 jun"
+    },
+    {
+      "strong": "🌙 Geen WR na 18u",
+      "text": "Brein consolidatie heeft tijd nodig"
+    }
+  ],
+  "examNote": "<b>📝 Examen WR</b> — Wo 17 jun 08:30–13:30 (5u!). Schriftelijk, theorie + oefeningen. Op 16 jun max lichte review.",
+  "weeks": [
+    {
+      "label": "Sprint 1 — H1 t/m H8 (8 → 13 jun)",
+      "subtitle": "Na CA examen, intensieve doorloop met dag-spaced rep",
+      "days": [
+        {
+          "weekday": "Ma",
+          "dateDisplay": "8 jun",
+          "isoDate": "2026-06-08",
+          "tag": "t-th",
+          "tagText": "WR intro (na CA examen)",
+          "sessions": [
+            {
+              "title": "🍃 CA examen 08:30–12:30 + rust",
+              "time": "tot 15:30",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "H1 — Floating-point: eerste contact",
+              "time": "16:00",
+              "dur": "60 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees STUDIEHULP_WR sectie H1: floating-point, IEEE 754, machineprecisie ε_mach",
+                  "min": 25
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Definieer: computationele fout, conditioneringsgetal κ, 'well-posed'",
+                  "min": 15
+                },
+                {
+                  "type": "lees",
+                  "text": "Bekijk de cursus H1 — overview, sla details over",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "17:00",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "H1 — Theorievragen droog uitvoeren",
+              "time": "17:15",
+              "dur": "45 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "schrijf",
+                  "text": "Beantwoord theorievragen H1 (theorie_vragen/hoofdstuk1) zonder kijken",
+                  "min": 25
+                },
+                {
+                  "type": "lees",
+                  "text": "Bekijk 'h1 - cancellation bij plotten' notebook",
+                  "min": 10
+                },
+                {
+                  "type": "spiek",
+                  "text": "Start spiekblad H1 (handgeschreven, kerntermen)",
+                  "min": 10
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Di",
+          "dateDisplay": "9 jun",
+          "isoDate": "2026-06-09",
+          "tag": "t-th",
+          "tagText": "H1 + H2",
+          "sessions": [
+            {
+              "title": "H1 — Theorie diepen + oefeningen",
+              "time": "9:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Herlees H1 grondig (cursus + samenvatting)",
+                  "min": 30
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Doe alle theorievragen H1 nu volledig + corrigeer met cursus",
+                  "min": 30
+                },
+                {
+                  "type": "code",
+                  "text": "Bord/PC oefeningen week 01 — afronding & vlottende komma",
+                  "min": 30
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10:30",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "H2 — LU + pivoting",
+              "time": "10:45",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees H2: LU-factorisatie, partiële pivoting, Cholesky",
+                  "min": 30
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Schrijf LU pseudocode + forward/backward substitutie",
+                  "min": 20
+                },
+                {
+                  "type": "code",
+                  "text": "Doe LU oefening met de hand (3×3 voorbeeld uit cursus)",
+                  "min": 25
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Bord/PC week 02 — directe methoden",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "12:15",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "H1+H2 nakijken + spiek",
+              "time": "12:30",
+              "dur": "30 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "nakijk",
+                  "text": "Vergelijk oef-antwoorden met oplossingen GitHub repo",
+                  "min": 15
+                },
+                {
+                  "type": "spiek",
+                  "text": "Spiekblad H1+H2 afronden",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "🍽️ Middagpauze",
+              "time": "13:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "Namiddag: oef verwerken",
+              "time": "15:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "nakijk",
+                  "text": "Vorig examen 24-25: alleen H1+H2 vragen — th + oef deel",
+                  "min": 60
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Update spiekblad met fout-patronen",
+                  "min": 30
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Wo",
+          "dateDisplay": "10 jun",
+          "isoDate": "2026-06-10",
+          "tag": "t-th",
+          "tagText": "H3 + H4",
+          "sessions": [
+            {
+              "title": "H3 — Iteratieve methoden (Jacobi/GS/SOR)",
+              "time": "9:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees H3: Jacobi, Gauss-Seidel, SOR, convergentie",
+                  "min": 30
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Schrijf convergentievoorwaarden + spectrale straal op spiekblad",
+                  "min": 15
+                },
+                {
+                  "type": "code",
+                  "text": "Doe 1 iteratie Jacobi en GS met de hand (zelfde matrix)",
+                  "min": 25
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Bord/PC week 03 — iteratieve methoden",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10:30",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "H4 — Eigenwaarden + power method",
+              "time": "10:45",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees H4: power method, inverse iteration, QR",
+                  "min": 30
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Theorie_vragen H4 droog beantwoorden",
+                  "min": 25
+                },
+                {
+                  "type": "code",
+                  "text": "Doe 3 stappen power method handmatig",
+                  "min": 25
+                },
+                {
+                  "type": "spiek",
+                  "text": "Spiekblad H3+H4",
+                  "min": 10
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "12:15",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "✍️ Spaced rep H1+H2 (dag 1)",
+              "time": "12:30",
+              "dur": "30 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "herhaal",
+                  "text": "Quick recall H1 + H2 zonder bron",
+                  "min": 30
+                }
+              ]
+            },
+            {
+              "title": "🍽️ Middagpauze",
+              "time": "13:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "Bord/PC week 04 — eigenwaarden",
+              "time": "15:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "code",
+                  "text": "Doe alle week 04 bord/PC oefeningen",
+                  "min": 60
+                },
+                {
+                  "type": "nakijk",
+                  "text": "Vergelijk met oplossingen",
+                  "min": 30
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Do",
+          "dateDisplay": "11 jun",
+          "isoDate": "2026-06-11",
+          "tag": "t-th",
+          "tagText": "H5 + H6",
+          "sessions": [
+            {
+              "title": "H5 — Interpolatie + splines",
+              "time": "9:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees H5: Lagrange, Newton verdeelde verschillen, splines",
+                  "min": 30
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Schrijf Runge-fenomeen op + waarom Chebyshev knopen",
+                  "min": 15
+                },
+                {
+                  "type": "code",
+                  "text": "Doe interpolatie met de hand (3 punten Lagrange)",
+                  "min": 25
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Bord/PC week 05",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10:30",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "H6 — Numerieke integratie + ODE",
+              "time": "10:45",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees H6: trapezium, Simpson, Gauss-kwadratuur, Euler",
+                  "min": 30
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Schrijf foutformules op spiekblad",
+                  "min": 15
+                },
+                {
+                  "type": "code",
+                  "text": "Doe Simpson + Gauss met de hand",
+                  "min": 25
+                },
+                {
+                  "type": "spiek",
+                  "text": "Spiekblad H5+H6",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "12:15",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "✍️ Spaced rep H3+H4 (dag 1)",
+              "time": "12:30",
+              "dur": "30 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "herhaal",
+                  "text": "Quick recall iteratieve methoden + eigenwaarden",
+                  "min": 30
+                }
+              ]
+            },
+            {
+              "title": "🍽️ Middagpauze",
+              "time": "13:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "Bord/PC week 05+06",
+              "time": "15:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "code",
+                  "text": "Bord/PC oefeningen interpolatie + integratie",
+                  "min": 60
+                },
+                {
+                  "type": "nakijk",
+                  "text": "Vergelijk met oplossingen, noteer lacunes",
+                  "min": 30
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Vr",
+          "dateDisplay": "12 jun",
+          "isoDate": "2026-06-12",
+          "tag": "t-th",
+          "tagText": "H7 + H8",
+          "sessions": [
+            {
+              "title": "H7 — Niet-lineaire vergelijkingen",
+              "time": "9:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees H7: bisectie, Newton-Raphson, secant, convergentieorde",
+                  "min": 30
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Schrijf 3 methoden + convergentieorde op spiekblad",
+                  "min": 15
+                },
+                {
+                  "type": "code",
+                  "text": "Doe Newton-Raphson 3 iteraties met de hand op f(x)=x²-2",
+                  "min": 25
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Bord/PC week 07",
+                  "min": 20
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10:30",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "H8 — ODE / verdere onderwerpen",
+              "time": "10:45",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Lees H8: Runge-Kutta, stabiliteit, stijve systemen",
+                  "min": 30
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Theorie_vragen H8 droog",
+                  "min": 25
+                },
+                {
+                  "type": "code",
+                  "text": "Doe RK4 één stap met de hand",
+                  "min": 25
+                },
+                {
+                  "type": "spiek",
+                  "text": "Spiekblad H7+H8 + grote samenvatting H1-H8 (1 A4)",
+                  "min": 10
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "12:15",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "✍️ Spaced rep H1+H2 (dag 3)",
+              "time": "12:30",
+              "dur": "30 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "herhaal",
+                  "text": "Mini-mock alleen H1+H2 vragen uit eigen examens",
+                  "min": 30
+                }
+              ]
+            },
+            {
+              "title": "🍽️ Middagpauze",
+              "time": "13:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "Bord/PC week 07+08",
+              "time": "15:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "code",
+                  "text": "Bord/PC oefeningen niet-lineair + ODE",
+                  "min": 60
+                },
+                {
+                  "type": "nakijk",
+                  "text": "Vergelijk + lacunes",
+                  "min": 30
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Za",
+          "dateDisplay": "13 jun",
+          "isoDate": "2026-06-13",
+          "tag": "t-mock",
+          "tagText": "Proefexamen 1",
+          "sessions": [
+            {
+              "title": "🏁 Mock examen 1 — Theorie deel (eigen 24-25)",
+              "time": "9:00",
+              "dur": "120 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "mock",
+                  "text": "Maak het theorie deel van eigen examen 24-25 (gesimuleerd, 2u)",
+                  "min": 120
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "11:00",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "🏁 Mock examen 1 — Oefeningen deel",
+              "time": "11:15",
+              "dur": "150 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "mock",
+                  "text": "Maak het oefeningen deel (2.5u, getimed)",
+                  "min": 150
+                }
+              ]
+            },
+            {
+              "title": "🍽️ Middagpauze",
+              "time": "13:45",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "Nakijken volledig + foutenanalyse",
+              "time": "15:00",
+              "dur": "120 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "nakijk",
+                  "text": "Vergelijk met oplossingen (GitHub) — let op subtiele fouten",
+                  "min": 60
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Per H lijst: wat ging goed / wat moet bijgewerkt",
+                  "min": 30
+                },
+                {
+                  "type": "spiek",
+                  "text": "Update grote samenvatting + spiekblaadjes",
+                  "min": 30
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Buffer + Sprint 2 (14 → 16 jun)",
+      "subtitle": "Zo buffer, dan mocks + final review",
+      "days": [
+        {
+          "weekday": "Zo",
+          "dateDisplay": "14 jun",
+          "isoDate": "2026-06-14",
+          "tag": "t-rest",
+          "tagText": "BUFFER",
+          "sessions": [
+            {
+              "title": "⚪ Bufferdag — inhalen of rust",
+              "time": "vrij",
+              "dur": "",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "herhaal",
+                  "text": "OPTIONEEL: inhalen wat blijft hangen uit week 1",
+                  "min": 0
+                },
+                {
+                  "type": "spiek",
+                  "text": "OPTIONEEL: spiekblaadjes verfraaien",
+                  "min": 0
+                }
+              ]
+            },
+            {
+              "title": "🛌 Liefst: rust + sport + sociaal",
+              "time": "rest",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            }
+          ]
+        },
+        {
+          "weekday": "Ma",
+          "dateDisplay": "15 jun",
+          "isoDate": "2026-06-15",
+          "tag": "t-mock",
+          "tagText": "Proefexamen 2 + zwakke",
+          "sessions": [
+            {
+              "title": "🏁 Mock 2 — vol examen (alle H, getimed 4u)",
+              "time": "9:00",
+              "dur": "240 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "mock",
+                  "text": "Maak proefexamen 2 (kies een goede oude editie), 4u getimed",
+                  "min": 240
+                }
+              ]
+            },
+            {
+              "title": "🍽️ Middagpauze",
+              "time": "13:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "Nakijken + zwakste punten aanvallen",
+              "time": "15:00",
+              "dur": "120 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "nakijk",
+                  "text": "Vergelijk + per H scoor jezelf",
+                  "min": 45
+                },
+                {
+                  "type": "herhaal",
+                  "text": "Top-2 zwakste H — per H 2 extra oefeningen",
+                  "min": 60
+                },
+                {
+                  "type": "spiek",
+                  "text": "Spiekblad consolideren",
+                  "min": 15
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "weekday": "Di",
+          "dateDisplay": "16 jun",
+          "isoDate": "2026-06-16",
+          "tag": "t-review",
+          "tagText": "Final review",
+          "sessions": [
+            {
+              "title": "Final review — alle H + theorie_vragen",
+              "time": "9:00",
+              "dur": "90 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "herhaal",
+                  "text": "Loop alle theorie_vragen H1-H8 snel door",
+                  "min": 45
+                },
+                {
+                  "type": "schrijf",
+                  "text": "Identificeer top-3 lacunes + repareer",
+                  "min": 30
+                },
+                {
+                  "type": "spiek",
+                  "text": "Spiekblad finaliseren",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "☕ Pauze",
+              "time": "10:30",
+              "dur": "15 min",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "Lichte herhaling — overzicht",
+              "time": "10:45",
+              "dur": "75 min",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "lees",
+                  "text": "Doorblader 1-pagina samenvatting H1-H8",
+                  "min": 30
+                },
+                {
+                  "type": "herhaal",
+                  "text": "Quick-fire flashcards alle hoofdstukken",
+                  "min": 30
+                },
+                {
+                  "type": "spiek",
+                  "text": "Materiaal klaarleggen voor morgen (ID, pen, water)",
+                  "min": 15
+                }
+              ]
+            },
+            {
+              "title": "🍽️ Middagpauze + rust",
+              "time": "12:00",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            },
+            {
+              "title": "🛌 Rust namiddag + vroeg slapen",
+              "time": "vanaf 14u",
+              "dur": "",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "herhaal",
+                  "text": "GEEN nieuwe stof. Mogelijk wandeling. Vroeg eten, geen schermen na 21u.",
+                  "min": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Examen",
+      "days": [
+        {
+          "weekday": "Wo",
+          "dateDisplay": "17 jun",
+          "isoDate": "2026-06-17",
+          "tag": "t-exam",
+          "tagText": "EXAMEN WR",
+          "sessions": [
+            {
+              "title": "🎯 EXAMEN WETENSCHAPPELIJK REKENEN — 08:30–13:30",
+              "time": "08:30",
+              "dur": "5 uur",
+              "isBreak": false,
+              "tasks": [
+                {
+                  "type": "mock",
+                  "text": "5 uur examen — kalm starten, tijd verdelen over th + oef. Succes!",
+                  "min": 0
+                }
+              ]
+            },
+            {
+              "title": "🍃 Lunch + rust — daarna LA intro 16-18u",
+              "time": "13:30+",
+              "dur": "",
+              "tasks": [],
+              "isBreak": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
