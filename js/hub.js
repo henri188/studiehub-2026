@@ -112,7 +112,7 @@ function emojiBar(done, total) {
 
 function buildShareText() {
   const today   = new Date();
-  const dateStr = today.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+  const dateStr = today.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' });
 
   let streak = 0;
   try { streak = JSON.parse(localStorage.getItem('hg_streak') || '{}').count || 0; } catch {}
@@ -120,24 +120,19 @@ function buildShareText() {
   const lines = SHARE_PLANNERS.map(p => {
     const done = readDone(p.stateKey);
     const pct  = p.total ? Math.round((done / p.total) * 100) : 0;
-    return `${p.label} ${emojiBar(done, p.total)} ${String(pct).padStart(3)}%`;
+    return `${p.label}  ${emojiBar(done, p.total)}  ${String(pct).padStart(3)}%`;
   });
 
-  const streakLine = streak > 0 ? `\n🔥 ${streak} dag${streak !== 1 ? 'en' : ''} streak` : '';
-  return `📚 HydrarGyrum Studiehub\n📅 ${dateStr}${streakLine}\n\n${lines.join('\n')}\n\nhydrargyrum.be`;
+  const header = streak > 0
+    ? `📖 Dag ${streak} van het blok — ${dateStr}`
+    : `📖 ${dateStr}`;
+
+  return `${header}\n\n${lines.join('\n')}\n\nBekijk mijn voortgang → https://hydrargyrum.be/`;
 }
 
 document.getElementById('share-btn')?.addEventListener('click', () => {
   navigator.clipboard.writeText(buildShareText())
     .then(() => showToast('Voortgang gekopieerd!'))
-    .catch(() => showToast('Kopiëren mislukt'));
-});
-
-// ── Uitnodig ──────────────────────────────────────────────────────────────────
-document.getElementById('invite-btn')?.addEventListener('click', () => {
-  const msg = 'Studeer je ook voor de examens in juni? Ik gebruik HydrarGyrum Studiehub — planners, oefentool en countdown. Gratis aanmelden op https://hydrargyrum.be/';
-  navigator.clipboard.writeText(msg)
-    .then(() => showToast('Uitnodiging gekopieerd!'))
     .catch(() => showToast('Kopiëren mislukt'));
 });
 

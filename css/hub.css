@@ -537,7 +537,6 @@
 }
 .hub-social-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 .hub-social-btn:hover { color: var(--ink); border-color: var(--ink); }
-.hub-social-invite:hover { color: var(--moss); border-color: var(--moss); }
 
 /* ── Toast ── */
 .hg-toast {
