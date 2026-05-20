@@ -321,44 +321,106 @@
   margin-bottom: var(--u7);
 }
 .day-view-header {
-  margin-bottom: var(--u5);
+  margin-bottom: var(--u4);
 }
 .day-view-title {
   font-size: clamp(28px, 4vw, 44px);
   font-weight: 400;
   letter-spacing: -0.03em;
   line-height: 1.05;
-  margin-bottom: var(--u2);
 }
-.day-view-sub {
-  font-family: var(--font-body);
-  font-size: 16px;
-  color: var(--graphite);
+
+/* Widget card */
+.dv-widget {
+  background: var(--bone);
+  border: 1px solid var(--line);
+  border-radius: var(--r-l);
+  overflow: hidden;
 }
-.day-view-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--u3);
-}
-.dv-block {
-  min-width: 0;
-}
-.dv-block-label {
-  display: inline-flex;
+
+/* Overall progress bar at top */
+.dv-widget-top {
+  padding: 12px 20px;
+  display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+}
+.dv-widget-stat {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--graphite);
+  white-space: nowrap;
+}
+.dv-widget-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--line);
+  border-radius: var(--r-full);
+  overflow: hidden;
+}
+.dv-widget-fill {
+  height: 100%;
+  background: var(--moss);
+  border-radius: var(--r-full);
+  transition: width 0.4s var(--ease-mercury);
+}
+.dv-widget-pct {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink);
+  min-width: 32px;
+  text-align: right;
+}
+
+/* Per-subject section */
+.dv-subject {
+  border-bottom: 1px solid var(--line);
+}
+.dv-subject:last-child { border-bottom: none; }
+.dv-subject-header {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: color-mix(in oklab, var(--pl-accent) 5%, var(--bone));
+  border-bottom: 1px solid var(--line);
+}
+.dv-subject-title {
   font-family: var(--font-mono);
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--pl-accent);
   text-decoration: none;
-  margin-bottom: var(--u2);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   transition: opacity var(--t-fast);
 }
-.dv-block-label:hover { opacity: 0.7; }
-.dv-block-arrow { font-size: 11px; opacity: 0.7; }
+.dv-subject-title:hover { opacity: 0.7; }
+.dv-block-arrow { font-size: 11px; opacity: 0.65; }
+.dv-subject-prog {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dv-subject-bar {
+  width: 60px;
+  height: 3px;
+  background: var(--line);
+  border-radius: var(--r-full);
+  overflow: hidden;
+}
+.dv-subject-frac {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--graphite);
+  white-space: nowrap;
+}
 
 /* ── Planner component styles (used by day view) ── */
 :root { --pl-accent: var(--moss); }
@@ -452,5 +514,6 @@
   .hub-footer { flex-direction: column; gap: var(--u4); align-items: flex-start; }
   .footer-meta { text-align: left; }
   .topbar-inner { padding: 12px var(--u3); }
-  .day-view-grid { grid-template-columns: 1fr; }
+  .dv-subject-header { flex-wrap: wrap; }
+  .dv-subject-prog { margin-left: 0; }
 }

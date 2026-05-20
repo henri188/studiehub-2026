@@ -1,4 +1,4 @@
-/* HydrarGyrum — Dagweergave: vandaag's taken per vak, gerenderd op de homepage */
+/* HydrarGyrum — Dagweergave: één widget met alle vakken voor vandaag */
 (function () {
   'use strict';
 
@@ -10,7 +10,7 @@
     { id: 'la', href: 'pages/planner.html?id=la', title: 'Lineaire Algebra' },
   ];
 
-  var _store = {}; // planId → { state, cfg: def, day, wi, di }
+  var _store = {}; // planId → { state, cfg, day, wi, di }
 
   function todayIso() {
     return new Date().toISOString().slice(0, 10);
@@ -26,14 +26,14 @@
     try { localStorage.setItem(s.cfg.stateKey, JSON.stringify(s.state)); } catch (e) {}
   }
 
-  // ── Global toggle handlers (namespaced per planner) ──────────────────────────
+  // ── Global toggle handlers ─────────────────────────────────────────────────
   window.dvToggleTask = function (planId, taskId, e) {
     if (e) e.stopPropagation();
     var s = _store[planId];
     if (!s) return;
     s.state[taskId] = !s.state[taskId];
     persist(planId);
-    rerenderContent(planId);
+    rerenderWidget();
     if (window.HgSound) window.HgSound.play(s.state[taskId] ? 'task-check' : 'task-uncheck');
   };
 
@@ -49,7 +49,7 @@
     if (ch) ch.classList.toggle('open', s.state[key]);
   };
 
-  // ── HTML builders ────────────────────────────────────────────────────────────
+  // ── HTML builders ──────────────────────────────────────────────────────────
   function taskHtml(planId, cfg, task, taskId, done) {
     if (cfg.renderTask === 'kanban') {
       var tm = (task.type && cfg.typeMap && cfg.typeMap[task.type]) || null;
@@ -69,9 +69,8 @@
       + '</div>';
   }
 
-  function blockContentHtml(planId) {
+  function subjectHtml(planId, meta) {
     var s = _store[planId];
-    if (!s) return '';
     var cfg = s.cfg, state = s.state, day = s.day, wi = s.wi, di = s.di;
     var isKanban = cfg.renderTask === 'kanban';
 
@@ -84,17 +83,16 @@
     });
     var pct = total ? Math.round(done / total * 100) : 0;
 
-    var html = '<div class="day-card today">'
-      + '<div class="day-header">'
-      + '<div class="today-dot"></div>'
-      + '<div class="day-label">' + day.label
-      + ' <span style="color:var(--graphite);font-weight:400">' + day.date + '</span></div>'
+    var html = '<div class="dv-subject" style="--pl-accent:' + cfg.accent + '">'
+      + '<div class="dv-subject-header">'
+      + '<a href="' + meta.href + '" class="dv-subject-title">'
+      + meta.title + '<span class="dv-block-arrow">↗</span>'
+      + '</a>'
       + '<span class="day-tag ' + (day.tag || '') + '">' + (day.tagText || '') + '</span>'
+      + '<div class="dv-subject-prog">'
+      + '<div class="dv-subject-bar"><div class="day-bar-fill" style="width:' + pct + '%"></div></div>'
+      + '<span class="dv-subject-frac">' + done + '/' + total + '</span>'
       + '</div>'
-      + '<div class="day-summary">'
-      + '<div class="day-stat"><span class="day-stat-n">' + done + '/' + total + '</span><span class="day-stat-l">taken klaar</span></div>'
-      + '<div class="day-stat"><span class="day-stat-n">' + pct + '%</span><span class="day-stat-l">voltooiing</span></div>'
-      + '<div class="day-bar"><div class="day-bar-fill" style="width:' + pct + '%"></div></div>'
       + '</div>';
 
     day.sessions.forEach(function (sess, si) {
@@ -136,20 +134,51 @@
       html += '</div>';
     });
 
+    html += '</div>'; // .dv-subject
+    return html;
+  }
+
+  function widgetHtml(blocks) {
+    // Overall progress across all planners
+    var totalAll = 0, doneAll = 0;
+    blocks.forEach(function (b) {
+      var s = _store[b.meta.id];
+      var state = s.state, day = s.day, wi = s.wi, di = s.di;
+      day.sessions.forEach(function (sess, si) {
+        sess.tasks.forEach(function (_, ti) {
+          totalAll++;
+          if (state[wi + '_' + di + '_' + si + '_' + ti]) doneAll++;
+        });
+      });
+    });
+    var pctAll = totalAll ? Math.round(doneAll / totalAll * 100) : 0;
+
+    var html = '<div class="dv-widget">'
+      + '<div class="dv-widget-top">'
+      + '<span class="dv-widget-stat">' + doneAll + ' van ' + totalAll + ' taken klaar</span>'
+      + '<div class="dv-widget-bar"><div class="dv-widget-fill" style="width:' + pctAll + '%"></div></div>'
+      + '<span class="dv-widget-pct">' + pctAll + '%</span>'
+      + '</div>';
+
+    blocks.forEach(function (b) {
+      html += subjectHtml(b.meta.id, b.meta);
+    });
+
     html += '</div>';
     return html;
   }
 
-  function rerenderContent(planId) {
-    var el = document.getElementById('dv-content-' + planId);
-    if (el) el.innerHTML = blockContentHtml(planId);
+  function rerenderWidget() {
+    var el = document.getElementById('day-view-widget');
+    if (!el || !el._blocks) return;
+    el.innerHTML = widgetHtml(el._blocks);
   }
 
-  // ── Init ─────────────────────────────────────────────────────────────────────
+  // ── Init ───────────────────────────────────────────────────────────────────
   async function init() {
     var section = document.getElementById('day-view-section');
-    var grid = document.getElementById('day-view-grid');
-    if (!grid) return;
+    var widgetEl = document.getElementById('day-view-widget');
+    if (!widgetEl) return;
 
     var today = todayIso();
 
@@ -171,14 +200,12 @@
     fetched.forEach(function (item) {
       if (!item) return;
       var def = item.def, meta = item.meta;
-
       def.weeks.forEach(function (w) {
         w.days.forEach(function (d) {
           if (!d.label) d.label = d.weekday || '';
           if (!d.date)  d.date  = d.dateDisplay || '';
         });
       });
-
       var found = null;
       def.weeks.forEach(function (week, wi) {
         week.days.forEach(function (day, di) {
@@ -186,14 +213,7 @@
         });
       });
       if (!found) return;
-
-      _store[meta.id] = {
-        state: loadState(def.stateKey),
-        cfg:   def,
-        day:   found.day,
-        wi:    found.wi,
-        di:    found.di,
-      };
+      _store[meta.id] = { state: loadState(def.stateKey), cfg: def, day: found.day, wi: found.wi, di: found.di };
       blocks.push({ meta: meta, def: def });
     });
 
@@ -203,16 +223,8 @@
     }
     if (section) section.removeAttribute('style');
 
-    grid.innerHTML = blocks.map(function (b) {
-      return '<div class="dv-block" style="--pl-accent:' + b.def.accent + '">'
-        + '<a href="' + b.meta.href + '" class="dv-block-label">'
-        + b.meta.title + '<span class="dv-block-arrow">↗</span>'
-        + '</a>'
-        + '<div id="dv-content-' + b.meta.id + '">'
-        + blockContentHtml(b.meta.id)
-        + '</div>'
-        + '</div>';
-    }).join('');
+    widgetEl._blocks = blocks;
+    widgetEl.innerHTML = widgetHtml(blocks);
   }
 
   if (document.readyState === 'loading') {
