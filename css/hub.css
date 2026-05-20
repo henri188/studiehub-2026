@@ -336,6 +336,7 @@
   border: 1px solid var(--line);
   border-radius: var(--r-l);
   overflow: hidden;
+  max-width: 480px;
 }
 
 /* Overall progress bar at top */
