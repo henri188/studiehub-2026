@@ -49,36 +49,36 @@ body { font-family: var(--font-display); font-size: 15px; background: var(--pape
 .day-tag { font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border-radius: var(--r-s); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
 .today-dot { width: 7px; height: 7px; background: var(--pl-accent); border-radius: 50%; flex-shrink: 0; }
 
-.day-summary { padding: 8px 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; border-bottom: 1px solid var(--line); background: color-mix(in oklab, var(--paper) 75%, transparent); }
+.day-summary { padding: 10px 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; border-bottom: 1px solid var(--line); background: color-mix(in oklab, var(--paper) 75%, transparent); }
 .day-stat { display: flex; flex-direction: column; gap: 2px; min-width: 70px; }
 .day-stat-right { margin-left: auto; text-align: right; }
-.day-stat-n { font-family: var(--font-mono); font-size: 12px; color: var(--ink); }
+.day-stat-n { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--ink); }
 .day-stat-l { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--graphite); }
-.day-bar { flex: 1; min-width: 90px; height: 4px; background: var(--line); border-radius: var(--r-full); overflow: hidden; }
+.day-bar { flex: 1; min-width: 90px; height: 5px; background: var(--line); border-radius: var(--r-full); overflow: hidden; }
 .day-bar-fill { height: 100%; background: var(--pl-accent); transition: width 0.4s var(--ease-mercury); }
 
 /* ── Sessions ── */
 .session { border-bottom: 1px solid var(--line); }
 .session:last-child { border-bottom: none; }
-.session-header { padding: 10px 16px; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; transition: background var(--t-fast); }
-.session-header:hover { background: var(--paper); }
-.time-badge { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); background: var(--paper); border: 1px solid var(--line); padding: 2px 8px; border-radius: var(--r-s); white-space: nowrap; letter-spacing: 0.04em; }
+.session-header { padding: 11px 16px; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; transition: background var(--t-fast); }
+.session-header:hover { background: color-mix(in oklab, var(--paper) 70%, var(--bone)); }
+.time-badge { font-family: var(--font-mono); font-size: 10px; font-weight: 500; color: var(--ink); background: var(--paper); border: 1px solid var(--line-strong); padding: 2px 8px; border-radius: var(--r-s); white-space: nowrap; letter-spacing: 0.04em; }
 .session-title { font-family: var(--font-display); font-size: 13px; font-weight: 500; flex: 1; color: var(--ink); letter-spacing: -0.01em; }
 .session-title[data-complete] { color: var(--pl-accent); }
 .session-dur { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); white-space: nowrap; }
 .chevron { color: var(--graphite); font-size: 11px; transition: transform var(--t-fast); }
 .chevron.open { transform: rotate(90deg); }
 
-.session-timer { padding: 6px 16px 8px; display: flex; align-items: center; gap: 8px; border-top: 1px dashed var(--line); background: var(--paper); }
+.session-timer { padding: 7px 16px 9px; display: flex; align-items: center; gap: 10px; border-top: 1px dashed var(--line); background: var(--paper); }
 .session-timer.running .timer-remaining { color: var(--pl-accent); }
 .session-timer.done { background: color-mix(in oklab, var(--pl-accent) 10%, var(--paper)); }
-.timer-btn { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--line-strong); background: transparent; color: var(--graphite); font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: color var(--t-fast), border-color var(--t-fast); }
+.timer-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--line-strong); background: transparent; color: var(--graphite); font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: color var(--t-fast), border-color var(--t-fast); }
 .timer-btn:hover { color: var(--ink); border-color: var(--ink); }
 .timer-reset { font-size: 11px; }
-.timer-remaining { font-family: var(--font-mono); font-size: 12px; color: var(--ink); min-width: 48px; }
+.timer-remaining { font-family: var(--font-mono); font-size: 14px; font-weight: 600; color: var(--ink); min-width: 52px; }
 .timer-progress { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); }
 .timer-quick { display: flex; gap: 4px; margin-left: auto; }
-.timer-chip { border: 1px solid var(--line-strong); background: var(--bone); color: var(--graphite); font-family: var(--font-mono); font-size: 9px; padding: 2px 6px; border-radius: var(--r-full); cursor: pointer; transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast); }
+.timer-chip { border: 1px solid var(--line-strong); background: var(--bone); color: var(--graphite); font-family: var(--font-mono); font-size: 9px; padding: 3px 7px; border-radius: var(--r-full); cursor: pointer; transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast); }
 .timer-chip:hover { color: var(--ink); border-color: var(--ink); background: var(--paper); }
 
 /* ── Task containers ── */
@@ -106,10 +106,12 @@ body { font-family: var(--font-display); font-size: 15px; background: var(--pape
 .task-text.done { text-decoration: line-through; color: var(--graphite); }
 .task-time { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
 .task-body { flex: 1; min-width: 0; }
-.task-badge { font-family: var(--font-mono); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 1px 5px; border-radius: var(--r-s); display: inline-block; margin-bottom: 3px; }
+.task-badge { font-family: var(--font-mono); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 1px 6px; border-radius: var(--r-s); display: inline-block; margin-bottom: 3px; }
 
 /* ── Break indicator ── */
-.break-indicator { text-align: center; padding: 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--graphite); background: var(--paper); }
+.break-indicator { padding: 7px 16px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--graphite); background: var(--paper); border-top: 1px dashed var(--line); border-bottom: 1px dashed var(--line); display: flex; align-items: center; gap: 8px; }
+.break-indicator::before { content: ''; flex: 1; height: 1px; background: var(--line); }
+.break-indicator::after  { content: ''; flex: 1; height: 1px; background: var(--line); }
 
 /* ── Week stats ── */
 .week-stats { display: flex; gap: 10px; margin-bottom: var(--u2); flex-wrap: wrap; }
@@ -170,11 +172,12 @@ body { font-family: var(--font-display); font-size: 15px; background: var(--pape
 .science-strip.collapsed { max-height: 0; margin-bottom: 0; }
 
 /* ── Day progress bar ── */
-.day-progress { height: 2px; background: var(--line); }
-.day-progress-fill { height: 100%; background: var(--pl-accent); border-radius: 0 1px 1px 0; transition: width 0.5s var(--ease-mercury); }
+.day-progress { height: 3px; background: var(--line); }
+.day-progress-fill { height: 100%; background: var(--pl-accent); border-radius: 0 2px 2px 0; transition: width 0.5s var(--ease-mercury); }
 
 /* ── Active session (current time window) ── */
-.session.session-active-now { background: color-mix(in oklab, var(--pl-accent) 5%, transparent); border-left: 2px solid var(--pl-accent); }
+.session.session-active-now { background: color-mix(in oklab, var(--pl-accent) 7%, transparent); border-left: 3px solid var(--pl-accent); }
+.session.session-active-now .session-header { padding-left: 13px; }
 
 /* ── Task check micro-animatie (dopamine pop) ── */
 @keyframes checkPop { 0% { transform: scale(0.55); } 60% { transform: scale(1.3); } 100% { transform: scale(1); } }
