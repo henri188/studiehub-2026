@@ -285,6 +285,26 @@
 
     </div><!-- /hub-grid -->
 
+    <!-- Social actions -->
+    <div class="hub-social">
+      <button class="hub-social-btn" id="share-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="5" height="5" rx="1"/><rect x="16" y="3" width="5" height="5" rx="1"/><rect x="3" y="16" width="5" height="5" rx="1"/>
+          <path d="M8 5.5h8M5.5 8v8M18.5 8v3.5M13 19h5.5M18.5 14v5"/>
+        </svg>
+        Deel voortgang
+      </button>
+      <button class="hub-social-btn hub-social-invite" id="invite-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <line x1="19" y1="8" x2="19" y2="14"/>
+          <line x1="22" y1="11" x2="16" y2="11"/>
+        </svg>
+        Uitnodig
+      </button>
+    </div>
+
     <!-- Footer -->
     <footer class="hub-footer">
       <div class="footer-word">Hg<em>·80</em></div>
@@ -295,6 +315,9 @@
     </footer>
 
   </main>
+
+  <!-- Toast notification -->
+  <div class="hg-toast" id="hg-toast" aria-live="polite"></div>
 
   <script src="js/sound-system.js" defer></script>
   <script src="js/day-view.js" defer></script>

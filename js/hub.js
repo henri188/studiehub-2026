@@ -79,6 +79,68 @@ function setPill(id, dateStr, label) {
   }
 }
 
+// ── Toast ─────────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('hg-toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ── Voortgang delen (Wordle-stijl) ────────────────────────────────────────────
+const SHARE_PLANNERS = [
+  { label: 'MM', name: 'Multimedia',      stateKey: 'mm_planner_v2', total: 105 },
+  { label: 'CA', name: 'Computerarch.',   stateKey: 'ca_planner_v2', total: 99  },
+  { label: 'WR', name: 'Wetensch. Rek.', stateKey: 'wr_planner_v2', total: 69  },
+  { label: 'WD', name: 'Webdevelopment', stateKey: 'wd_planner_v2', total: 33  },
+  { label: 'LA', name: 'Lineaire Alg.',  stateKey: 'la_planner_v2', total: 42  },
+];
+
+function readDone(stateKey) {
+  try {
+    const s = JSON.parse(localStorage.getItem(stateKey) || '{}');
+    return Object.values(s).filter(Boolean).length;
+  } catch { return 0; }
+}
+
+function emojiBar(done, total) {
+  const filled = total ? Math.round((done / total) * 6) : 0;
+  return '🟩'.repeat(filled) + '⬜'.repeat(6 - filled);
+}
+
+function buildShareText() {
+  const today   = new Date();
+  const dateStr = today.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  let streak = 0;
+  try { streak = JSON.parse(localStorage.getItem('hg_streak') || '{}').count || 0; } catch {}
+
+  const lines = SHARE_PLANNERS.map(p => {
+    const done = readDone(p.stateKey);
+    const pct  = p.total ? Math.round((done / p.total) * 100) : 0;
+    return `${p.label} ${emojiBar(done, p.total)} ${String(pct).padStart(3)}%`;
+  });
+
+  const streakLine = streak > 0 ? `\n🔥 ${streak} dag${streak !== 1 ? 'en' : ''} streak` : '';
+  return `📚 HydrarGyrum Studiehub\n📅 ${dateStr}${streakLine}\n\n${lines.join('\n')}\n\nhydrargyrum.be`;
+}
+
+document.getElementById('share-btn')?.addEventListener('click', () => {
+  navigator.clipboard.writeText(buildShareText())
+    .then(() => showToast('Voortgang gekopieerd!'))
+    .catch(() => showToast('Kopiëren mislukt'));
+});
+
+// ── Uitnodig ──────────────────────────────────────────────────────────────────
+document.getElementById('invite-btn')?.addEventListener('click', () => {
+  const msg = 'Studeer je ook voor de examens in juni? Ik gebruik HydrarGyrum Studiehub — planners, oefentool en countdown. Gratis aanmelden op https://hydrargyrum.be/';
+  navigator.clipboard.writeText(msg)
+    .then(() => showToast('Uitnodiging gekopieerd!'))
+    .catch(() => showToast('Kopiëren mislukt'));
+});
+
 // ── Logout ─────────────────────────────────────────────────────────────────────
 document.getElementById('logout-btn').addEventListener('click', async () => {
   await AuthService.logout();

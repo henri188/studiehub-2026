@@ -510,6 +510,61 @@
 .t-review { background: color-mix(in oklab, var(--moss)      15%, var(--paper)); color: var(--moss); }
 .t-rest   { background: color-mix(in oklab, var(--ink)        6%, var(--paper)); color: var(--graphite); }
 
+/* ── Social actions ── */
+.hub-social {
+  display: flex;
+  align-items: center;
+  gap: var(--u3);
+  margin-top: var(--u5);
+  padding-top: var(--u5);
+  border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+.hub-social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-full);
+  padding: 8px 18px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--graphite);
+  transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
+  cursor: pointer;
+}
+.hub-social-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+.hub-social-btn:hover { color: var(--ink); border-color: var(--ink); }
+.hub-social-invite:hover { color: var(--moss); border-color: var(--moss); }
+
+/* ── Toast ── */
+.hg-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 22px;
+  border-radius: var(--r-full);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-fast) var(--ease-mercury),
+              transform var(--t-fast) var(--ease-mercury);
+  z-index: 200;
+  white-space: nowrap;
+  box-shadow: var(--shadow-card);
+}
+.hg-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 /* ── Responsive ── */
 @media (max-width: 700px) {
   .hub-main { padding: var(--u6) var(--u3) var(--u7); }
