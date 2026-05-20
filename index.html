@@ -112,6 +112,19 @@
       <p>Vijf examens, zes weken werk. Kies een planner of open de oefentool.</p>
     </section>
 
+    <!-- Day view -->
+    <section class="day-view-section" id="day-view-section" style="display:none">
+      <div class="day-view-header">
+        <div class="hub-kicker">
+          <span class="pip"></span>
+          <span class="mono" id="dv-date">Vandaag</span>
+        </div>
+        <h2 class="day-view-title">Dagplanning</h2>
+        <p class="day-view-sub">Alle taken voor vandaag, overzicht per vak.</p>
+      </div>
+      <div class="day-view-grid" id="day-view-grid"></div>
+    </section>
+
     <!-- Cards -->
     <div class="hub-grid">
 
@@ -276,6 +289,7 @@
   </main>
 
   <script src="js/sound-system.js" defer></script>
+  <script src="js/day-view.js" defer></script>
   <script type="module" src="js/hub.js"></script>
 </body>
 </html>

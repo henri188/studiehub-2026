@@ -316,6 +316,134 @@
   color: var(--graphite);
 }
 
+/* ── Day view section ── */
+.day-view-section {
+  margin-bottom: var(--u7);
+}
+.day-view-header {
+  margin-bottom: var(--u5);
+}
+.day-view-title {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: var(--u2);
+}
+.day-view-sub {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--graphite);
+}
+.day-view-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--u3);
+}
+.dv-block {
+  min-width: 0;
+}
+.dv-block-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pl-accent);
+  text-decoration: none;
+  margin-bottom: var(--u2);
+  transition: opacity var(--t-fast);
+}
+.dv-block-label:hover { opacity: 0.7; }
+.dv-block-arrow { font-size: 11px; opacity: 0.7; }
+
+/* ── Planner component styles (used by day view) ── */
+:root { --pl-accent: var(--moss); }
+
+.day-card { background: var(--bone); border: 1px solid var(--line); border-radius: var(--r-l); overflow: hidden; transition: border-color var(--t-fast); }
+.day-card.today { border-color: var(--pl-accent); box-shadow: 0 0 0 1px var(--pl-accent); }
+.day-header { padding: 12px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); background: var(--paper); }
+.day-label { font-family: var(--font-display); font-weight: 600; font-size: 14px; color: var(--ink); letter-spacing: -0.01em; }
+.day-tag { font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border-radius: var(--r-s); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+.today-dot { width: 7px; height: 7px; background: var(--pl-accent); border-radius: 50%; flex-shrink: 0; }
+
+.day-summary { padding: 8px 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; border-bottom: 1px solid var(--line); background: color-mix(in oklab, var(--paper) 75%, transparent); }
+.day-stat { display: flex; flex-direction: column; gap: 2px; min-width: 70px; }
+.day-stat-right { margin-left: auto; text-align: right; }
+.day-stat-n { font-family: var(--font-mono); font-size: 12px; color: var(--ink); }
+.day-stat-l { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--graphite); }
+.day-bar { flex: 1; min-width: 90px; height: 4px; background: var(--line); border-radius: var(--r-full); overflow: hidden; }
+.day-bar-fill { height: 100%; background: var(--pl-accent); transition: width 0.4s var(--ease-mercury); }
+
+.session { border-bottom: 1px solid var(--line); }
+.session:last-child { border-bottom: none; }
+.session-header { padding: 10px 16px; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; transition: background var(--t-fast); }
+.session-header:hover { background: var(--paper); }
+.time-badge { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); background: var(--paper); border: 1px solid var(--line); padding: 2px 8px; border-radius: var(--r-s); white-space: nowrap; letter-spacing: 0.04em; }
+.session-title { font-family: var(--font-display); font-size: 13px; font-weight: 500; flex: 1; color: var(--ink); letter-spacing: -0.01em; }
+.session-title[data-complete] { color: var(--pl-accent); }
+.session-dur { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); white-space: nowrap; }
+.chevron { color: var(--graphite); font-size: 11px; transition: transform var(--t-fast); }
+.chevron.open { transform: rotate(90deg); }
+
+.tasks { padding: 8px 16px 12px; display: none; }
+.tasks.open { display: block; }
+.tasks-kanban { padding: 8px 12px 12px; display: none; }
+.tasks-kanban.open { display: block; }
+
+.task { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--line); cursor: pointer; transition: opacity var(--t-fast); }
+.task:last-child { border-bottom: none; }
+.task:hover { opacity: 0.7; }
+.ticket { display: flex; align-items: flex-start; gap: 10px; padding: 8px 10px; background: var(--paper); border-radius: var(--r-m); border-left: 3px solid var(--line-strong); margin-bottom: 6px; cursor: pointer; transition: opacity var(--t-fast), transform var(--t-fast); }
+.ticket:last-child { margin-bottom: 0; }
+.ticket:hover { opacity: 0.8; transform: translateX(2px); }
+.ticket.ticket-done { opacity: 0.45; }
+.task-check { width: 15px; height: 15px; border: 1.5px solid var(--line-strong); border-radius: var(--r-s); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: all var(--t-fast); }
+.task-check.done { background: var(--pl-accent); border-color: var(--pl-accent); }
+.task-check.done::after { content: '✓'; color: var(--paper); font-size: 9px; font-weight: 900; line-height: 1; }
+.task-text { font-size: 13px; line-height: 1.45; color: var(--ink); flex: 1; }
+.task-text.done { text-decoration: line-through; color: var(--graphite); }
+.task-time { font-family: var(--font-mono); font-size: 10px; color: var(--graphite); white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+.task-body { flex: 1; min-width: 0; }
+.task-badge { font-family: var(--font-mono); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 1px 5px; border-radius: var(--r-s); display: inline-block; margin-bottom: 3px; }
+.break-indicator { text-align: center; padding: 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--graphite); background: var(--paper); }
+
+/* Kanban ticket borders */
+.tk-lees    { border-left-color: var(--moss); }
+.tk-schrijf { border-left-color: var(--ink); }
+.tk-code    { border-left-color: #4A8C6E; }
+.tk-herhaal { border-left-color: #C9963A; }
+.tk-mock    { border-left-color: var(--cinnabar); }
+.tk-nakijk  { border-left-color: var(--graphite); }
+.tk-spiek   { border-left-color: var(--moss); }
+
+/* Kanban badge backgrounds */
+.tb-lees    { background: color-mix(in oklab, var(--moss)      12%, var(--paper)); color: var(--moss); }
+.tb-schrijf { background: color-mix(in oklab, var(--ink)       10%, var(--paper)); color: var(--graphite); }
+.tb-code    { background: color-mix(in oklab, #4A8C6E          12%, var(--paper)); color: #4A8C6E; }
+.tb-herhaal { background: color-mix(in oklab, #C9963A          12%, var(--paper)); color: #C9963A; }
+.tb-mock    { background: color-mix(in oklab, var(--cinnabar)  12%, var(--paper)); color: var(--cinnabar); }
+.tb-nakijk  { background: color-mix(in oklab, var(--graphite)  12%, var(--paper)); color: var(--graphite); }
+.tb-spiek   { background: color-mix(in oklab, var(--moss)      12%, var(--paper)); color: var(--moss); }
+
+/* Topic tags */
+.t-q1     { background: color-mix(in oklab, var(--moss)      15%, var(--paper)); color: var(--moss); }
+.t-q2     { background: color-mix(in oklab, var(--moss)      10%, var(--paper)); color: var(--moss); }
+.t-q3     { background: color-mix(in oklab, var(--cinnabar)  14%, var(--paper)); color: var(--cinnabar); }
+.t-q4     { background: color-mix(in oklab, var(--graphite)  15%, var(--paper)); color: var(--graphite); }
+.t-q5     { background: color-mix(in oklab, var(--cinnabar)  10%, var(--paper)); color: var(--cinnabar); }
+.t-q6     { background: color-mix(in oklab, var(--ink)        8%, var(--paper)); color: var(--graphite); }
+.t-th     { background: color-mix(in oklab, var(--moss)      15%, var(--paper)); color: var(--moss); }
+.t-sa     { background: color-mix(in oklab, var(--graphite)  12%, var(--paper)); color: var(--graphite); }
+.t-ex     { background: color-mix(in oklab, var(--cinnabar)  14%, var(--paper)); color: var(--cinnabar); }
+.t-mock   { background: color-mix(in oklab, var(--cinnabar)  18%, var(--paper)); color: var(--cinnabar); }
+.t-exam   { background: color-mix(in oklab, var(--cinnabar)  20%, var(--paper)); color: var(--cinnabar); }
+.t-review { background: color-mix(in oklab, var(--moss)      15%, var(--paper)); color: var(--moss); }
+.t-rest   { background: color-mix(in oklab, var(--ink)        6%, var(--paper)); color: var(--graphite); }
+
 /* ── Responsive ── */
 @media (max-width: 700px) {
   .hub-main { padding: var(--u6) var(--u3) var(--u7); }
@@ -324,4 +452,5 @@
   .hub-footer { flex-direction: column; gap: var(--u4); align-items: flex-start; }
   .footer-meta { text-align: left; }
   .topbar-inner { padding: 12px var(--u3); }
+  .day-view-grid { grid-template-columns: 1fr; }
 }
